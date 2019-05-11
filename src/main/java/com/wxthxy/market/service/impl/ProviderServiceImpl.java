@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.wxthxy.market.dao.ProviderDAO;
 import com.wxthxy.market.entity.Provider;
 import com.wxthxy.market.service.ProviderService;
-@Service("providerService")
+@Service
 public class ProviderServiceImpl implements ProviderService {
 
 	@Resource

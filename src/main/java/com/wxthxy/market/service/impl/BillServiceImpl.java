@@ -10,7 +10,7 @@ import com.wxthxy.market.dao.BillDAO;
 import com.wxthxy.market.entity.Bill;
 import com.wxthxy.market.service.BillService;
 
-@Service("billService")
+@Service
 public class BillServiceImpl implements BillService{
 
 	@Resource

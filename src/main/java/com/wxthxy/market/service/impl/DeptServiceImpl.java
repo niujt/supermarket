@@ -13,21 +13,20 @@ import com.wxthxy.market.entity.Dept;
 import com.wxthxy.market.service.BillService;
 import com.wxthxy.market.service.DeptService;
 
-@Service("deptService")
-public class DeptServiceImpl implements DeptService{
+@Service
+public class DeptServiceImpl implements DeptService {
 
-	@Resource
-	private DeptDAO deptdao;
+    @Resource
+    private DeptDAO deptdao;
 
-	@Override
-	public List<Dept> deptlist() {
-		return deptdao.deptlist();
-	}
 
-	@Override
-	public Dept finddeptbyname(String dname) {
-		
-		return deptdao.finddeptbyname(dname);
-	}
-	
+    public List<Dept> deptlist() {
+        return deptdao.deptlist();
+    }
+
+    public Dept finddeptbyname(String dname) {
+
+        return deptdao.finddeptbyname(dname);
+    }
+
 }

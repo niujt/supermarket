@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wxthxy.market.dao.DeptDAO">
+  <select id="deptlist" resultType="Dept">
+    select *
+    from smbms_dept
+  </select>
+  <select id="finddeptbyname" parameterType="String" resultType="Dept">
+  	 select *
+    from smbms_dept
+    where dname=#{dname}
+  </select>
+</mapper>

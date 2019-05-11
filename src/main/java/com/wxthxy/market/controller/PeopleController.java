@@ -1,6 +1,6 @@
 package com.wxthxy.market.controller;
 
-import java.io.File;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -8,9 +8,6 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
-import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.lang.math.RandomUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -19,18 +16,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSONArray;
-import com.wxthxy.market.entity.Bill;
 import com.wxthxy.market.entity.Dept;
 import com.wxthxy.market.entity.People;
-import com.wxthxy.market.entity.Provider;
 import com.wxthxy.market.entity.User;
-import com.wxthxy.market.service.BillService;
 import com.wxthxy.market.service.DeptService;
 import com.wxthxy.market.service.PeopleService;
-import com.wxthxy.market.service.ProviderService;
 import com.wxthxy.market.util.Constants;
 import com.wxthxy.market.util.PageSupport;
 

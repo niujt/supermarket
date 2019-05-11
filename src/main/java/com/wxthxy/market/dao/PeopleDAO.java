@@ -7,11 +7,17 @@ import org.apache.ibatis.annotations.Param;
 import com.wxthxy.market.entity.People;
 
 public interface PeopleDAO {
-	public List<People> getpeopleList();
-	public List<People> peoplelist(@Param("peopleName")String peopleName,@Param("deptid")String deptid,@Param("from") int from,@Param("pageSize")int pageSize);
-	public int getcount(@Param("peopleName")String peopleName,@Param("deptid")String deptid);
-	public int savepeople(People p);
-	public People getPeoplebyid(@Param("id")String id);
-	public int updatepeoplebyid(People p);
-	public int deletepeoplebyid(@Param("id")String id);
+    List<People> getpeopleList();
+
+    List<People> peoplelist(@Param("peopleName") String peopleName, @Param("deptid") String deptid, @Param("from") int from, @Param("pageSize") int pageSize);
+
+    int getcount(@Param("peopleName") String peopleName, @Param("deptid") String deptid);
+
+    int savepeople(People p);
+
+    People getPeoplebyid(@Param("id") String id);
+
+    int updatepeoplebyid(People p);
+
+    int deletepeoplebyid(@Param("id") String id);
 }

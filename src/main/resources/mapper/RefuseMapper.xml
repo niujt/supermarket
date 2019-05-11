@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wxthxy.market.dao.RefuseDAO">
+	<resultMap id="BaseResultMap" type="com.wxthxy.market.entity.Refuse">
+		<id column="id" jdbcType="BIGINT" property="id" />
+		<result column="refCode" jdbcType="VARCHAR" property="refCode" />
+		<result column="refName" jdbcType="VARCHAR" property="refName" />
+		<result column="refReasion" jdbcType="VARCHAR" property="refReasion" />
+		<result column="createBy" jdbcType="BIGINT" property="createBy" />
+		<result column="creationDate" jdbcType="TIMESTAMP" property="creationDate" />
+		<result column="modifyDate" jdbcType="TIMESTAMP" property="modifyDate" />
+		<result column="modifyBy" jdbcType="BIGINT" property="modifyBy" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, refCode, refName, refReasion,
+		createBy,
+		creationDate, modifyDate, modifyBy
+	</sql>
+	<!-- 查询所有的退货单信息 -->
+	<select id="refuselist" resultType="Refuse">
+		SELECT *
+		FROM
+		smbms.smbms_Refuse
+	</select>
+	<!-- 按照条件分页查询退货单信息 -->
+	<select id="GetRefuseList" resultType="Refuse">
+		SELECT *
+		FROM
+		smbms.smbms_Refuse
+		WHERE 1=1
+		 <if test="refCode!=null and refCode!='' ">and refCode LIKE CONCAT('%',#{refCode},'%') </if>
+		<if test="refName!=null and refName!='' ">AND refName LIKE CONCAT('%',#{refName},'%') </if>
+		ORDER BY creationDate DESC
+		LIMIT #{from},#{pageSize}
+	</select>
+	<!-- 查询符合条件的总记录数 -->
+	<select id="GetCount" resultType="int">
+		SELECT count(1)
+		FROM
+		smbms.smbms_Refuse
+		WHERE 1=1
+		 <if test="refCode!=null and refCode!='' ">and refCode LIKE CONCAT('%',#{refCode},'%') </if>
+		<if test="refName!=null and refName!='' ">AND refName LIKE CONCAT('%',#{refName},'%') </if>
+	</select>
+	<!--添加一条退货单信息 -->
+	<insert id="saveRefuse" parameterType="Refuse">
+		INSERT INTO
+		smbms.smbms_Refuse
+		(
+		refCode,
+		refName,
+		refnumber,
+		refunit,
+		refReasion,
+		createBy,
+		creationDate,
+		modifyDate,
+		modifyBy
+		)
+		VALUES
+		(
+		#{refCode},
+		#{refName},
+		#{refnumber},
+		#{refunit},
+		#{refReasion},
+		#{createBy},
+		#{creationDate},
+		#{modifyDate},
+		#{modifyBy}
+		)
+	</insert>
+	<!-- 根据退货单id查找退货单信息 -->
+	<select id="getRefusebyid" resultType="Refuse">
+		SELECT *
+		FROM
+		smbms.smbms_Refuse
+		WHERE id = #{id}
+	</select>
+	<!-- 根据退货单id修改退货单信息 -->
+	<update id="updateRefusebyid">
+		UPDATE
+		smbms.smbms_Refuse
+		SET
+		refName = #{refName} ,
+		refnumber=#{refnumber},
+		refReasion =
+		#{refReasion} ,
+		modifyDate =
+		#{modifyDate},
+		modifyBy = #{modifyBy}
+		WHERE id = #{id}
+	</update>
+	<!--删除退货单 -->
+	<delete id="deleteRefusebyid">
+		DELETE FROM smbms.smbms_Refuse
+		WHERE
+		id = #{id}
+	</delete>
+</mapper>

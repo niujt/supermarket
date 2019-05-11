@@ -8,8 +8,8 @@ import com.wxthxy.market.entity.Bill;
 import com.wxthxy.market.entity.Dept;
 
 
-
 public interface DeptService {
-	public List<Dept> deptlist();
-	public Dept finddeptbyname(String dname);
+    List<Dept> deptlist();
+
+    Dept finddeptbyname(String dname);
 }

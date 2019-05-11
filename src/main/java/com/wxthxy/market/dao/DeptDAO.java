@@ -8,6 +8,7 @@ import com.wxthxy.market.entity.Bill;
 import com.wxthxy.market.entity.Dept;
 
 public interface DeptDAO {
-	public List<Dept> deptlist();
-	public Dept finddeptbyname(@Param("dname")String dname);
+    List<Dept> deptlist();
+
+    Dept finddeptbyname(@Param("dname") String dname);
 }

@@ -12,7 +12,7 @@ import com.wxthxy.market.entity.User;
 import com.wxthxy.market.service.UserService;
 import com.wxthxy.market.util.Constants;
 
-@Service("userService")
+@Service
 public class UserServiceImpl implements UserService {
 
 	@Resource

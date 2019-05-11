@@ -8,12 +8,16 @@ import com.wxthxy.market.entity.Bill;
 import com.wxthxy.market.entity.Sale;
 
 
-
 public interface SaleService {
-	public List<Sale> getsaleList(String scode,String sname,int from,int pageSize);
-	public int getcount(String scode,String sname);
-	public int savesale(Sale sale);
-	public Sale findsaleByid(String id);
-	public int deletesalebyid(String id);
-	public int updatesalebyid(Sale sale);
+    List<Sale> getsaleList(String scode, String sname, int from, int pageSize);
+
+    int getcount(String scode, String sname);
+
+    int savesale(Sale sale);
+
+    Sale findsaleByid(String id);
+
+    int deletesalebyid(String id);
+
+    int updatesalebyid(Sale sale);
 }

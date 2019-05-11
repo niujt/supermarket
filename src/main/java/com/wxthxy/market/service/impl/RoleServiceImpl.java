@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.wxthxy.market.dao.RoleDAO;
 import com.wxthxy.market.entity.Role;
 import com.wxthxy.market.service.RoleService;
-@Service("RoleService")
+@Service
 public class RoleServiceImpl implements RoleService{
 	@Resource
 	private RoleDAO  roledao;

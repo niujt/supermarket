@@ -18,7 +18,7 @@ public interface BillService {
 	 * @param pageSize 页面容量
 	 * @return 订单列表
 	 */
-	public List<Bill> billlist(String billCode,int providerId,int isPayment, int from,int pageSize);
+	 List<Bill> billlist(String billCode,int providerId,int isPayment, int from,int pageSize);
 	/**
 	 * 按条件查询到的订单记录数
 	 * @param productName 商品名称
@@ -26,41 +26,41 @@ public interface BillService {
 	 * @param isPayment 是否付款
 	 * @return 订单列表
 	 */
-	public int  getcount(String productName,int providerId,int isPayment);
+	 int  getcount(String productName,int providerId,int isPayment);
 	/**
 	 * 验证订单编码是否存在
 	 * @param billCode 订单编码
 	 * @return true/false
 	 */
-	public boolean CheckbillCode(@Param("billCode")String billCode);
+	 boolean CheckbillCode(@Param("billCode")String billCode);
 	/**
 	 * 保存要添加的订单
 	 * @param bill 订单
 	 * @return 保存的条数
 	 */
-	public int savebill(Bill bill);//根据id查询订单
+	 int savebill(Bill bill);//根据id查询订单
 	/**
 	 * 根据id查询订单信息
 	 * @param id 订单id
 	 * @return 订单
 	 */
-	public Bill getBillbyid(@Param("id")String id);
+	 Bill getBillbyid(@Param("id")String id);
 	/**
 	 * 根据id修改订单信息
 	 * @param bill 订单
 	 * @return 修改的条数
 	 */
-	public int updatebillbyid(Bill bill );
+	 int updatebillbyid(Bill bill );
 	/**
 	 * 根据id删除订单信息
 	 * @param id 订单id
 	 * @return 删除的条数
 	 */
-	public int deletebillbyid(@Param("id")String id);
+	 int deletebillbyid(@Param("id")String id);
 	/**
 	 * 根据供应商id 查询  订单集合
 	 * @param pid 供应商id
 	 * @return 订单列表
 	 */
-	public List<Bill> getbillbypproviderid(@Param("pid")String pid);
+	 List<Bill> getbillbypproviderid(@Param("pid")String pid);
 }
