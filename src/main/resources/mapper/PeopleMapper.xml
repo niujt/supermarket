@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wxthxy.supermarket.dao.PeopleDAO">
+	<resultMap id="BaseResultMap" type="com.wxthxy.supermarket.entity.People">
+		<id column="id" jdbcType="BIGINT" property="id" />
+		<result column="peopleName" jdbcType="VARCHAR" property="peopleName" />
+		<result column="peopleAge" jdbcType="VARCHAR" property="peopleAge" />
+		<result column="deptid" jdbcType="INTEGER" property="deptid" />
+		<result column="salary" jdbcType="DECIMAL" property="salary" />
+		<result column="gender" jdbcType="INTEGER" property="gender" />
+		<result column="createdBy" jdbcType="BIGINT" property="createdBy" />
+		<result column="creationDate" jdbcType="TIMESTAMP" property="creationDate" />
+		<result column="modifyBy" jdbcType="BIGINT" property="modifyBy" />
+		<result column="modifyDate" jdbcType="TIMESTAMP" property="modifyDate" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id,peopleName,peopleAge,deptid,salary,gender,
+		createdBy, creationDate, modifyBy,
+		modifyDate
+	</sql>
+	<!-- 查询所有的人事信息 -->
+	<select id="getpeopleList" resultType="com.wxthxy.supermarket.entity.People">
+		SELECT p.* ,d.dname AS dname
+		FROM
+		smbms.smbms_dept d,
+		smbms.smbms_people p
+		WHERE p.deptid =d.id
+	</select>
+	<!-- 查询订人事信息 -->
+	<select id="peoplelist" resultType="com.wxthxy.supermarket.entity.People">
+		SELECT p.* ,d.dname AS dname
+		FROM
+		smbms.smbms_dept d,
+		smbms.smbms_people p
+		WHERE p.deptid =d.id and 1=1
+		<if test="peopleName!=null and peopleName!=''"> AND p.peopleName LIKE CONCAT('%',#{peopleName},'%')
+		</if>
+		<if test="deptid!=0 and deptid!=null"> AND p.deptid =#{deptid}</if>
+		ORDER BY p.creationDate DESC
+		LIMIT #{from},#{pageSize}
+	</select>
+	<!-- 按照条件查询出的总记录数 -->
+	<select id="getcount" resultType="int">
+		SELECT count(*)
+		FROM
+		smbms.smbms_people p, smbms.smbms_role r
+		WHERE
+		p.deptid =r.id
+		<if test="peopleName!=null and peopleName!=''"> AND p.peopleName LIKE CONCAT('%',#{peopleName},'%')
+		</if>
+		<if test="deptid!=0 and deptid!=null"> AND p.deptid =#{deptid}</if>
+	</select>
+	<!-- 查询订单编码是否存在 -->
+	<!-- <select id="CheckbillCode" resultType="Bill">
+		SELECT *
+		FROM
+		smbms.smbms_bill
+		WHERE billCode =#{billCode}
+	</select> -->   
+	<!-- 保存要添加的人事 -->
+	<insert id="savepeople" parameterType="com.wxthxy.supermarket.entity.People">
+		INSERT INTO smbms.smbms_people
+		(peopleName,peopleAge,deptid,salary,gender,createdBy, creationDate)
+		VALUES
+		(#{peopleName},
+		#{peopleAge},
+		#{deptid},
+		#{salary},
+		#{gender},
+		#{createdBy},
+		#{creationDate});
+	</insert>
+	<!-- 根据id显示人事信息 -->
+	<select id="getPeoplebyid" resultType="com.wxthxy.supermarket.entity.People">
+		SELECT p.* ,r.roleName AS
+		roleName
+		FROM
+		smbms.smbms_people p,
+		smbms.smbms_role r
+		WHERE
+		p.deptid =r.id and p.id = #{id}
+	</select>
+	<!--根据订单id修改订单信息 -->
+	<update id="updatepeoplebyid" parameterType="com.wxthxy.supermarket.entity.People">
+		UPDATE
+		smbms.smbms_people
+		SET
+		peopleName = #{peopleName} ,
+		peopleAge =#{peopleAge} ,
+		deptid = #{deptid},
+		salary =#{salary} ,
+		gender = #{gender} ,
+		modifyBy = #{modifyBy} ,
+		modifyDate = #{modifyDate}
+		WHERE
+		id = #{id}
+	</update>
+	<!-- 根据id删除人事信息 -->
+	<delete id="deletepeoplebyid" parameterType="Integer">
+		DELETE FROM smbms.smbms_people
+		WHERE
+		id = #{id}
+	</delete>
+</mapper>
