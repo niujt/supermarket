@@ -1,165 +1,300 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html> 
-<html lang="en"> 
-<head> 
-    <meta charset="utf-8"> 
-    <meta name="viewport" content="width=device-width, initial-scale=1"> 
-    <title>捷途软件--智能办公</title> 
-    <link href="${ctx}/css/base.css" rel="stylesheet">
-    <link href="${ctx}/css/login.css" rel="stylesheet">
-    <link href="${ctx}/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <script type="text/javascript" src="${ctx }/resources/jquery/jquery-1.11.0.min.js"></script>
-	<script type="text/javascript" src="${ctx }/resources/jquery/jquery-migrate-1.2.1.min.js"></script>
-	<script type="text/javascript" src="${ctx }/resources/bootstrap/js/bootstrap.min.js"></script>
-     <script type="text/javascript" src="${ctx}/resources/easyUI/jquery.easyui.min.js"></script>
-     <script type="text/javascript" src="${ctx}/resources/easyUI/easyui-lang-zh_CN.js"></script>
-     <link rel="stylesheet" href="${ctx}/resources/easyUI/easyui.css">
-	 <script type="text/javascript">
-		 $(function(){
-			 // 等文档加载完成以后再执行本脚本 
-		 	 // 给验证码绑定点击事件 
-		 	 // vimg 
-		 	 $("#vimg").click(function(){
-		 		 $(this).attr("src","${ctx}/createCode?timer="+new Date().getTime());
-		 	 }).mouseover(function(){
-		 		  $(this).css("cursor","pointer");
-		 	 });
-			 
-			 /** 回车键事件  
-			   event :事件源,代表按下的那个按键 
-			 */
-			 $(document).keydown(function(event){
-				 if(event.keyCode == 13){
-					 $("#login_id").trigger("click");
-				 }
-			 });
-			 
-			 /** 1.异步登录功能  */
-			 $("#login_id").bind("click",function(){
-				 var userId = $("#userId").val();
-				 var passWord = $("#passWord").val();
-				 var vcode = $("#vcode").val();
-				 
-				 // 定义一个校验结果 
-				 var msg = "";
-				 if(!/^\w{2,20}$/.test(userId.trim())){
-					 msg = "登录名必须是2-20个的字符";
-				 }else if(!/^\w{6,20}$/.test(passWord)){
-					 msg = "密码必须是6-20个的字符";
-				 }else if(!/^\w{4}$/.test(vcode)){
-					 msg = "验证码格式不正确";
-				 }
-				 
-				 if(msg!=""){
-					 // 校验失败了 
-					 $.messager.alert("登录提示","<span style='color:red;'>"+msg+"</span>","error");
-					 return ; // 结束程序 
-				 }
-				
-				 var params = $("#loginForm").serialize();
-				
-				 /** 发起异步请求登录 */
-				 $.ajax({
-					 url:"${ctx}/loginAjax",
-					 type: "post",
-					 dataType : "json",
-					 data : params ,
-					 async : true ,  // 是异步还是异步中的同步
-					 success : function(data){
-						 if(data.status == 1){
-							  /** 跳转到主界面上去  */
-							  window.location = "${ctx}/oa/main";
-						 }else{
-							 $("#vimg").trigger("click");
-							 $.messager.alert("登录提示","<span style='color:red;'>"+data.tip+"</span>","error");
-						 }
-						
-					 },error : function(){
-						 $.messager.alert("登录提示","<span style='color:red;'>您登陆失败了</span>","error");
-					 }
-				 })
-					 
-			 })
-			 
-		 
-		 })
-	 
-	 </script>
-</head> 
+		 pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>系统登录</title>
+
+	<style type="text/css">
+		html {
+			overflow-y: scroll;
+			vertical-align: baseline;
+		}
+
+		body {
+			font-family: Microsoft YaHei, Segoe UI, Tahoma, Arial, Verdana,
+			sans-serif;
+			font-size: 12px;
+			color: #fff;
+			height: 100%;
+			line-height: 1;
+			background: #999
+		}
+
+		* {
+			margin: 0;
+			padding: 0
+		}
+
+		ul, li {
+			list-style: none
+		}
+
+		h1 {
+			font-size: 30px;
+			font-weight: 700;
+			text-shadow: 0 1px 4px rgba(0, 0, 0, .2)
+		}
+
+		.login-box {
+			width: 410px;
+			margin: 120px auto 0 auto;
+			text-align: center;
+			padding: 30px;
+			background: url(${pageContext.request.contextPath }/statics/images/mask.png);
+			border-radius: 10px;
+		}
+
+		.login-box .name, .login-box .password, .login-box .code, .login-box .remember
+		{
+			font-size: 16px;
+			text-shadow: 0 1px 2px rgba(0, 0, 0, .1)
+		}
+
+		.login-box .remember input {
+			box-shadow: none;
+			width: 15px;
+			height: 15px;
+			margin-top: 25px
+		}
+
+		.login-box .remember {
+			padding-left: 40px
+		}
+
+		.login-box .remember label {
+			display: inline-block;
+			height: 42px;
+			width: 70px;
+			line-height: 34px;
+			text-align: left
+		}
+
+		.login-box label {
+			display: inline-block;
+			width: 100px;
+			text-align: right;
+			vertical-align: middle
+		}
+
+		.login-box #code {
+			width: 120px
+		}
+
+		.login-box .codeImg {
+			float: right;
+			margin-top: 26px;
+		}
+
+		.login-box img {
+			width: 148px;
+			height: 42px;
+			border: none
+		}
+
+		input[type=text], input[type=password] {
+			width: 270px;
+			height: 42px;
+			margin-top: 25px;
+			padding: 0px 15px;
+			border: 1px solid rgba(255, 255, 255, .15);
+			border-radius: 6px;
+			color: #fff;
+			letter-spacing: 2px;
+			font-size: 16px;
+			background: transparent;
+		}
+
+		button {
+			cursor: pointer;
+			width: 100%;
+			height: 44px;
+			padding: 0;
+			background: #ef4300;
+			border: 1px solid #ff730e;
+			border-radius: 6px;
+			font-weight: 700;
+			color: #fff;
+			font-size: 24px;
+			letter-spacing: 15px;
+			text-shadow: 0 1px 2px rgba(0, 0, 0, .1)
+		}
+
+		input:focus {
+			outline: none;
+			box-shadow: 0 2px 3px 0 rgba(0, 0, 0, .1) inset, 0 2px 7px 0
+			rgba(0, 0, 0, .2)
+		}
+
+		button:hover {
+			box-shadow: 0 15px 30px 0 rgba(255, 255, 255, .15) inset, 0 2px 7px 0
+			rgba(0, 0, 0, .2)
+		}
+
+		.screenbg {
+			position: fixed;
+			bottom: 0;
+			left: 0;
+			z-index: -999;
+			overflow: hidden;
+			width: 100%;
+			height: 100%;
+			min-height: 100%;
+		}
+
+		.screenbg ul li {
+			display: block;
+			list-style: none;
+			position: fixed;
+			overflow: hidden;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			z-index: -1000;
+			float: right;
+		}
+
+		.screenbg ul a {
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			display: inline-block;
+			margin: 0;
+			padding: 0;
+			cursor: default;
+		}
+
+		.screenbg a img {
+			vertical-align: middle;
+			display: inline;
+			border: none;
+			display: block;
+			list-style: none;
+			position: fixed;
+			overflow: hidden;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			z-index: -1000;
+			float: right;
+		}
+
+		.bottom {
+			margin: 8px auto 0 auto;
+			width: 100%;
+			position: fixed;
+			text-align: center;
+			bottom: 0;
+			left: 0;
+			overflow: hidden;
+			padding-bottom: 8px;
+			color: #ccc;
+			word-spacing: 3px;
+			zoom: 1;
+		}
+
+		.bottom a {
+			color: #FFF;
+			text-decoration: none;
+		}
+
+		.bottom a:hover {
+			text-decoration: underline;
+		}
+		.role{
+			margin-left: -240px;
+			margin-top: 20px;
+			margin-bottom: 10px;
+		}
+		.error{
+			color: red;
+			position: absolute;
+			left: 1190px;
+			top: 220px;
+			font-size: 17px;
+			font-weight: 800;
+		}
+	</style>
+
+	<script type="text/javascript"
+			src="${pageContext.request.contextPath }/statics/js/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			$(".screenbg ul li").each(function() {
+				$(this).css("opacity", "0");
+			});
+			$(".screenbg ul li:first").css("opacity", "1");
+			var index = 0;
+			var t;
+			var li = $(".screenbg ul li");
+			var number = li.size();
+			function change(index) {
+				li.css("visibility", "visible");
+				li.eq(index).siblings().animate({
+					opacity : 0
+				}, 3000);
+				li.eq(index).animate({
+					opacity : 1
+				}, 3000);
+			}
+			function show() {
+				index = index + 1;
+				if (index <= number - 1) {
+					change(index);
+				} else {
+					index = 0;
+					change(index);
+				}
+			}
+			t = setInterval(show, 8000);
+			//根据窗口宽度生成图片宽度
+			var width = $(window).width();
+			$(".screenbg ul img").css("width", width + "px");
+		});
+	</script>
+</head>
+
 <body>
-	<div class="login-hd">
-		<div class="left-bg"></div>
-		<div class="right-bg"></div>
-		<div class="hd-inner">
-			<span class="logo"></span>
-			<span class="split"></span>
-			<span class="sys-name">智能办公平台</span>
+<div class="login-box">
+	<h1>超市销售系统后台登录</h1>
+	<form method="post"
+		  action="${pageContext.request.contextPath }/doLogin.html">
+		<div class="name">
+			<label>账号：</label> <input type="text" name="userCode" id="userCode"
+									  tabindex="1" autocomplete="off" />
+		</div><span class="error">${error }</span>
+		<div class="password">
+			<label>密 码：</label> <input type="password" name="userPassword" id="userPassword"
+									   maxlength="16" id="" tabindex="2" />
 		</div>
-	</div>
-	<div class="login-bd">
-		<div class="bd-inner">
-			<div class="inner-wrap">
-				<div class="lg-zone">
-					<div class="lg-box">
-						<div class="panel-heading" style="background-color: #11a9e2;">
-							<h3 class="panel-title" style="color: #FFFFFF;font-style: italic;">用户登陆</h3>
-						</div>
-						<form id="loginForm">
-						   <div class="form-horizontal" style="padding-top: 20px;padding-bottom: 30px; padding-left: 20px;">
-								
-								<div class="form-group" style="padding: 5px;">
-									<div class="col-md-11">
-										<input class="form-control" id="userId" name="userId" type="text" placeholder="账号/邮箱">
-									</div>
-								</div>
-				
-								<div class="form-group" style="padding: 5px;">
-									<div class="col-md-11">
-										<input  class="form-control"  id="passWord" name="passWord" type="password" placeholder="请输入密码">
-									</div>
-								</div>
-				
-								<div class="form-group" style="padding: 5px;">
-									<div class="col-md-11">
-										<div class="input-group">
-										<input class="form-control " id="vcode" name="vcode" type="text" placeholder="验证码">
-										<span class="input-group-addon" id="basic-addon2"><img class="check-code" id="vimg" alt="" src="${ctx}/createCode"></span>
-										</div>
-									</div>
-								</div>
-				
-						</div>
-							<div class="tips clearfix">
-											<label><input type="checkbox" checked="checked">记住用户名</label>
-											<a href="javascript:;" class="register">忘记密码？</a>
-										</div>
-							<div class="enter">
-								<a href="javascript:;" id="login_id" class="purchaser" >登录</a>
-								<a href="javascript:;" class="supplier" onClick="javascript:window.location='main.html'">重 置</a>
-							</div>
-						</form>
-					</div>
-				</div>
-				<div class="lg-poster"></div>
-			</div>
-	</div>
-	</div>
-	<div class="login-ft">
-		<div class="ft-inner">
-			<div class="about-us">
-				<a href="javascript:;">关于我们</a>
-				<a href="javascript:;">法律声明</a>
-				<a href="javascript:;">服务条款</a>
-				<a href="javascript:;">联系方式</a>
-			</div>
-			<div class="address">
-			地址：广州市天河区车陂大岗路4号,沣宏大厦3011
-			&nbsp;邮编：510000&nbsp;&nbsp;
-			Copyright&nbsp;©&nbsp;2015&nbsp;-&nbsp;2016&nbsp;疯狂软件-分享知识，传递希望&nbsp;版权所有</div>
-			<div class="other-info">
-			建议使用火狐、谷歌浏览器，不建议使用IE浏览器！</div>
+		<div class="role">
+			<label for="userRole" class="p">权限：</label> <select id="userRole"
+														  name="userRole">
+			<option value="1" selected="selected">系统管理员</option>
+			<option value="2">经理</option>
+		</select>
 		</div>
-	</div>
-</body> 
+		<div class="login">
+			<button type="submit" tabindex="5">登录</button>
+		</div>
+	</form>
+</div>
+
+<div class="bottom">
+	©2018 QAQ&nbsp;&nbsp;&nbsp;&nbsp;<span>超市销售系统登陆页面</span><img
+		width="13" height="16" src="${pageContext.request.contextPath }/statics/images/copy_rignt_24.png" />
+</div>
+
+<div class="screenbg">
+	<ul>
+		<li><a href="javascript:;"><img src="${pageContext.request.contextPath }/statics/images/0.jpg"/></a></li>
+		<li><a href="javascript:;"><img src="${pageContext.request.contextPath }/statics/images/1.jpg"/></a></li>
+		<li><a href="javascript:;"><img src="${pageContext.request.contextPath }/statics/images/2.jpg"/></a></li>
+	</ul>
+</div>
+
+</body>
 </html>
