@@ -19,25 +19,12 @@ public class LoginController {
 	private UserService userService;
 	
 	/**
-	 * 主页面
-	 * @return frame.jsp
-	 */
-	@RequestMapping("/sys/user/main.html")
-	public String main(HttpSession session){
-		Long role=((User)(session.getAttribute(Constants.SESSION))).getUserRole();
-		if(role==1) {
-			return "frame";
-		}
-		return "user/frame";
-	}
-	
-	/**
 	 * 登录
 	 * @return login.jsp
 	 */
 	@RequestMapping("/login.html")
 	public String login(){
-		return "login1";
+		return "login";
 	}
 	/**
 	 * 验证登陆
@@ -54,28 +41,27 @@ public class LoginController {
 			HttpSession  session, HttpServletRequest request){
 		Long _userRole=Long.valueOf(userRole);
 		String error="";
-		System.out.println("====================================role==="+_userRole);
 		User user = userService.login(userCode);
 		if(user!=null){
 			session.setAttribute(Constants.SESSION, user);
 			if(!userPassword.equals(user.getUserPassword())) {
 				error="密码错误";
 				request.setAttribute("error",error);
-				return "login1";
+				return "login";
 			}
 			else {
 				if(_userRole!=user.getUserRole()) {
 					error="权限错误";
 					request.setAttribute("error",error);
-					return "login1";
+					return "login";
 				}
 			}
-			return "redirect:/sys/user/main.html";
+			return "index";
 			}
 		else {
 			error="用户名不存在或不能为空";
 			request.setAttribute("error",error);
-			return "login1";
+			return "login";
 		}
 		
 	}

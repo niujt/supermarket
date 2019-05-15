@@ -35,7 +35,7 @@
 	</select>
 
 	<!-- 登录 -->
-	<select id="selectByPrimaryKey" parameterType="java.lang.Long"
+	<select id="selectByPrimaryKey" parameterType="String"
 		resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />

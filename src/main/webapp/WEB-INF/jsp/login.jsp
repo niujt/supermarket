@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 		 pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html >
+<html>
 <head>
 	<title>系统登录</title>
 
@@ -41,7 +41,7 @@
 			margin: 120px auto 0 auto;
 			text-align: center;
 			padding: 30px;
-			background: url(${pageContext.request.contextPath }/statics/images/mask.png);
+			background: url(/static/images/mask.png);
 			border-radius: 10px;
 		}
 
@@ -220,7 +220,7 @@
 	</style>
 
 	<script type="text/javascript"
-			src="${pageContext.request.contextPath }/statics/js/jquery-1.8.3.min.js"></script>
+			src="/static/js/jquery-1.8.3.min.js"></script>
 	<script type="text/javascript">
 		$(function() {
 			$(".screenbg ul li").each(function() {
@@ -261,7 +261,7 @@
 <div class="login-box">
 	<h1>超市销售系统后台登录</h1>
 	<form method="post"
-		  action="${pageContext.request.contextPath }/doLogin.html">
+		  action="/doLogin.html">
 		<div class="name">
 			<label>账号：</label> <input type="text" name="userCode" id="userCode"
 									  tabindex="1" autocomplete="off" />
@@ -285,14 +285,14 @@
 
 <div class="bottom">
 	©2018 QAQ&nbsp;&nbsp;&nbsp;&nbsp;<span>超市销售系统登陆页面</span><img
-		width="13" height="16" src="${pageContext.request.contextPath }/statics/images/copy_rignt_24.png" />
+		width="13" height="16" src="/static/images/copy_rignt_24.png" />
 </div>
 
 <div class="screenbg">
 	<ul>
-		<li><a href="javascript:;"><img src="${pageContext.request.contextPath }/statics/images/0.jpg"/></a></li>
-		<li><a href="javascript:;"><img src="${pageContext.request.contextPath }/statics/images/1.jpg"/></a></li>
-		<li><a href="javascript:;"><img src="${pageContext.request.contextPath }/statics/images/2.jpg"/></a></li>
+		<li><a href="javascript:;"><img src="/static/images/0.jpg"/></a></li>
+		<li><a href="javascript:;"><img src="/static/images/1.jpg"/></a></li>
+		<li><a href="javascript:;"><img src="/static/images/2.jpg"/></a></li>
 	</ul>
 </div>
 
