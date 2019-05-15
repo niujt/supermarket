@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link href="/static/css/layui.min.css">
+    <link href="css/layui.min.css">
     <title>超市管理系统</title>
 </head> 
 <body>
@@ -26,6 +26,7 @@
     <li class="layui-nav-item"><a href="">退出系统</a></li>
 </ul>
 </div>
+<button type="button" class="btn btn-info">dsadas</button>
 <script type="text/javascript" src="/static/js/layui.all.js"></script>
 <script type="text/javascript">
     //注意：导航 依赖 element 模块，否则无法进行功能性操作
