@@ -23,7 +23,6 @@ import com.wxthxy.supermarket.entity.User;
 import com.wxthxy.supermarket.service.GoodsService;
 import com.wxthxy.supermarket.service.RefuseService;
 import com.wxthxy.supermarket.util.Constants;
-import com.wxthxy.supermarket.util.PageSupport;
 
 @Controller
 @RequestMapping("/refuse")

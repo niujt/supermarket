@@ -1,7 +1,6 @@
 package com.wxthxy.supermarket.controller;
 
 import java.io.File;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import javax.annotation.Resource;
@@ -21,11 +20,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.alibaba.fastjson.JSONArray;
 import com.wxthxy.supermarket.entity.Bill;
 import com.wxthxy.supermarket.entity.Provider;
-import com.wxthxy.supermarket.entity.User;
 import com.wxthxy.supermarket.service.BillService;
 import com.wxthxy.supermarket.service.ProviderService;
-import com.wxthxy.supermarket.util.Constants;
-import com.wxthxy.supermarket.util.PageSupport;
 
 @Controller
 @RequestMapping("/provider")

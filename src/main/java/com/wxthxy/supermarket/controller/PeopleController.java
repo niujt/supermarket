@@ -26,7 +26,6 @@ import com.wxthxy.supermarket.entity.User;
 import com.wxthxy.supermarket.service.DeptService;
 import com.wxthxy.supermarket.service.PeopleService;
 import com.wxthxy.supermarket.util.Constants;
-import com.wxthxy.supermarket.util.PageSupport;
 
 @Controller
 @RequestMapping("/people")
