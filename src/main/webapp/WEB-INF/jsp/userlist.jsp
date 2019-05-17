@@ -1,5 +1,6 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,37 +9,52 @@
 </head>
 <body>
 <%@include file="menu.jsp" %>
-<%--<div class="search">--%>
-<%--<form method="POST"--%>
-<%--action="${pageContext.request.contextPath}/user/userlist.html">--%>
-<%--<span>用户名：</span> <input name="queryname" class="input-text"--%>
-<%--type="text" value="${queryUserName}"> <span>用户角色：</span> <select--%>
-<%--name="queryUserRole">--%>
-<%--<c:if test="${roleList != null}">--%>
-<%--<option value="">--请选择--</option>--%>
-<%--<c:forEach var="role" items="${roleList}">--%>
-<%--<option--%>
-<%--<c:if test="${role.id == queryUserRole}">selected="selected"</c:if>--%>
-<%--value="${role.id}">${role.roleName}</option>--%>
-<%--</c:forEach>--%>
-<%--</c:if>--%>
-<%--</select> <input type="hidden" name="pageIndex" value="1" /> <input--%>
-<%--value="查 询" type="submit" id="searchbutton"> <a--%>
-<%--href="${pageContext.request.contextPath}/user/adduser.html">添加用户</a>--%>
-<%--</form>--%>
-<%--</div>--%>
 <!--用户-->
 <div style="margin-bottom: 5px;">
 
     <!-- 示例-970 -->
-    <ins class="adsbygoogle" style="display:inline-block;width:970px;height:90px" data-ad-client="ca-pub-6111334333458862" data-ad-slot="3820120620"></ins>
+    <ins class="adsbygoogle" style="display:inline-block;width:970px;height:90px"
+         data-ad-client="ca-pub-6111334333458862" data-ad-slot="3820120620"></ins>
 
 </div>
+<table>
+    <form method="POST" class="layui-form"
+          action="/user/userlist.html">
+        <tr>
+            <td><span>用户名：</span></td>
+            <td>
+                <input name="queryname" class="layui-input"
+                        type="text" value="${queryUserName}">
+            </td>
+            <td><span>用户角色：</span></td>
+            <td>
+                <select name="queryUserRole">
+                    <%--<c:if test="${roleList != null}">--%>
+                    <%--<option value="">--请选择--</option>--%>
+                    <%--<c:forEach var="role" items="${roleList}">--%>
+                    <%--<option--%>
+                    <%--<c:if test="${role.id == queryUserRole}">selected="selected"</c:if>--%>
+                    <%--value="${role.id}">${role.roleName}</option>--%>
+                    <%--</c:forEach>--%>
+                    <%--</c:if>--%>
+                </select>
+            </td>
+            <td>
+                <input type="hidden" name="pageIndex" value="1"/> <input
+                    value="查 询" type="submit" id="searchbutton" class="layui-btn layui-btn-normal">
+            </td>
+            <td>
+                <button class="layui-btn layui-btn-normal"
+                        onclick="location.href='/user/adduser.html'">添加用户
+                </button>
+            </td>
+        </tr>
+    </form>
+</table>
 
 <table id="userlist" lay-filter="test"></table>
 <script type="text/html" id="toolbar">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="add">添加</button>
         <button class="layui-btn layui-btn-sm" lay-event="del">删除</button>
         <button class="layui-btn layui-btn-sm" lay-event="edit">编辑</button>
     </div>
@@ -56,14 +72,13 @@
             , url: '/user/json/userlist' //数据接口
             , page: true //开启分页
             , cols: [[ //表头
-                {type:'checkbox', fixed: 'left'}
-                ,{field: 'userCode', title: '用户编码', width: 140, sort: true}
+                {field: 'userCode', title: '用户编码', width: 140, sort: true}
                 , {field: 'userName', title: '用户名称', width: 140, sort: true}
                 , {field: 'gender', title: '性别', width: 140, sort: true}
                 , {field: 'age', title: '年龄', width: 140}
                 , {field: 'phone', title: '电话', width: 140}
                 , {field: 'userRole', title: '用户角色', width: 140, sort: true}
-                ,{fixed: 'right', width:178, align:'center', toolbar: '#toolbar'}
+                , {fixed: 'right', title: '操作', width: 178, align: 'center', toolbar: '#toolbar'}
             ]], done: function (res, curr, count) {
                 $("[data-field = 'gender']").children().each(function () {
 
@@ -85,21 +100,16 @@
                 });
             }
         });
-        table.on('checkbox(test)', function(obj){
-            console.log(obj)
-        });
         //监听事件
-        table.on('tool(test)', function(obj){
+        table.on('tool(test)', function (obj) {
             var data = obj.data;
-            if(obj.event === 'add'){
-                layer.msg('添加');
-            } else if(obj.event === 'del'){
-                layer.confirm('真的删除行么', function(index){
+            if (obj.event === 'del') {
+                layer.confirm('真的删除行么', function (index) {
                     obj.del();
                     layer.close(index);
                 });
-            } else if(obj.event === 'edit'){
-                layer.alert('编辑行：<br>'+ JSON.stringify(data))
+            } else if (obj.event === 'edit') {
+                layer.alert('编辑行：<br>' + JSON.stringify(data))
             }
         });
 
