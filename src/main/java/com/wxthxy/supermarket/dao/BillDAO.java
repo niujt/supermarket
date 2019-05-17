@@ -10,24 +10,15 @@ public interface BillDAO {
     /**
      * 按照条件分页查询订单
      *
-     * @param productName 商品名称
-     * @param providerId  供应商id
-     * @param isPayment   是否付款
-     * @param from        从（第几页开始）
-     * @param pageSize    页面容量
      * @return 订单列表
      */
-    List<Bill> billlist(@Param("productName") String productName, @Param("providerId") int providerId, @Param("isPayment") int isPayment, @Param("from") int from, @Param("pageSize") int pageSize);
+    List<Bill> billlist(Integer page,Integer limit);
 
     /**
      * 按条件查询到的总记录数
-     *
-     * @param productName 商品名称
-     * @param providerId  供应商id
-     * @param isPayment   是否付款
      * @return 查询到的条数
      */
-    int getcount(@Param("productName") String productName, @Param("providerId") int providerId, @Param("isPayment") int isPayment);
+    int getcount();
 
     /**
      * 验证订单编码是否存在

@@ -9,6 +9,7 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -49,65 +50,22 @@ public class BillController {
 	private RefuseService refuseservice;
 	/**
 	 * 进入订单列表
-	 * @param productName
-	 * @param providerid
-	 * @param isPayment
-	 * @param pageIndex
-	 * @param m
 	 * @return
 	 */
 	@RequestMapping("/billlist.html")
-	public String billlist(@RequestParam(value = "queryProductName",required = false) String productName,
-			@RequestParam(value = "queryProviderId",required = false) String providerid,
-			@RequestParam(value = "queryIsPayment",required = false) String isPayment,
-			@RequestParam(value = "pageIndex",required = false) String pageIndex,
-			Model m ,HttpSession session){
-		int _providerid =0;  //供应商id
-		int _isPayment = 0;    //是否付款
-		if(productName ==null){
-			productName ="";
-		}
-		if(providerid != null && !providerid.equals("")){
-			_providerid = Integer.parseInt(providerid);
-		}
-		if (isPayment!=null && !isPayment.equals("")){
-			_isPayment = Integer.parseInt(isPayment);
-		}
-		int currentpage = 1; //当前页   //默认从第一页开始
-		int pageSize = Constants.pageSize; //页面容量
-		if(pageIndex!=null){
-			try {
-				currentpage = Integer.valueOf(pageIndex);
-			} catch (NumberFormatException e) {
-				//否则就跳转到错误页面
-				return  "redirect:/user/syserror.html";
-			}
-		}
-		PageSupport pages=new PageSupport();
-		pages.setCurrentPageNo(currentpage);//当前页
-		pages.setPageSize(pageSize); //页面容量
-		int totalcount=billservice.getcount(productName,_providerid, _isPayment);
-		pages.setTotalCount(totalcount);//总记录数
-		int totalPageCount = pages.getTotalPageCount(); //总页数
-		//控制首页和尾页
-		if(currentpage < 1){   //如果当前页码小于1 就等于1
-			currentpage = 1;
-		}else if(currentpage > totalPageCount){ //如果当前页码大于总页数  就等于总页数
-			currentpage = totalPageCount;
-		}
-		List<Bill> billlist= billservice.billlist(productName, _providerid, _isPayment, ((currentpage-1)*pageSize), pageSize);
-		m.addAttribute("bill",billlist);
-		m.addAttribute("queryProductName",productName );//用于数据回显    用户名
-		m.addAttribute("queryProviderId",_providerid); //用于数据回显    角色id
-		m.addAttribute("queryIsPayment", _isPayment);// 是否付款
-		m.addAttribute("totalPageCount", totalPageCount); //总页数
-		m.addAttribute("totalCount",totalcount); //查找到的总记录数
-		m.addAttribute("currentPageNo",currentpage);//当前页码	
-		Long role=((User)(session.getAttribute(Constants.SESSION))).getUserRole();
-		if(role==1) {
-			return "billlist";
-		}
-		return "user/billlist";
+	public String showbilllist(){
+		return "list/billlist";
+	}
+	@RequestMapping(value = "/json/billlist",method = RequestMethod.GET)
+	@ResponseBody
+	public JSONObject billlist(@RequestParam(value = "page",required = false)Integer page, @RequestParam(value = "limit",required = false)Integer limit){
+		JSONObject json=new JSONObject();
+		json.put("code",0);
+		json.put("msg","");
+		json.put("count",billservice.getcount());
+		List<Bill> bills=billservice.billlist(page-1,limit);
+		json.put("data",bills);
+		return json;
 	}
 	/**
 	 * 进入添加订单列表

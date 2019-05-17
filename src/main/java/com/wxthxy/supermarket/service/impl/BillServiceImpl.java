@@ -18,16 +18,15 @@ public class BillServiceImpl implements BillService{
 	/**
 	 * 根据条件分页查询订单列表
 	 */
-	public List<Bill> billlist(String billCode, int providerId, int isPayment,
-			int from, int pageSize) {
+	public List<Bill> billlist(Integer page,Integer limit) {
 
-		return billdao.billlist(billCode, providerId, isPayment, from, pageSize);
+		return billdao.billlist(page, limit);
 	}
 	/**
 	 * 根据条件查询到的总记录数
 	 */
-	public int getcount(String productName, int providerId, int isPayment) {
-		return billdao.getcount(productName, providerId, isPayment);
+	public int getcount() {
+		return billdao.getcount();
 	}
 	/**
 	 * 验证订单编码是否存在

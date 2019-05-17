@@ -24,18 +24,13 @@
 		modifyDate, providerId
 	</sql>
 	<!-- 查询订单信息 -->
-	<select id="billlist" resultType="com.wxthxy.supermarket.entity.Bill">
+	<select id="billlist" resultType="com.wxthxy.supermarket.entity.Bill" parameterType="Integer">
 		SELECT b.* ,p.proName AS providerName
 		FROM
 		smbms.smbms_bill b,
 		smbms.smbms_provider p
 		WHERE b.providerId =p.id
-		<if test="productName!=null and productName!=''"> AND b.productName LIKE CONCAT('%',#{productName},'%')
-		</if>
-		<if test="providerId!=0 and providerId!=null"> AND b.providerId =#{providerId}</if>
-		<if test="isPayment!=0 and isPayment!=null"> AND b.isPayment = #{isPayment}</if>
-		ORDER BY b.creationDate DESC
-		LIMIT #{from},#{pageSize}
+		LIMIT #{page},#{limit}
 	</select>
 	<!-- 按照条件查询出的总记录数 -->
 	<select id="getcount" resultType="int">

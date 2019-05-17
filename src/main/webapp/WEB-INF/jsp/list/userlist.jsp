@@ -8,7 +8,7 @@
     <title>超市管理系统</title>
 </head>
 <body>
-<%@include file="menu.jsp" %>
+<%@include file="../menu.jsp" %>
 <!--用户-->
 <hr>
 <table>
@@ -60,7 +60,7 @@
         var table = layui.table;
         table.render({
             elem: '#userlist'
-            , height: 312
+            , height: 360
             , url: '/user/json/userlist' //数据接口
             , page: true //开启分页
             , cols: [[ //表头

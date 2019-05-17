@@ -10,23 +10,15 @@ import com.wxthxy.supermarket.entity.Bill;
 
 public interface BillService {
 	/**
-	 * 按照条件分页查询订单
-	 * @param billCode 订单编码
-	 * @param providerId 供应商id
-	 * @param isPayment 是否付款
-	 * @param from 从(第几页开始)
-	 * @param pageSize 页面容量
+	 * 分页查询订单
 	 * @return 订单列表
 	 */
-	 List<Bill> billlist(String billCode,int providerId,int isPayment, int from,int pageSize);
+	 List<Bill> billlist(Integer page,Integer limit);
 	/**
-	 * 按条件查询到的订单记录数
-	 * @param productName 商品名称
-	 * @param providerId 供应商id
-	 * @param isPayment 是否付款
+	 * 订单记录数
 	 * @return 订单列表
 	 */
-	 int  getcount(String productName,int providerId,int isPayment);
+	 int  getcount();
 	/**
 	 * 验证订单编码是否存在
 	 * @param billCode 订单编码
