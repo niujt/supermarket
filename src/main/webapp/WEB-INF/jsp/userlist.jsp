@@ -10,23 +10,17 @@
 <body>
 <%@include file="menu.jsp" %>
 <!--用户-->
-<div style="margin-bottom: 5px;">
-
-    <!-- 示例-970 -->
-    <ins class="adsbygoogle" style="display:inline-block;width:970px;height:90px"
-         data-ad-client="ca-pub-6111334333458862" data-ad-slot="3820120620"></ins>
-
-</div>
+<hr>
 <table>
     <form method="POST" class="layui-form"
           action="/user/userlist.html">
         <tr>
-            <td><span>用户名：</span></td>
+            <td><span>&nbsp;&nbsp;&nbsp;&nbsp;用户名：</span></td>
             <td>
                 <input name="queryname" class="layui-input"
                         type="text" value="${queryUserName}">
             </td>
-            <td><span>用户角色：</span></td>
+            <td><span>&nbsp;&nbsp;&nbsp;&nbsp;用户角色：</span></td>
             <td>
                 <select name="queryUserRole">
                     <%--<c:if test="${roleList != null}">--%>
@@ -39,9 +33,7 @@
                     <%--</c:if>--%>
                 </select>
             </td>
-            <td>
-                <input type="hidden" name="pageIndex" value="1"/> <input
-                    value="查 询" type="submit" id="searchbutton" class="layui-btn layui-btn-normal">
+            <td><input value="查 询" type="submit" id="searchbutton" class="layui-btn layui-btn-normal">
             </td>
             <td>
                 <button class="layui-btn layui-btn-normal"
