@@ -18,11 +18,9 @@ public interface RefuseDAO {
      *
      * @param
      * @param
-     * @param from
-     * @param pageSize
      * @return
      */
-    List<Refuse> GetRefuseList(@Param("refName") String refName, @Param("refCode") String refCode, @Param("from") int from, @Param("pageSize") int pageSize);
+    List<Refuse> getRefuseList(Integer page,Integer limit);
 
     /**
      * 查找符合条件的总记录数
@@ -31,7 +29,7 @@ public interface RefuseDAO {
      * @param
      * @return
      */
-    int GetCount(@Param("refCode") String refCode, @Param("refName") String refName);
+    int getCount();
 
     /**
      * 保存要添加的退货信息信息

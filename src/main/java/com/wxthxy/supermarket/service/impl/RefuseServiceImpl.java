@@ -20,13 +20,13 @@ public class RefuseServiceImpl implements RefuseService {
 		return refusedao.refuselist();
 	}
 
-	public List<Refuse> GetRefuseList(String refName,String refCode, int from, int pageSize) {
-		return refusedao.GetRefuseList(refName,refCode, from, pageSize);
+	public List<Refuse> getRefuseList(Integer page,Integer limit) {
+		return refusedao.getRefuseList(page,limit);
 	}
 
 
-	public int GetCount(String refCode,String refName) {
-		return refusedao.GetCount(refCode,refName);
+	public int getCount() {
+		return refusedao.getCount();
 	}
 
 

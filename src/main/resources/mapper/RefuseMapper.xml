@@ -20,32 +20,25 @@
 	<select id="refuselist" resultType="com.wxthxy.supermarket.entity.Refuse">
 		SELECT *
 		FROM
-		smbms.smbms_Refuse
+		smbms.smbms_refuse
 	</select>
 	<!-- 按照条件分页查询退货单信息 -->
-	<select id="GetRefuseList" resultType="com.wxthxy.supermarket.entity.Refuse">
+	<select id="getRefuseList" resultType="com.wxthxy.supermarket.entity.Refuse" parameterType="Integer">
 		SELECT *
 		FROM
-		smbms.smbms_Refuse
-		WHERE 1=1
-		 <if test="refCode!=null and refCode!='' ">and refCode LIKE CONCAT('%',#{refCode},'%') </if>
-		<if test="refName!=null and refName!='' ">AND refName LIKE CONCAT('%',#{refName},'%') </if>
-		ORDER BY creationDate DESC
-		LIMIT #{from},#{pageSize}
+		smbms.smbms_refuse
+		LIMIT #{page},#{limit}
 	</select>
 	<!-- 查询符合条件的总记录数 -->
-	<select id="GetCount" resultType="int">
+	<select id="getCount" resultType="Integer">
 		SELECT count(1)
 		FROM
-		smbms.smbms_Refuse
-		WHERE 1=1
-		 <if test="refCode!=null and refCode!='' ">and refCode LIKE CONCAT('%',#{refCode},'%') </if>
-		<if test="refName!=null and refName!='' ">AND refName LIKE CONCAT('%',#{refName},'%') </if>
+		smbms.smbms_refuse
 	</select>
 	<!--添加一条退货单信息 -->
 	<insert id="saveRefuse" parameterType="com.wxthxy.supermarket.entity.Refuse">
 		INSERT INTO
-		smbms.smbms_Refuse
+		smbms.smbms_refuse
 		(
 		refCode,
 		refName,
@@ -74,13 +67,13 @@
 	<select id="getRefusebyid" resultType="com.wxthxy.supermarket.entity.Refuse">
 		SELECT *
 		FROM
-		smbms.smbms_Refuse
+		smbms.smbms_refuse
 		WHERE id = #{id}
 	</select>
 	<!-- 根据退货单id修改退货单信息 -->
 	<update id="updateRefusebyid" parameterType="com.wxthxy.supermarket.entity.Refuse">
 		UPDATE
-		smbms.smbms_Refuse
+		smbms.smbms_refuse
 		SET
 		refName = #{refName} ,
 		refnumber=#{refnumber},
@@ -93,7 +86,7 @@
 	</update>
 	<!--删除退货单 -->
 	<delete id="deleteRefusebyid" parameterType="Integer">
-		DELETE FROM smbms.smbms_Refuse
+		DELETE FROM smbms.smbms_refuse
 		WHERE
 		id = #{id}
 	</delete>

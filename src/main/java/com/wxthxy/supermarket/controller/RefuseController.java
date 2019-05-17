@@ -7,6 +7,7 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -32,65 +33,22 @@ public class RefuseController {
 	private  RefuseService refuseservice;
 	@Resource
 	private  GoodsService goodsservice;
-	//角色信息
-		@RequestMapping(value = "/refuselist",method = RequestMethod.GET)
-		@ResponseBody
-		public String refuselist(){
-			HashMap<String,Object> result =new HashMap<String,Object>(); 
-			List<Refuse> refuselist= refuseservice.Refuselist();
-			if(refuselist!=null){
-				result.put("refuselist",refuselist);
-			}
-			return JSONArray.toJSONString(result);
-		}
 	//进入退货单列表
 	@RequestMapping("/refuselist.html")
-	public String refuselist(@RequestParam(value = "queryRefName",required = false) String refuseName,
-			@RequestParam(value = "queryRefCode",required = false) String refuseCode,
-			@RequestParam(value = "pageIndex",required = false) String pageIndex,
-			Model m,HttpSession session){
-		if(refuseName ==null){
-			refuseName ="";
-		}
-		if(refuseCode ==null){
-			refuseCode ="";
-		}
-		int currentpage = 1; //当前页   //默认从第一页开始
-		int pageSize = Constants.pageSize; //页面容量
-		if(pageIndex!=null){
-			try {
-				currentpage = Integer.valueOf(pageIndex);
-			} catch (NumberFormatException e) {
-				//否则就跳转到错误页面
-				return  "redirect:/user/syserror.html";
-			}
-		}
-		PageSupport pages=new PageSupport();
-		pages.setCurrentPageNo(currentpage);//当前页
-		pages.setPageSize(pageSize); //页面容量
-		int totalcount=refuseservice.GetCount(refuseCode,refuseName);
-		pages.setTotalCount(totalcount);//总记录数
-		int totalPageCount = pages.getTotalPageCount(); //总页数
-		//控制首页和尾页
-		if(currentpage < 1){   //如果当前页码小于1 就等于1
-			currentpage = 1;
-		}else if(currentpage > totalPageCount){ //如果当前页码大于总页数  就等于总页数
-			currentpage = totalPageCount;
-		}
-		List<Refuse> refuselist= refuseservice.GetRefuseList(refuseName, refuseCode,((currentpage-1)*pageSize), pageSize);
-		m.addAttribute("refuseList",refuselist);
-		m.addAttribute("queryRefName",refuseName );//用于数据回显    退货名称
-		m.addAttribute("queryRefCode",refuseCode);//用于数据回显 退货编码
-		m.addAttribute("totalPageCount", totalPageCount); //总页数
-		m.addAttribute("totalCount",totalcount); //查找到的总记录数
-		m.addAttribute("currentPageNo",currentpage);//当前页码
-		Long role=((User)(session.getAttribute(Constants.SESSION))).getUserRole();
-		if(role==1) {
-			return "refuselist";
-		}
-		return "user/refuselist";
+	public String refuselist(){
+		return "list/refuselist";
 	}
-	
+	@RequestMapping(value = "/json/refuselist",method = RequestMethod.GET)
+	@ResponseBody
+	public JSONObject showproviderlist(@RequestParam(value = "page",required = false)Integer page, @RequestParam(value = "limit",required = false)Integer limit){
+		JSONObject json=new JSONObject();
+		json.put("code",0);
+		json.put("msg","");
+		json.put("count",refuseservice.getCount());
+		List<Refuse> refuses=refuseservice.getRefuseList(page-1,limit);
+		json.put("data",refuses);
+		return json;
+	}
 	//进入添加订单列表
 	@RequestMapping("/refuseadd.html")
 	public String refuseadd(@ModelAttribute Refuse refuse){

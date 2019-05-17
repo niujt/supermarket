@@ -16,21 +16,15 @@ public interface RefuseService {
     /**
      * 根据条件分页查询用户信息
      *
-     * @param refName
-     * @param refCode
-     * @param from
-     * @param pageSize
      * @return
      */
-    List<Refuse> GetRefuseList(String refName, String refCode, int from, int pageSize);
+    List<Refuse> getRefuseList(Integer page,Integer limit);
 
     /**
      * 查找符合条件的总记录数
-     *
-     * @param refCode
      * @return
      */
-    int GetCount(String refCode, String refName);
+    int getCount();
 
     /**
      * 保存要添加的退货信息

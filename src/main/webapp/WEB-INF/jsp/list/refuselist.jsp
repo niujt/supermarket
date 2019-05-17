@@ -1,81 +1,70 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@include file="/WEB-INF/jsp/common/head.jsp"%>
+         pageEncoding="UTF-8" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="/static/css/layui.min.css">
+    <title>超市管理系统</title>
+</head>
+<body>
+<%@include file="../menu.jsp" %>
+<!--退货列表-->
+<hr>
+<%--<div class="search">--%>
+<%--<form method="post" action="${pageContext.request.contextPath }/refuse/refuselist.html" enctype="multipart/form-data">--%>
+<%--<span>退货编码：</span>--%>
+<%--<input name="queryRefCode" type="text" value="${queryRefCode }">--%>
+<%--<span>退货名称：</span>--%>
+<%--<input name="queryRefName" type="text" value="${queryRefName}">--%>
+<%--<input type="hidden" name="pageIndex" value="1"/>--%>
+<%--<input value="查 询" type="submit" id="searchbutton">--%>
+<%--<a href="${pageContext.request.contextPath }/refuse/refuseadd.html">添加退货单</a> --%>
+<%--</form>--%>
+<%--</div>--%>
 
-<div class="right">
-        <div class="location">
-            <strong>你现在所在的位置是:</strong>
-            <span>退货管理页面</span>
-        </div>
-        <div class="search">
-        	<form method="post" action="${pageContext.request.contextPath }/refuse/refuselist.html" enctype="multipart/form-data">
-				<span>退货编码：</span>
-				<input name="queryRefCode" type="text" value="${queryRefCode }">
-				<span>退货名称：</span>
-				<input name="queryRefName" type="text" value="${queryRefName}">
-				<input type="hidden" name="pageIndex" value="1"/>
-				<input value="查 询" type="submit" id="searchbutton">
-				 <a href="${pageContext.request.contextPath }/refuse/refuseadd.html">添加退货单</a> 
-			</form>
-        </div>
-        <!--退货列表-->
-        <table class="providerTable" cellpadding="0" cellspacing="0">
-            <tr class="firstTr">
-                <th width="10%">商品编码</th>
-                <th width="20%">商品名称</th>
-                <th width="20%">退货数量</th>
-                <th width="10%">退货理由</th>
-                 <th width="10%">创建时间</th>
-                <th width="30%">操作</th>
-            </tr>
-            <c:forEach var="refuse" items="${refuseList }" varStatus="status">
-				<tr>
-					<td>
-					<span>${refuse.refCode }</span>
-					</td>
-					<td>
-					<span>${refuse.refName }</span>
-					</td>
-					<td>
-					<span>${refuse.refnumber }</span>(${refuse.refunit })
-					</td>
-					<td>
-					<span>${refuse.refReasion}</span>
-					</td>
-					<td>
-					 <span>
-					<fmt:formatDate value="${refuse.creationDate}" pattern="yyyy-MM-dd"/>
-					</span> 
-					</td>
-					<td>
-					<span><a class="viewRefuse" href="javascript:;" refid=${refuse.id } refname=${refuse.refName }><img src="${pageContext.request.contextPath }/statics/images/read.png" alt="查看" title="查看"/></a></span>
-					<span><a class="modifyRefuse" href="javascript:;" refid=${refuse.id } refname=${refuse.refName }><img src="${pageContext.request.contextPath }/statics/images/xiugai.png" alt="修改" title="修改"/></a></span>
-					<span><a class="deleteRefuse" href="javascript:;" refid=${refuse.id } refname=${refuse.refName }><img src="${pageContext.request.contextPath }/statics/images/schu.png" alt="删除" title="删除"/></a></span>
-					</td>
-				</tr>
-			</c:forEach>
-        </table>
-			<input type="hidden" id="totalPageCount" value="${totalPageCount}"/>
-		  	<c:import url="rollpage.jsp">
-	          	<c:param name="totalCount" value="${totalCount}"/>
-	          	<c:param name="currentPageNo" value="${currentPageNo}"/>
-	          	<c:param name="totalPageCount" value="${totalPageCount}"/>
-          	</c:import>
+<table id="refuselist" lay-filter="test"></table>
+<script type="text/html" id="toolbar">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="del">删除</button>
+        <button class="layui-btn layui-btn-sm" lay-event="edit">编辑</button>
     </div>
-</section>
+</script>
+</body>
+<script type="text/javascript" src="/static/js/layui.all.js"></script>
+<script type="text/javascript" src="/static/js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript">
+    layui.use('table', function () {
+        var table = layui.table;
+        table.render({
+            elem: '#refuselist'
+            , height: 360
+            , url: '/refuse/json/refuselist' //数据接口
+            , page: true //开启分页
+            , cols: [[ //表头
+                {field: 'refCode', title: '商品编码', width: 140, sort: true}
+                , {field: 'refName', title: '商品名称', width: 140, sort: true}
+                , {field: 'refnumber', title: '退货数量', width: 140, sort: true}
+                , {field: 'refReasion', title: '退货理由', width: 140}
+                , {field: 'creationDate', title: '创建时间', width: 140}
+                , {fixed: 'right', title: '操作', width: 178, align: 'center', toolbar: '#toolbar'}
+            ]], done: function (res, curr, count) {
 
-<!--点击删除按钮后弹出的页面-->
-<div class="zhezhao"></div>
-<div class="remove" id="removeRef">
-   <div class="removerChid">
-       <h2>提示</h2>
-       <div class="removeMain" >
-           <p>你确定不退该商品了么？</p>
-           <a href="#" id="yes">确定</a>
-           <a href="#" id="no">取消</a>
-       </div>
-   </div>
-</div>
+            }
+        });
+        //监听事件
+        table.on('tool(test)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'del') {
+                layer.confirm('真的删除行么', function (index) {
+                    obj.del();
+                    layer.close(index);
+                });
+            } else if (obj.event === 'edit') {
+                layer.alert('编辑行：<br>' + JSON.stringify(data))
+            }
+        });
 
-<%@include file="/WEB-INF/jsp/common/foot.jsp" %>
-<script type="text/javascript" src="${pageContext.request.contextPath }/statics/js/refuselist.js"></script>
+    });
+
+</script>
+</html>
