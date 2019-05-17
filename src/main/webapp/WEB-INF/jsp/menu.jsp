@@ -2,6 +2,7 @@
          pageEncoding="UTF-8" %>
 <ul class="layui-nav">
 
+    <li class="layui-nav-item "><a href="/index">首页</a></li>
     <li class="layui-nav-item "><a href="/bill/billlist.html">订单管理</a></li>
     <li class="layui-nav-item "><a href="/provider/providerlist.html">供应商管理</a></li>
     <li class="layui-nav-item"><a href="/refuse/refuselist.html">退货单管理</a></li>

@@ -27,6 +27,10 @@ public class LoginController {
 	public String login(){
 		return "login";
 	}
+	@RequestMapping("/index")
+	public String index(){
+		return "index";
+	}
 	/**
 	 * 验证登陆
 	 * @param userCode 用户编码
