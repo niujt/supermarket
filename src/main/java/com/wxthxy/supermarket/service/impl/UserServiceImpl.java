@@ -27,13 +27,12 @@ public class UserServiceImpl implements UserService {
 	
 	
 	//根据条件获取总记录数
-	public int getCount(String userName, int userRole) {
-		return  userdao.getCount(userName, userRole);
+	public int getCount() {
+		return  userdao.getCount();
 	}
 	//根据条件分页查询用户信息
-	public List<User> getUserList(String userName, int userRole,
-			int currentPageNo, int pageSize) {	   
-		return  userdao.getUserList(userName, userRole, currentPageNo, pageSize);
+	public List<User> getUserList(Integer page,Integer limit) {
+		return  userdao.getUserList(page,limit);
 	}
 	//添加一条新的用户信息
 	public int adduser(User u) {

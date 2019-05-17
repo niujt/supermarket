@@ -18,22 +18,16 @@ public interface UserDAO {
     /**
      * 查询指定条件的记录数
      *
-     * @param username 用户姓名
-     * @param userRole 用户权限
      * @return 查询的条数
      */
-    int getCount(@Param("userName") String username, @Param("userRole") int userRole);
+    int getCount();
 
     /**
      * 根据条件获取分页查询的用户信息
      *
-     * @param userName      用户姓名
-     * @param userRole      用户权限
-     * @param currentPageNo 当前页
-     * @param pageSize      页面容量
      * @return 用户列表
      */
-    List<User> getUserList(@Param("userName") String userName, @Param("userRole") int userRole, @Param("currentPageNo") int currentPageNo, @Param("pageSize") int pageSize);
+    List<User> getUserList(Integer page,Integer limit);
 
     /**
      * 添加一条用户信息

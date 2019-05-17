@@ -17,22 +17,16 @@ public interface UserService {
     /**
      * 根据条件获取总记录数
      *
-     * @param userName 用户名
-     * @param userRole 用户权限
      * @return 总记录数
      */
-    int getCount(String userName, int userRole);
+    int getCount();
 
     /**
-     * 分页条件查询用户列表
+     * 查询用户列表
      *
-     * @param userName      用户名
-     * @param userRole      用户权限
-     * @param currentPageNo 当前页码
-     * @param pageSize      页面容量
      * @return 用户列表
      */
-    List<User> getUserList(String userName, int userRole, int currentPageNo, int pageSize);
+    List<User> getUserList(Integer page,Integer limit);
 
     /**
      * 添加一条新的用户信息

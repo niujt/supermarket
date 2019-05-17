@@ -24,14 +24,9 @@
 		createdBy, creationDate, modifyBy, modifyDate
 	</sql>
 	<!-- 获取总记录数 -->
-	<select id="getCount" resultType="int">
+	<select id="getCount" resultType="Integer">
 		select count(*)
 		from smbms_user
-		where 1=1
-		<if test="userName!=null and userName!=''">and userName=#{userName}</if>
-		<if test="userRole !=0">
-			and userRole = #{userRole}
-		</if>
 	</select>
 
 	<!-- 登录 -->
@@ -42,32 +37,14 @@
 		from smbms_user
 		where userCode = #{userCore}
 	</select>
-	
-	
-	
-	<select id="userList" resultMap="BaseResultMap">
-		select u.*,r.roleName as userRoleName from smbms_user u,smbms_role r
-		where
-		u.userRole = r.id
-		<if test="userName!=null and userName!=''"> and u.userName like CONCAT('%',#{userName},'%')</if>
-		<if test="userRole !=0 and userRole !=null">
-			and u.userRole = #{userRole}
-		</if>
-		order by u.creationDate DESC
-	</select>
-	
 
 	<!-- 获取用户集合 -->
-	<select id="getUserList" resultMap="BaseResultMap">
-		select u.*,r.roleName as userRoleName from smbms_user u,smbms_role r
-		where
+	<select id="getUserList" parameterType="Integer" resultType="com.wxthxy.supermarket.entity.User">
+		select u.*,r.roleName as userRoleName from smbms_user u left join smbms_role r
+		on
 		u.userRole = r.id
-		<if test="userName!=null and userName!=''"> and u.userName like CONCAT('%',#{userName},'%')</if>
-		<if test="userRole !=0 and userRole !=null">
-			and u.userRole = #{userRole}
-		</if>
 		order by u.creationDate DESC
-		LIMIT #{currentPageNo},#{pageSize}
+		limit #{page},#{limit}
 	</select>
 	<!-- 添加一条用户信息 -->
 	<insert id="adduser" parameterType="com.wxthxy.supermarket.entity.User">

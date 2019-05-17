@@ -7,6 +7,8 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
+import com.alibaba.fastjson.JSONObject;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,12 +21,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.mysql.jdbc.StringUtils;
-import com.wxthxy.supermarket.entity.Role;
 import com.wxthxy.supermarket.entity.User;
 import com.wxthxy.supermarket.service.RoleService;
 import com.wxthxy.supermarket.service.UserService;
 import com.wxthxy.supermarket.util.Constants;
-import com.wxthxy.supermarket.util.PageSupport;
 
 @Controller
 @RequestMapping("/user")
@@ -34,66 +34,23 @@ public class UserController {
 	@Resource
 	private RoleService roleservice;
 	/**
-	 * 按条件分页查询用户列表
-	 * @param model
-	 * @param username
-	 * @param userRole
-	 * @param pageIndex
+	 * 用户列表
 	 * @return
 	 */
 	@RequestMapping(value = "/userlist.html")
-	public String  showuserlist(Model model
-			,@RequestParam(value = "queryname",required= false) String username
-			,@RequestParam(value="queryUserRole",required= false)String userRole
-			,@RequestParam( value = "pageIndex",required= false) String pageIndex){
-		int _userRole =0; //角色id
-		List<User> userlist = null;//查询用户的集合
-		int pageSize = Constants.pageSize ;//页面容量
-		int currentpage=1;  //从第一页开始
-
-		//如果用户名为空  就设置成空字符串
-		if(username == null){
-			username = "";
-		}
-		//如果用户角色不为空 或者不为空字符串
-		if(userRole != null && !userRole.equals("")){ 
-			//就把角色id赋值给当前角色id
-			_userRole = Integer.parseInt(userRole);
-		}
-		if(pageIndex != null){
-			try{ 
-				//当前页码等于传过来的页码     
-				currentpage = Integer.valueOf(pageIndex);
-			}catch(NumberFormatException e){
-				//否则就跳转到错误页面
-				return  "redirect:/user/syserror.html";
-			}
-		}
-		//获取查询到的所有记录数
-		int totalCount 	= userservice.getCount(username,_userRole);
-		PageSupport pages=new PageSupport();
-		pages.setCurrentPageNo(currentpage);//当前页
-		pages.setPageSize(pageSize); //页面容量
-		pages.setTotalCount(totalCount);//总记录数
-		int totalPageCount = pages.getTotalPageCount(); //总页数
-		//控制首页和尾页
-		if(currentpage < 1){   //如果当前页码小于1 就等于1
-			currentpage = 1;
-		}else if(currentpage > totalPageCount){ //如果当前页码大于总页数  就等于总页数
-			currentpage = totalPageCount;
-		}
-		userlist = userservice.getUserList(username,_userRole,((currentpage-1)*pageSize), pageSize);
-		model.addAttribute("userList", userlist);
-		List<Role> roleList = null;
-		roleList = roleservice.getRolelist();
-		model.addAttribute("roleList", roleList);  //角色列表
-		model.addAttribute("user",userlist); 
-		model.addAttribute("queryUserName", username);//用于数据回显    用户名
-		model.addAttribute("queryUserRole", _userRole); //用于数据回显    角色id
-		model.addAttribute("totalPageCount", totalPageCount);// 总页数
-		model.addAttribute("totalCount", totalCount); //查找到的总记录数
-		model.addAttribute("currentPageNo", currentpage);//当前页码
+	public String  showuserlist(){
 		return "userlist"; // 转发到userlist.jsp
+	}
+	@RequestMapping(value = "/json/userlist",method = RequestMethod.GET)
+	@ResponseBody
+	public JSONObject userlist(@RequestParam(value = "page",required = false)Integer page,@RequestParam(value = "limit",required = false)Integer limit){
+		JSONObject json=new JSONObject();
+		json.put("code",0);
+		json.put("msg","");
+		json.put("count",userservice.getCount());
+		List<User> users=userservice.getUserList(page-1,limit);
+		json.put("data",users);
+		return json;
 	}
 
 
