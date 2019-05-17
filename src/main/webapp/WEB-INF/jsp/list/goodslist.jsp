@@ -1,93 +1,68 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@include file="/WEB-INF/jsp/common/head.jsp"%>
+         pageEncoding="UTF-8" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="/static/css/layui.min.css">
+    <title>超市管理系统</title>
+</head>
+<body>
+<%@include file="../menu.jsp" %>
 
-<div class="right">
-       <div class="location">
-           <strong>你现在所在的位置是:</strong>
-           <span>库存管理页面</span>
-       </div>
-       <div class="search">
-       <form method="post" action="${pageContext.request.contextPath }/goods/goodslist.html">
-			<span>库存编码：</span>
-			<input name="querygcode" type="text" value="${querygcode}">
-			<span>库存商品名称：</span>
-			<input name="querygname" type="text" value="${querygname}">
-			 <input type="hidden" name="pageIndex" value="1"/>
-			 <input	value="查 询" type="submit" id="searchbutton">
-			 <span><button type="button" id="btnExport">导出excel</button></span>
-			 <a href="${pageContext.request.contextPath }/goods/goodsadd.html">添加库存</a>
-		</form>
-       </div>
-       <!--账单表格 样式和供应商公用-->
-      <table class="providerTable" cellpadding="0" cellspacing="0" id="tblExport">
-          <tr class="firstTr">
-              <th width="15%">库存编码</th>
-              <th width="15%">库存商品名称</th>
-              <th width="15%">库存商品数量</th>
-              <th width="15%">进价</th>
-              <th width="15%">创建时间</th>
-              <th width="25%">操作</th>
-          </tr>
-          <c:forEach var="g" items="${goods}" varStatus="status">
-				<tr>
-					<td>
-					<span>${g.gcode}</span>
-					</td>
-					<td>
-					<span>${g.gname}</span>
-					</td>
-					<td>
-					<span>${g.gnumber}</span>(${g.gunit})
-					</td>
-					<td>
-					<span>${g.pprice}</span>(元)
-					</td>
-					<td>
-					<span>
-					<fmt:formatDate value="${g.creationDate}" pattern="yyyy-MM-dd"/>
-					</span>
-					</td>
-					<td>
-					<span><a class="viewGoods" href="javascript:;" gid=${g.id } ><img src="${pageContext.request.contextPath }/statics/images/read.png" alt="查看" title="查看"/></a></span>
-					<span><a class="modifyGoods" href="javascript:;" gid=${g.id } ><img src="${pageContext.request.contextPath }/statics/images/xiugai.png" alt="修改" title="修改"/></a></span>
-					<span><a class="deleteGoods" href="javascript:;" gid=${g.id } ><img src="${pageContext.request.contextPath }/statics/images/schu.png" alt="删除" title="删除"/></a></span>
-					</td>
-				</tr>
-			</c:forEach>
-      </table>
- 			<input type="hidden" id="totalPageCount" value="${totalPageCount}"/>
-		  	<c:import url="rollpage.jsp">
-	          	<c:param name="totalCount" value="${totalCount}"/>
-	          	<c:param name="currentPageNo" value="${currentPageNo}"/>
-	          	<c:param name="totalPageCount" value="${totalPageCount}"/>
-          	</c:import>
-        </div>
-    </section>
-
-<!--点击删除按钮后弹出的页面-->
-<div class="zhezhao"></div>
-<div class="remove" id="removeBi">
-    <div class="removerChid">
-        <h2>提示</h2>
-        <div class="removeMain">
-            <p>你确定要删除该商品吗？</p>
-            <a href="#" id="yes">确定</a>
-            <a href="#" id="no">取消</a>
-        </div>
+<%--<div class="search">--%>
+<%--<form method="post" action="${pageContext.request.contextPath }/goods/goodslist.html">--%>
+<%--<span>库存编码：</span>--%>
+<%--<input name="querygcode" type="text" value="${querygcode}">--%>
+<%--<span>库存商品名称：</span>--%>
+<%--<input name="querygname" type="text" value="${querygname}">--%>
+<%--<input type="hidden" name="pageIndex" value="1"/>--%>
+<%--<input	value="查 询" type="submit" id="searchbutton">--%>
+<%--<span><button type="button" id="btnExport">导出excel</button></span>--%>
+<%--<a href="${pageContext.request.contextPath }/goods/goodsadd.html">添加库存</a>--%>
+<%--</form>--%>
+<%--</div>--%>
+<table id="goodslist" lay-filter="test"></table>
+<script type="text/html" id="toolbar">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="del">删除</button>
+        <button class="layui-btn layui-btn-sm" lay-event="edit">编辑</button>
     </div>
-</div>
-
-<%@include file="/WEB-INF/jsp/common/foot.jsp" %>
-<script type="text/javascript" src="${pageContext.request.contextPath }/statics/js/goodslist.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath }/statics/js/jquery.table2excel.js"></script>
-<script type="text/javascript">
-$(document).ready(function () {
-    $("#btnExport").click(function () {
-        $("#tblExport").table2excel({
-            exclude  : ".noExl", //过滤位置的 css 类名
-            filename : "库存-" + new Date().getTime() + ".xls" //文件名称
-        });
-    });
-});
 </script>
+<script type="text/javascript" src="/static/js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="/static/js/layui.all.js"></script>
+<%--<script type="text/javascript" src="/static/js/billlist.js"></script>--%>
+<script type="text/javascript">
+    layui.use('table', function () {
+        var table = layui.table;
+        table.render({
+            elem: '#goodslist'
+            , height: 360
+            , url: '/goods/json/goodslist' //数据接口
+            , page: true //开启分页
+            , cols: [[ //表头
+                {field: 'gcode', title: '库存编码', width: 140, sort: true}
+                , {field: 'gname', title: '库存商品名称', width: 140, sort: true}
+                , {field: 'gnumber', title: '库存商品数量', width: 140}
+                , {field: 'pprice', title: '进价(元)', width: 140}
+                , {field: 'creationDate', title: '创建时间', width: 140, sort: true}
+                , {fixed: 'right', title: '操作', width: 178, align: 'center', toolbar: '#toolbar'}
+            ]], done: function (res, curr, count) {
+            }
+        });
+        //监听事件
+        table.on('tool(test)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'del') {
+                layer.confirm('真的删除行么', function (index) {
+                    obj.del();
+                    layer.close(index);
+                });
+            } else if (obj.event === 'edit') {
+                layer.alert('编辑行：<br>' + JSON.stringify(data))
+            }
+        });
+
+    });
+</script>
+</body>
+</html>

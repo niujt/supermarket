@@ -4,22 +4,16 @@
   <sql id="Base_Column_List">
    id,gcode,gname,gnumber,pprice,createdBy,creationDate,modifyBy,modifyDate
   </sql>
-  <select id="getgoodsList" resultType="com.wxthxy.supermarket.entity.Goods">
-  	select * from smbms_goods where 1=1
-  	<if test="gcode!=null and gcode!='' ">and gcode like concat('%',#{gcode},'%')</if>
-  	<if test="gname!=null and gname!='' ">and gname like concat('%',#{gname},'%')</if>
-  	ORDER BY creationDate DESC
-		LIMIT #{from},#{pageSize}
-  </select>
-  <select id="goodslist" resultType="com.wxthxy.supermarket.entity.Goods">
+
+  <select id="goodslist" resultType="com.wxthxy.supermarket.entity.Goods" parameterType="Integer">
   	select * from smbms_goods
+  	ORDER BY creationDate DESC
+		LIMIT #{page},#{limit}
   </select>
    <!-- 按照条件查询出总记录数 -->
-  <select id="getcount" resultType="int">
+  <select id="getcount" resultType="Integer">
   	select count(*) 
-  	from smbms_goods where 1=1
-	<if test="gcode!=null and gcode!='' ">and gcode like concat('%',#{gcode},'%')</if>
-  	<if test="gname!=null and gname!='' ">and gname like concat('%',#{gname},'%')</if>
+  	from smbms_goods
   </select>
   <update id="updategoodsbynumber" parameterType="com.wxthxy.supermarket.entity.Goods">
  	update smbms_goods set gnumber=gnumber-#{gnumber} where sname=#{sname}

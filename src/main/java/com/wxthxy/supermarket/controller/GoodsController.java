@@ -9,13 +9,10 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import com.alibaba.fastjson.JSONArray;
 import com.wxthxy.supermarket.entity.Goods;
@@ -37,64 +34,22 @@ public class GoodsController {
 	private  GoodsService goodsservice;
 	@Resource
 	private RefuseService refuseservice;
-	@RequestMapping(value = "/goodslist")
-	@ResponseBody
-	public Object getgoodslist(){
-		HashMap<String,Object> result =new HashMap<String,Object>(); 
-
-		List<Goods> list= goodsservice.goodslist();
-		if(list!=null){
-			result.put("goodslist",list);
-		}
-		return JSONArray.toJSONString(result);
-	}
 	
 	@RequestMapping("/goodslist.html")
-	public String billlist(@RequestParam(value = "querygcode",required = false) String gcode,
-			@RequestParam(value = "querygname",required = false) String gname,
-			@RequestParam(value = "pageIndex",required = false) String pageIndex,
-			Model m ,HttpSession session){
-		if(gcode ==null){
-			gcode ="";
-		}
-		if(gname==null){
-			gname ="";
-		}
-		int currentpage = 1; //当前页   //默认从第一页开始
-		int pageSize = Constants.pageSize; //页面容量
-		if(pageIndex!=null){
-			try {
-				currentpage = Integer.valueOf(pageIndex);
-			} catch (NumberFormatException e) {
-				//否则就跳转到错误页面
-				return  "redirect:/syserror.html";
-			}
-		}
-		PageSupport pages=new PageSupport();
-		pages.setCurrentPageNo(currentpage);//当前页
-		pages.setPageSize(pageSize); //页面容量
-		int totalcount=goodsservice.getcount(gcode, gname);
-		pages.setTotalCount(totalcount);//总记录数
-		int totalPageCount = pages.getTotalPageCount(); //总页数
-		//控制首页和尾页
-		if(currentpage < 1){   //如果当前页码小于1 就等于1
-			currentpage = 1;
-		}else if(currentpage > totalPageCount){ //如果当前页码大于总页数  就等于总页数
-			currentpage = totalPageCount;
-		}
-		List<Goods> goodslist= goodsservice.getgoodsList(gcode, gname,((currentpage-1)*pageSize), pageSize);
-		m.addAttribute("goods",goodslist);
-		m.addAttribute("querygcode",gcode );//用于数据回显    
-		m.addAttribute("querygname",gname); //用于数据回显
-		m.addAttribute("totalPageCount", totalPageCount); //总页数
-		m.addAttribute("totalCount",totalcount); //查找到的总记录数
-		m.addAttribute("currentPageNo",currentpage);//当前页码
-		Long role=((User)(session.getAttribute(Constants.SESSION))).getUserRole();
-		if(role==1) {
-			return "goodslist";
-		}
-		return "user/goodslist";
+	public String billlist(){
+		return "list/goodslist";
 		
+	}
+	@RequestMapping(value = "/json/goodslist",method = RequestMethod.GET)
+	@ResponseBody
+	public JSONObject billlist(@RequestParam(value = "page",required = false)Integer page, @RequestParam(value = "limit",required = false)Integer limit){
+		JSONObject json=new JSONObject();
+		json.put("code",0);
+		json.put("msg","");
+		json.put("count",goodsservice.getcount());
+		List<Goods> goods=goodsservice.goodslist(page-1,limit);
+		json.put("data",goods);
+		return json;
 	}
 	@RequestMapping("/goodsadd.html")
 	public String goodsadd(@ModelAttribute Goods g) {

@@ -17,13 +17,10 @@ public class GoodsServiceImpl implements GoodsService{
 	private GoodsDAO goodsdao;
 
 
-	public List<Goods> getgoodsList(String gcode, String gname,int from,int pageSize) {
-		return goodsdao.getgoodsList(gcode, gname, from, pageSize);
-	}
 
 
-	public int getcount(String gcode, String gname) {
-		return goodsdao.getcount(gcode, gname);
+	public int getcount() {
+		return goodsdao.getcount();
 	}
 
 
@@ -49,9 +46,9 @@ public class GoodsServiceImpl implements GoodsService{
 	}
 
 
-	public List<Goods> goodslist() {
+	public List<Goods> goodslist(Integer page,Integer limit) {
 		
-		return goodsdao.goodslist();
+		return goodsdao.goodslist(page,limit);
 	}
 
 
