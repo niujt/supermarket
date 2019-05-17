@@ -17,5 +17,5 @@
             <dd><a href="">密码修改</a></dd>
         </dl>
     </li>
-    <li class="layui-nav-item layui-layout-right"><a href="/outLogin.html"> 欢迎小明&nbsp;&nbsp;&nbsp;退出系统</a></li>
+    <li class="layui-nav-item layui-layout-right"><a href="/outLogin.html"> 欢迎&nbsp;&nbsp;&nbsp;${userSession.userCode}&nbsp;&nbsp;&nbsp;退出系统</a></li>
 </ul>
