@@ -3,7 +3,7 @@
 <ul class="layui-nav">
 
     <li class="layui-nav-item "><a href="/bill/billlist.html">订单管理</a></li>
-    <li class="layui-nav-item "><a href="">供应商管理</a></li>
+    <li class="layui-nav-item "><a href="/provider/providerlist.html">供应商管理</a></li>
     <li class="layui-nav-item"><a href="">退货单管理</a></li>
     <li class="layui-nav-item"><a href="">人事管理</a></li>
     <li class="layui-nav-item"><a href="">销售管理</a></li>

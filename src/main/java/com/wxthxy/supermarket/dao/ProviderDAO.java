@@ -17,22 +17,15 @@ public interface ProviderDAO {
     /**
      * 按条件分页查询供应商信息
      *
-     * @param proCode  供应商编码
-     * @param proName  供应商名称
-     * @param from     从(第几页开始)
-     * @param pageSize 页面容量
      * @return 供应商列表
      */
-    List<Provider> GetProviderList(@Param("proCode") String proCode, @Param("proName") String proName, @Param("from") int from, @Param("pageSize") int pageSize);
+    List<Provider> getProviderList(Integer page,Integer limit);
 
     /**
      * 查找符合条件的总记录数
-     *
-     * @param proCode 供应商编码
-     * @param proName 供应商名称
      * @return 查询到的条数
      */
-    int GetCount(@Param("proCode") String proCode, @Param("proName") String proName);
+    int getCount();
 
     /**
      * 保存要添加的供应商信息

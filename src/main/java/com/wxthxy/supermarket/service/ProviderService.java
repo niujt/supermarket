@@ -16,23 +16,15 @@ public interface ProviderService {
 
     /**
      * 根据条件分页查询用户信息
-     *
-     * @param proCode  供应商编码
-     * @param proName  供应商名称
-     * @param from     从（第几页开始）
-     * @param pageSize 页面容量
      * @return 供应商列表
      */
-    List<Provider> GetProviderList(String proCode, String proName, int from, int pageSize);
+    List<Provider> getProviderList(Integer page,Integer limit);
 
     /**
      * 查找符合条件的总记录数
-     *
-     * @param proCode 供应商编码
-     * @param proName 供应商名称
      * @return 符合条件的条数
      */
-    int GetCount(String proCode, String proName);
+    int getCount();
 
     /**
      * 保存要添加的供应商信息

@@ -7,6 +7,8 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -32,62 +34,22 @@ public class ProviderController {
 	private ProviderService  providerservice;
 	@Resource
 	private BillService  billservice;
-	//获取供应商列表   ajax 的方法
-	@RequestMapping(value = "/providerlist")
-	@ResponseBody
-	public Object getproviderlist(){
-		HashMap<String,Object> result =new HashMap<String,Object>(); 
-
-		List<Provider> list= providerservice.providerlist();
-		if(list!=null){
-			result.put("providerlist",list);
-		}
-		return JSONArray.toJSONString(result);
-	}
 	//进入供应商列表页面
 	@RequestMapping("/providerlist.html")
-	public String providerlist(Model m ,
-			@RequestParam(value = "queryProCode",required = false) String proCode ,
-			@RequestParam(value = "queryProName",required = false) String proName,
-			@RequestParam(value = "pageIndex",required = false) String pageIndex,
-			HttpSession session){
-		List<Provider> providerList = null ;
-		int  currentpage = 1; //当前页号 从1 开始
-		int pageSize = Constants.pageSize; //页面容量
-		//如果供应商编号 和名称为空， 把它设置为 空字符串 方便 数据库查询
-		if(proCode==null ){
-			proCode = "";
-		}
-		if(proName == null){
-			proName = "";
-		}
-		if(pageIndex !=null){
-			currentpage = Integer.valueOf(pageIndex);
-		}
-		int totalCount = providerservice.GetCount(proCode, proName);//查找符合条件的总记录数  
-		PageSupport ps = new PageSupport();
-		ps.setCurrentPageNo(currentpage);
-		ps.setPageSize(pageSize);
-		ps.setTotalCount(totalCount);
-		int pagecount = ps.getTotalPageCount(); //获得总页数
-		if(currentpage<1){
-			currentpage = 1;
-		}else if(currentpage>pagecount){
-			currentpage = pagecount;
-		}
-		providerList = providerservice.GetProviderList(proCode,proName,((currentpage-1)*pageSize), pageSize);
-		m.addAttribute("providerList",providerList);
-		//用于数据回显
-		m.addAttribute("queryProCode",proCode);
-		m.addAttribute("queryProName",proName);
-		m.addAttribute("totalPageCount",pagecount);
-		m.addAttribute("totalCount", totalCount);
-		m.addAttribute("currentPageNo",currentpage);
-		Long role=((User)(session.getAttribute(Constants.SESSION))).getUserRole();
-		if(role==1) {
-			return "providerlist";
-		}
-		return "user/providerlist";
+	public String showproviderlist(){
+
+		return "list/providerlist";
+	}
+	@RequestMapping(value = "/json/providerlist",method = RequestMethod.GET)
+	@ResponseBody
+	public JSONObject showproviderlist(@RequestParam(value = "page",required = false)Integer page, @RequestParam(value = "limit",required = false)Integer limit){
+		JSONObject json=new JSONObject();
+		json.put("code",0);
+		json.put("msg","");
+		json.put("count",providerservice.getCount());
+		List<Provider> providers=providerservice.getProviderList(page-1,limit);
+		json.put("data",providers);
+		return json;
 	}
 	//进入添加供应商列表
 	@RequestMapping("/provideradd.html")

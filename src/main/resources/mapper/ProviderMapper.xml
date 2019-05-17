@@ -28,24 +28,18 @@
 		smbms.smbms_provider
 	</select>
 	<!-- 按照条件分页查询供应商信息 -->
-	<select id="GetProviderList" resultType="com.wxthxy.supermarket.entity.Provider">
+	<select id="getProviderList" resultType="com.wxthxy.supermarket.entity.Provider" parameterType="Integer">
 		SELECT *
 		FROM
 		smbms.smbms_provider
-		WHERE 1=1
-		<if test="proCode!=null and proCode!='' ">and proCode LIKE CONCAT('%',#{proCode},'%') </if>
-		<if test="proName!=null and proName!='' ">AND proName LIKE CONCAT('%',#{proName},'%') </if>
 		ORDER BY creationDate DESC
-		LIMIT #{from},#{pageSize}
+		LIMIT #{page},#{limit}
 	</select>
 	<!-- 查询符合条件的总记录数 -->
-	<select id="GetCount" resultType="int">
+	<select id="getCount" resultType="Integer">
 		SELECT count(1)
 		FROM
 		smbms.smbms_provider
-		WHERE 1=1
-		<if test="proCode!=null and proCode!='' ">and proCode LIKE CONCAT('%',#{proCode},'%') </if>
-		<if test="proName!=null and proName!='' ">AND proName LIKE CONCAT('%',#{proName},'%') </if>
 	</select>
 	<!--添加一条供应商信息 -->
 	<insert id="saveprovider" parameterType="com.wxthxy.supermarket.entity.Provider">

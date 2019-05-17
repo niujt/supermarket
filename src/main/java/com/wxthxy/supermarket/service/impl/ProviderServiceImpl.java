@@ -23,15 +23,14 @@ public class ProviderServiceImpl implements ProviderService {
 	/**
 	 * 根据条件分页查询用户信息
 	 */
-	public List<Provider> GetProviderList(String proCode, String proName,
-			int from, int pageSize) {
-		return  providerdao.GetProviderList(proCode, proName, from, pageSize);
+	public List<Provider> getProviderList(Integer page,Integer limit) {
+		return  providerdao.getProviderList(page,limit);
 	}
 	/**
 	 * 查找符合条件的总记录数
 	 */
-	public int GetCount(String proCode, String proName) {
-		return providerdao.GetCount(proCode, proName);
+	public int getCount() {
+		return providerdao.getCount();
 	}
 	/**
 	 * 保存要添加的供应商信息

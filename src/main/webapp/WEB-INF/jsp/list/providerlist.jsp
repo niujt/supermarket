@@ -1,87 +1,70 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@include file="/WEB-INF/jsp/common/head.jsp"%>
+         pageEncoding="UTF-8" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="/static/css/layui.min.css">
+    <title>超市管理系统</title>
+</head>
+<body>
+<%@include file="../menu.jsp" %>
 
-<div class="right">
-        <div class="location">
-            <strong>你现在所在的位置是:</strong>
-            <span>供应商管理页面</span>
-        </div>
-        <div class="search">
-        	<form method="post" action="${pageContext.request.contextPath }/provider/providerlist.html" enctype="multipart/form-data">
-				<span>供应商编码：</span>
-				<input name="queryProCode" type="text" value="${queryProCode }">
-				<span>供应商名称：</span>
-				<input name="queryProName" type="text" value="${queryProName }">
-				<input type="hidden" name="pageIndex" value="1"/>
-				<input value="查 询" type="submit" id="searchbutton">
-				<a href="${pageContext.request.contextPath }/provider/provideradd.html">添加供应商</a>
-			</form>
-        </div>
-        <!--供应商操作表格-->
-        <table class="providerTable" cellpadding="0" cellspacing="0">
-            <tr class="firstTr">
-                <th width="10%">供应商编码</th>
-                <th width="20%">供应商名称</th>
-                <th width="10%">联系人</th>
-                <th width="10%">联系电话</th>
-                <th width="10%">传真</th>
-                <th width="10%">创建时间</th>
-                <th width="30%">操作</th>
-            </tr>
-            <c:forEach var="provider" items="${providerList }" varStatus="status">
-				<tr>
-					<td>
-					<span>${provider.proCode }</span>
-					</td>
-					<td>
-					<span>${provider.proName }</span>
-					</td>
-					<td>
-					<span>${provider.proContact}</span>
-					</td>
-					<td>
-					<span>${provider.proPhone}</span>
-					</td>
-					<td>
-					<span>${provider.proFax}</span>
-					</td>
-					<td>
-					<span>
-					<fmt:formatDate value="${provider.creationDate}" pattern="yyyy-MM-dd"/>
-					</span>
-					</td>
-					<td>
-					<span><a class="viewProvider" href="javascript:;" proid=${provider.id } proname=${provider.proName }><img src="${pageContext.request.contextPath }/statics/images/read.png" alt="查看" title="查看"/></a></span>
-					<span><a class="modifyProvider" href="javascript:;" proid=${provider.id } proname=${provider.proName }><img src="${pageContext.request.contextPath }/statics/images/xiugai.png" alt="修改" title="修改"/></a></span>
-					<span><a class="deleteProvider" href="javascript:;" proid=${provider.id } proname=${provider.proName }><img src="${pageContext.request.contextPath }/statics/images/schu.png" alt="删除" title="删除"/></a></span>
-					</td>
-				</tr>
-			</c:forEach>
-        </table>
-			<input type="hidden" id="totalPageCount" value="${totalPageCount}"/>
-		  	<c:import url="rollpage.jsp">
-	          	<c:param name="totalCount" value="${totalCount}"/>
-	          	<c:param name="currentPageNo" value="${currentPageNo}"/>
-	          	<c:param name="totalPageCount" value="${totalPageCount}"/>
-          	</c:import>
+<hr>
+<%--<div class="search">--%>
+<%--<form method="post" action="${pageContext.request.contextPath }/provider/providerlist.html" enctype="multipart/form-data">--%>
+<%--<span>供应商编码：</span>--%>
+<%--<input name="queryProCode" type="text" value="${queryProCode }">--%>
+<%--<span>供应商名称：</span>--%>
+<%--<input name="queryProName" type="text" value="${queryProName }">--%>
+<%--<input type="hidden" name="pageIndex" value="1"/>--%>
+<%--<input value="查 询" type="submit" id="searchbutton">--%>
+<%--<a href="${pageContext.request.contextPath }/provider/provideradd.html">添加供应商</a>--%>
+<%--</form>--%>
+<%--</div>--%>
+<!--供应商操作表格-->
+<table id="providerlist" lay-filter="test"></table>
+<script type="text/html" id="toolbar">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="del">删除</button>
+        <button class="layui-btn layui-btn-sm" lay-event="edit">编辑</button>
     </div>
-    
-    
-</section>
+</script>
+<script type="text/javascript" src="/static/js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="/static/js/layui.all.js"></script>
+<%--<script type="text/javascript" src="/static/js/billlist.js"></script>--%>
+<script type="text/javascript">
+    layui.use('table', function () {
+        var table = layui.table;
+        table.render({
+            elem: '#providerlist'
+            , height: 360
+            , url: '/provider/json/providerlist' //数据接口
+            , page: true //开启分页
+            , cols: [[ //表头
+                {field: 'proCode', title: '供应商编码', width: 140, sort: true}
+                , {field: 'proName', title: '供应商名称', width: 140, sort: true}
+                , {field: 'proContact', title: '联系人', width: 140, sort: true}
+                , {field: 'proPhone', title: '联系电话', width: 140}
+                , {field: 'proFax', title: '传真', width: 140}
+                , {field: 'creationDate', title: '创建时间', width: 140, sort: true}
+                , {fixed: 'right', title: '操作', width: 178, align: 'center', toolbar: '#toolbar'}
+            ]], done: function (res, curr, count) {
+            }
+        });
+        //监听事件
+        table.on('tool(test)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'del') {
+                layer.confirm('真的删除行么', function (index) {
+                    obj.del();
+                    layer.close(index);
+                });
+            } else if (obj.event === 'edit') {
+                layer.alert('编辑行：<br>' + JSON.stringify(data))
+            }
+        });
 
-<!--点击删除按钮后弹出的页面-->
-<div class="zhezhao"></div>
-<div class="remove" id="removeProv">
-   <div class="removerChid">
-       <h2>提示</h2>
-       <div class="removeMain" >
-           <p>你确定要删除该供应商吗？</p>
-           <a href="#" id="yes">确定</a>
-           <a href="#" id="no">取消</a>
-       </div>
-   </div>
-</div>
-
-<%@include file="/WEB-INF/jsp/common/foot.jsp" %>
-<script type="text/javascript" src="${pageContext.request.contextPath }/statics/js/providerlist.js"></script>
+    });
+</script>
+</body>
+</html>
