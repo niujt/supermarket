@@ -6,10 +6,12 @@
 		modifyDate
 	</sql>
 	<!-- 获取所有的角色列表 -->
-	<select id="getCount" resultType="com.wxthxy.supermarket.entity.Role">
-		select
-		<include refid="Base_Column_List" />
-		from smbms_role
+	<select id="getRoleList" resultType="com.wxthxy.supermarket.entity.Role" parameterType="Integer">
+		select * from smbms_role
+		limit #{page},#{limit}
+	</select>
+	<select id="getCount" resultType="Integer">
+		select count(*) from smbms_role
 	</select>
 	<!-- 添加角色信息 -->
 	<insert id="addrole" parameterType="com.wxthxy.supermarket.entity.Role">

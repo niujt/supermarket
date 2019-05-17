@@ -12,7 +12,8 @@ public interface RoleService {
      *
      * @return 所有角色的列表
      */
-    List<Role> getRolelist();
+    Integer getcount();
+    List<Role> getRolelist(Integer page,Integer limit);
 
     /**
      * 添加角色信息

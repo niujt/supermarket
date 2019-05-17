@@ -6,13 +6,11 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import com.alibaba.fastjson.JSONObject;
+import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import com.alibaba.fastjson.JSONArray;
 import com.wxthxy.supermarket.entity.Role;
@@ -20,24 +18,27 @@ import com.wxthxy.supermarket.entity.User;
 import com.wxthxy.supermarket.service.RoleService;
 import com.wxthxy.supermarket.util.Constants;
 
-@Service
+@Controller
 @RequestMapping("/role")
 public class RoleController {
 	@Resource
 	private RoleService roleservice;
-	//角色信息
-	@RequestMapping(value = "/rolelist",method = RequestMethod.GET)
-	@ResponseBody
-	public String rolelist(){
-		List<Role> roleList= roleservice.getRolelist();
-		return JSONArray.toJSONString(roleList);
-	}
 	//先进入角色页面
 	@RequestMapping("/rolelist.html")
-	public String getrolelist(Model m ){
-		List<Role> roleList= roleservice.getRolelist();
-		m.addAttribute("roleList", roleList);
-		return "rolelist";
+	public String getrolelist(){
+
+		return "list/rolelist";
+	}
+	@RequestMapping(value = "/json/rolelist",method = RequestMethod.GET)
+	@ResponseBody
+	public JSONObject rolelist(@RequestParam(value = "page",required = false)Integer page, @RequestParam(value = "limit",required = false)Integer limit){
+		JSONObject json=new JSONObject();
+		json.put("code",0);
+		json.put("msg","");
+		json.put("count",roleservice.getcount());
+		List<Role> sales=roleservice.getRolelist(page-1,limit);
+		json.put("data",sales);
+		return json;
 	}
 	//进入添加角色页面
 	@RequestMapping(value = "/addrole.html",method = RequestMethod.GET)

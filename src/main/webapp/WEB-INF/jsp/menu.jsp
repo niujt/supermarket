@@ -13,7 +13,7 @@
         <a href="javascript:;">系统设置</a>
         <dl class="layui-nav-child"> <!-- 二级菜单 -->
             <dd><a href="/user/userlist.html">用户管理</a></dd>
-            <dd><a href="">角色管理</a></dd>
+            <dd><a href="/role/rolelist.html">角色管理</a></dd>
             <dd><a href="">密码修改</a></dd>
         </dl>
     </li>

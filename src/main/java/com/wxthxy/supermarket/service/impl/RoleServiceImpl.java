@@ -13,9 +13,15 @@ import com.wxthxy.supermarket.service.RoleService;
 public class RoleServiceImpl implements RoleService{
 	@Resource
 	private RoleDAO  roledao;
-	public List<Role> getRolelist() {
 
+	@Override
+	public Integer getcount() {
 		return roledao.getCount();
+	}
+
+	public List<Role> getRolelist(Integer page, Integer limit) {
+
+		return roledao.getRoleList(page, limit);
 	}
 	/**
 	 * 添加角色信息

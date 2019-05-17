@@ -7,12 +7,8 @@ import org.apache.ibatis.annotations.Param;
 import com.wxthxy.supermarket.entity.Role;
 
 public interface RoleDAO {
-    /**
-     * 根据分页查询角色信息
-     *
-     * @return 角色列表
-     */
-    List<Role> getCount();
+    Integer getCount();
+    List<Role> getRoleList(Integer page,Integer limit);
 
     /**
      * 添加角色信息
