@@ -33,7 +33,13 @@ public class Sale {
 	 * 售价
 	 */
     private BigDecimal sprice;
-    /**
+    private BigDecimal profit;
+
+	public BigDecimal getProfit() {
+		return sprice.subtract(pprice);
+	}
+
+	/**
      * 创建者
      */
     private Long createdBy;

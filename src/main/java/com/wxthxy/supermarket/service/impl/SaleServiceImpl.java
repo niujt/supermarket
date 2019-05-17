@@ -15,12 +15,12 @@ public class SaleServiceImpl implements SaleService {
     @Resource
     private SaleDAO saledao;
 
-    public List<Sale> getsaleList(String scode, String sname, int from, int pageSize) {
-        return saledao.getsaleList(scode, sname, from, pageSize);
+    public List<Sale> getsaleList(Integer page,Integer limit) {
+        return saledao.getsaleList(page,limit);
     }
 
-    public int getcount(String scode, String sname) {
-        return saledao.getcount(scode, sname);
+    public int getcount() {
+        return saledao.getcount();
     }
 
     public int savesale(Sale sale) {

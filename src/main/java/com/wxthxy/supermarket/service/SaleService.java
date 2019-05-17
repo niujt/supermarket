@@ -9,9 +9,9 @@ import com.wxthxy.supermarket.entity.Sale;
 
 
 public interface SaleService {
-    List<Sale> getsaleList(String scode, String sname, int from, int pageSize);
+    List<Sale> getsaleList(Integer page,Integer limit);
 
-    int getcount(String scode, String sname);
+    int getcount();
 
     int savesale(Sale sale);
 

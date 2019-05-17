@@ -9,13 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.alibaba.fastjson.JSONArray;
@@ -40,50 +37,19 @@ public class SaleController {
 	@Resource
 	private GoodsService goodsservice;
 	@RequestMapping("/salelist.html")
-	public String salelist(@RequestParam(value = "queryscode",required = false) String scode,
-			@RequestParam(value = "querysname",required = false) String sname,
-			@RequestParam(value = "pageIndex",required = false) String pageIndex,
-			Model m,HttpSession session){
-		if(scode==null){
-			scode ="";
-		}
-		if(sname == null){
-			sname="";
-		}
-		int currentpage = 1; //当前页   //默认从第一页开始
-		int pageSize = Constants.pageSize; //页面容量
-		if(pageIndex!=null){
-			try {
-				currentpage = Integer.valueOf(pageIndex);
-			} catch (NumberFormatException e) {
-				//否则就跳转到错误页面
-				return  "redirect:/syserror.html";
-			}
-		}
-		PageSupport pages=new PageSupport();
-		pages.setCurrentPageNo(currentpage);//当前页
-		pages.setPageSize(pageSize); //页面容量
-		int totalcount=saleservice.getcount(scode, sname);
-		pages.setTotalCount(totalcount);//总记录数
-		int totalPageCount = pages.getTotalPageCount(); //总页数
-		//控制首页和尾页
-		if(currentpage < 1){   //如果当前页码小于1 就等于1
-			currentpage = 1;
-		}else if(currentpage > totalPageCount){ //如果当前页码大于总页数  就等于总页数
-			currentpage = totalPageCount;
-		}
-		List<Sale> salelist= saleservice.getsaleList(scode, sname, ((currentpage-1)*pageSize), pageSize);
-		m.addAttribute("sale",salelist);
-		m.addAttribute("queryscode",scode );//用于数据回显    
-		m.addAttribute("querysname",sname); //用于数据回显   
-		m.addAttribute("totalPageCount", totalPageCount); //总页数
-		m.addAttribute("totalCount",totalcount); //查找到的总记录数
-		m.addAttribute("currentPageNo",currentpage);//当前页码
-		Long role=((User)(session.getAttribute(Constants.SESSION))).getUserRole();
-		if(role==1) {
-			return "salelist";
-		}
-		return "user/salelist";
+	public String showsalelist(){
+		return "list/salelist";
+	}
+	@RequestMapping(value = "/json/salelist",method = RequestMethod.GET)
+	@ResponseBody
+	public JSONObject showsalelist(@RequestParam(value = "page",required = false)Integer page, @RequestParam(value = "limit",required = false)Integer limit){
+		JSONObject json=new JSONObject();
+		json.put("code",0);
+		json.put("msg","");
+		json.put("count",saleservice.getcount());
+		List<Sale> sales=saleservice.getsaleList(page-1,limit);
+		json.put("data",sales);
+		return json;
 	}
 	@RequestMapping("/saleadd.html")
 	public String saleadd(@ModelAttribute Sale sale){

@@ -4,19 +4,15 @@
   <sql id="Base_Column_List">
     id, scode, sname, snumber, pprice, sprice,createdBy,creationDate, modifyBy, modifyDate
   </sql>
-  <select id="getsaleList" resultType="com.wxthxy.supermarket.entity.Sale">
-  	select * from smbms_sale where 1=1
-  	<if test="scode!=null and scode!='' ">and scode like concat('%',#{scode},'%')</if>
-  	<if test="sname!=null and sname!='' ">and sname like concat('%',#{sname},'%')</if>
+  <select id="getsaleList" resultType="com.wxthxy.supermarket.entity.Sale" parameterType="Integer">
+  	select * from smbms_sale
   	order by creationDate desc
-  	limit #{from},#{pageSize}
+  	limit #{page},#{limit}
   </select>
   <!-- 按照条件查询出总记录数 -->
-  <select id="getcount" resultType="int">
+  <select id="getcount" resultType="Integer">
   	select count(*) 
-  	from smbms_sale where 1=1
-  	<if test="scode!=null and scode!=''">and scode like concat('%',#{scode},'%')</if>
-  	<if test="sname!=null and sname!=''">and sname like concat('%',#{sname},'%')</if>
+  	from smbms_sale
   </select>
   <insert id="savesale" parameterType="com.wxthxy.supermarket.entity.Sale">
   	insert into smbms_sale(scode,sname,snumber,pprice,sprice,createdBy,creationDate) 
