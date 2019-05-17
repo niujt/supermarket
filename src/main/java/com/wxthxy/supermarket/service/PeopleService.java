@@ -7,9 +7,9 @@ import org.apache.ibatis.annotations.Param;
 import com.wxthxy.supermarket.entity.People;
 
 public interface PeopleService {
-    List<People> peoplelist(String peopleName, String deptid, int from, int pageSize);
+    List<People> peoplelist(Integer page,Integer limit);
 
-    int getcount(String peopleName, String deptid);
+    int getcount();
 
     int savepeople(People p);
 

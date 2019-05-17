@@ -25,6 +25,7 @@ public class People {
 	 * 职位
 	 */
 	private Long deptid;
+	private String dname;
 	/**
 	 * 薪水
 	 */
@@ -49,6 +50,15 @@ public class People {
 	 * 修改时间
 	 */
 	private Date modifyDate;
+
+	public String getDname() {
+		return dname;
+	}
+
+	public void setDname(String dname) {
+		this.dname = dname;
+	}
+
 	public Long getId() {
 		return id;
 	}

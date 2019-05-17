@@ -9,9 +9,9 @@ import com.wxthxy.supermarket.entity.People;
 public interface PeopleDAO {
     List<People> getpeopleList();
 
-    List<People> peoplelist(@Param("peopleName") String peopleName, @Param("deptid") String deptid, @Param("from") int from, @Param("pageSize") int pageSize);
+    List<People> peoplelist(Integer page,Integer limit);
 
-    int getcount(@Param("peopleName") String peopleName, @Param("deptid") String deptid);
+    int getcount();
 
     int savepeople(People p);
 

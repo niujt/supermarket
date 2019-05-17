@@ -14,14 +14,14 @@ public class PeopleServiceImpl implements PeopleService{
 	@Resource
 	public PeopleDAO dao;
 
-	public List<People> peoplelist(String peopleName, String deptid, int from, int pageSize) {
+	public List<People> peoplelist(Integer page,Integer limit) {
 		
-		return dao.peoplelist(peopleName, deptid, from, pageSize);
+		return dao.peoplelist(page,limit);
 	}
 
 
-	public int getcount(String peopleName, String deptid) {
-		return dao.getcount(peopleName, deptid);
+	public int getcount() {
+		return dao.getcount();
 	}
 
 

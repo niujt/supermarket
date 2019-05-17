@@ -1,89 +1,77 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@include file="/WEB-INF/jsp/common/head.jsp"%>
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="/static/css/layui.min.css">
+	<title>超市管理系统</title>
+</head>
+<body>
+<%@include file="../menu.jsp" %>
 
-<div class="right">
-        <div class="location">
-            <strong>你现在所在的位置是:</strong>
-            <span>人事管理页面</span>
-        </div>
-        <div class="search">
-        	<form method="post" action="${pageContext.request.contextPath }/people/peoplelist.html" enctype="multipart/form-data">
-				<span>姓名：</span>
-				<input name="queryPeopleName" type="text" value="${queryPeopleName }">
-				<span>职位：</span>
-				<select name="querydeptid"  id="querydeptid"></select>
-				<input type="hidden" name="pageIndex" value="1"/>
-				<input value="查 询" type="submit" id="searchbutton">
-				<a href="${pageContext.request.contextPath }/people/peopleadd.html">添加员工</a>
-			</form>
-        </div>
-        <!--供应商操作表格-->
-        <table class="providerTable" cellpadding="0" cellspacing="0">
-            <tr class="firstTr">
-                <th width="10%">姓名</th>
-                <th width="10%">年龄</th>
-                <th width="10%">职位</th>
-                <th width="10%">薪水</th>
-                <th width="10%">性别</th>
-                <th width="10%">创建时间</th>
-                <th width="40%">操作</th>
-            </tr>
-            <c:forEach var="people" items="${peopleList }" varStatus="status">
-				<tr>
-					<td>
-					<span>${people.peopleName }</span>
-					</td>
-					<td>
-					<span>${people.peopleAge }</span>(周岁)
-					</td>
-					<td>
-					<c:if test="${people.deptid==1}">普通员工</c:if> <c:if
-							test="${people.deptid==2}">经理</c:if>
-					</td>
-					<td>
-					<span>${people.salary}</span>(元)
-					</td>
-					<td>
-					 <span><c:if test="${people.gender==1}">男</c:if> <c:if
-							test="${people.gender==2}">女</c:if> </span>
-					</td>
-					<td>
-					<span>
-					<fmt:formatDate value="${people.creationDate}" pattern="yyyy-MM-dd"/>
-					</span>
-					</td>
-					<td>
-					<span><a class="viewPeople" href="javascript:;" peoid="${people.id }" peoname="${people.peopleName }"><img src="${pageContext.request.contextPath }/statics/images/read.png" alt="查看" title="查看"/></a></span>
-					<span><a class="modifyPeople" href="javascript:;" peoid="${people.id }" peoname="${people.peopleName }"><img src="${pageContext.request.contextPath }/statics/images/xiugai.png" alt="修改" title="修改"/></a></span>
-					<span><a class="deletePeople" href="javascript:;" peoid="${people.id }" peoname="${people.peopleName }"><img src="${pageContext.request.contextPath }/statics/images/schu.png" alt="删除" title="删除"/></a></span>
-					</td>
-				</tr>
-			</c:forEach>
-        </table>
-			<input type="hidden" id="totalPageCount" value="${totalPageCount}"/>
-		  	<c:import url="rollpage.jsp">
-	          	<c:param name="totalCount" value="${totalCount}"/>
-	          	<c:param name="currentPageNo" value="${currentPageNo}"/>
-	          	<c:param name="totalPageCount" value="${totalPageCount}"/>
-          	</c:import>
-          	
-          	
-    </div>
-</section>
 
-<!--点击删除按钮后弹出的页面-->
-<div class="zhezhao"></div>
-<div class="remove" id="removeProv">
-   <div class="removerChid">
-       <h2>提示</h2>
-       <div class="removeMain" >
-           <p>你确定要删除该信息吗？</p>
-           <a href="#" id="yes">确定</a>
-           <a href="#" id="no">取消</a>
-       </div>
-   </div>
-</div>
+        <%--<div class="search">--%>
+        	<%--<form method="post" action="${pageContext.request.contextPath }/people/peoplelist.html" enctype="multipart/form-data">--%>
+				<%--<span>姓名：</span>--%>
+				<%--<input name="queryPeopleName" type="text" value="${queryPeopleName }">--%>
+				<%--<span>职位：</span>--%>
+				<%--<select name="querydeptid"  id="querydeptid"></select>--%>
+				<%--<input type="hidden" name="pageIndex" value="1"/>--%>
+				<%--<input value="查 询" type="submit" id="searchbutton">--%>
+				<%--<a href="${pageContext.request.contextPath }/people/peopleadd.html">添加员工</a>--%>
+			<%--</form>--%>
+        <%--</div>--%>
+<table id="peoplelist" lay-filter="test"></table>
+<script type="text/html" id="toolbar">
+	<div class="layui-btn-container">
+		<button class="layui-btn layui-btn-sm" lay-event="del">删除</button>
+		<button class="layui-btn layui-btn-sm" lay-event="edit">编辑</button>
+	</div>
+</script>
+<script type="text/javascript" src="/static/js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="/static/js/layui.all.js"></script>
+<%--<script type="text/javascript" src="/static/js/billlist.js"></script>--%>
+<script type="text/javascript">
+	layui.use('table', function () {
+		var table = layui.table;
+		table.render({
+			elem: '#peoplelist'
+			, height: 360
+			, url: '/people/json/peoplelist' //数据接口
+			, page: true //开启分页
+			, cols: [[ //表头
+				{field: 'peopleName', title: '姓名', width: 140, sort: true}
+				, {field: 'peopleAge', title: '年龄', width: 140, sort: true}
+				, {field: 'dname', title: '职位', width: 140, sort: true}
+				, {field: 'salary', title: '薪水(元)', width: 140}
+				, {field: 'gender', title: '性别', width: 140}
+				, {field: 'creationDate', title: '创建时间', width: 140, sort: true}
+				, {fixed: 'right', title: '操作', width: 178, align: 'center', toolbar: '#toolbar'}
+			]], done: function (res, curr, count) {
+				$("[data-field = 'gender']").children().each(function () {
 
-<%@include file="/WEB-INF/jsp/common/foot.jsp" %>
-<script type="text/javascript" src="${pageContext.request.contextPath }/statics/js/peoplelist.js"></script>
+					if ($(this).text() === '1') {
+						$(this).text("男");
+					} else if ($(this).text() === '2') {
+						$(this).text("女");
+					}
+				});
+			}
+		});
+		//监听事件
+		table.on('tool(test)', function (obj) {
+			var data = obj.data;
+			if (obj.event === 'del') {
+				layer.confirm('真的删除行么', function (index) {
+					obj.del();
+					layer.close(index);
+				});
+			} else if (obj.event === 'edit') {
+				layer.alert('编辑行：<br>' + JSON.stringify(data))
+			}
+		});
+
+	});
+</script>
+</body>
+</html>

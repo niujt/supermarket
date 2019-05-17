@@ -8,6 +8,8 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -35,50 +37,19 @@ public class PeopleController {
 	private PeopleService  peopleservice;
 	//进入员工列表页面
 	@RequestMapping("/peoplelist.html")
-	public String providerlist(Model m ,
-			@RequestParam(value = "queryPeopleName",required = false) String peopleName ,
-			@RequestParam(value = "querydeptid",required = false) String deptid,
-			@RequestParam(value = "pageIndex",required = false) String pageIndex,
-			HttpSession session){
-		List<People> peopleList = null ;
-		
-		int  currentpage = 1; //当前页号 从1 开始
-		int pageSize = Constants.pageSize; //页面容量
-		int _deptid=0;
-		if(peopleName==null ){
-			peopleName = "";
-		}
-		if(deptid != null &&deptid.equals("")){
-			_deptid=Integer.parseInt(deptid);
-		}
-		if(pageIndex !=null){
-			currentpage = Integer.valueOf(pageIndex);
-		}
-		int totalCount = peopleservice.getcount(peopleName, deptid);//查找符合条件的总记录数  
-		PageSupport ps = new PageSupport();
-		ps.setCurrentPageNo(currentpage);
-		ps.setPageSize(pageSize);
-		ps.setTotalCount(totalCount);
-		int pagecount = ps.getTotalPageCount(); //获得总页数
-		if(currentpage<1){
-			currentpage = 1;
-		}else if(currentpage>pagecount){
-			currentpage = pagecount;
-		}
-		peopleList = peopleservice.peoplelist(peopleName,deptid,((currentpage-1)*pageSize), pageSize);
-	
-		m.addAttribute("peopleList",peopleList);
-		//用于数据回显
-		m.addAttribute("queryPeopleName",peopleName);
-		m.addAttribute("querydeptid",_deptid);
-		m.addAttribute("totalPageCount",pagecount);
-		m.addAttribute("totalCount", totalCount);
-		m.addAttribute("currentPageNo",currentpage);
-		Long role=((User)(session.getAttribute(Constants.SESSION))).getUserRole();
-		if(role==1) {
-			return "peoplelist";
-		}
-		return "user/peoplelist";
+	public String peoplelistshow(){
+		return "list/peoplelist";
+	}
+	@RequestMapping(value = "/json/peoplelist",method = RequestMethod.GET)
+	@ResponseBody
+	public JSONObject peoplelist(@RequestParam(value = "page",required = false)Integer page, @RequestParam(value = "limit",required = false)Integer limit){
+		JSONObject json=new JSONObject();
+		json.put("code",0);
+		json.put("msg","");
+		json.put("count",peopleservice.getcount());
+		List<People> peoples=peopleservice.peoplelist(page-1, limit);
+		json.put("data",peoples);
+		return json;
 	}
 	//进入添加供应商列表
 	@RequestMapping("/peopleadd.html")
