@@ -37,7 +37,7 @@
 		var table = layui.table;
 		table.render({
 			elem: '#salelist'
-			, height: 360
+			, height: 800
 			, url: '/sale/json/salelist' //数据接口
 			, page: true //开启分页
 			, cols: [[ //表头

@@ -21,20 +21,9 @@
 			<el-ignored>false</el-ignored>
 			<!-- 使jsp脚本失效  -->
 			<scripting-invalid>true</scripting-invalid>
-			<!-- 为每个jsp导入一个标签库  -->
-			<include-prelude>/WEB-INF/taglib.jsp</include-prelude>
 		</jsp-property-group>
 	</jsp-config>
 	
 
 
-	<display-name>oa</display-name>
-	<welcome-file-list>
-		<welcome-file>index.html</welcome-file>
-		<welcome-file>index.htm</welcome-file>
-		<welcome-file>index.jsp</welcome-file>
-		<welcome-file>default.html</welcome-file>
-		<welcome-file>default.htm</welcome-file>
-		<welcome-file>default.jsp</welcome-file>
-	</welcome-file-list>
 </web-app>

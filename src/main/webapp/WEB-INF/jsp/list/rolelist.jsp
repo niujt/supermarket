@@ -29,7 +29,7 @@
         var table = layui.table;
         table.render({
             elem: '#rolelist'
-            , height: 360
+            , height: 800
             , url: '/role/json/rolelist' //数据接口
             , page: true //开启分页
             , cols: [[ //表头

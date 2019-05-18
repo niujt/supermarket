@@ -36,7 +36,7 @@
 		var table = layui.table;
 		table.render({
 			elem: '#peoplelist'
-			, height: 360
+			, height: 800
 			, url: '/people/json/peoplelist' //数据接口
 			, page: true //开启分页
 			, cols: [[ //表头
