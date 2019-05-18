@@ -1,8 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
-<footer style="text-align: center;color: #cccccc"> ©2019 QAQ&nbsp;&nbsp;&nbsp;&nbsp;<span>@Created&nbsp;&nbsp;By&nbsp;&nbsp;ZhouLM</span><img
+<footer style="text-align: center;margin-bottom: 0px;color: #cccccc"> ©2019 QAQ&nbsp;&nbsp;&nbsp;&nbsp;<span>@Created&nbsp;&nbsp;By&nbsp;&nbsp;ZhouLM</span><img
         width="13" height="16" src="/static/images/copy_rignt_24.png"/></footer>
 <script type="text/javascript">
+    layui.use('carousel', function(){
+        var carousel = layui.carousel;
+        //建造实例
+        carousel.render({
+            elem: '#test1'
+            ,width: '100%' //设置容器宽度
+            ,arrow: 'always' //始终显示箭头
+            //,anim: 'updown' //切换动画方式
+        });
+    });
     //常规用法
     layui.use('laydate', function () {
         var laydate = layui.laydate;
