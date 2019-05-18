@@ -30,6 +30,12 @@
 		smbms.smbms_bill b,
 		smbms.smbms_provider p
 		WHERE b.providerId =p.id
+		<if test="productName !=''">
+			and b.productName=#{productName}
+		</if>
+		<if test="providerId !=0">
+			and b.providerId=#{providerId}
+		</if>
 		LIMIT #{page},#{limit}
 	</select>
 	<!-- 按照条件查询出的总记录数 -->

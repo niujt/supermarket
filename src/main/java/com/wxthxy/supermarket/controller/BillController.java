@@ -53,12 +53,13 @@ public class BillController {
 
     @RequestMapping(value = "/json/billlist", method = RequestMethod.GET)
     @ResponseBody
-    public JSONObject billlist(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "limit", required = false) Integer limit) {
+    public JSONObject billlist(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "limit", required = false) Integer limit
+    ,@RequestParam(value = "productName",required = false)String productName,@RequestParam(value = "providerName",required = false)String providerName) {
         JSONObject json = new JSONObject();
         json.put("code", 0);
         json.put("msg", "");
         json.put("count", billservice.getcount());
-        List<Bill> bills = billservice.billlist((page - 1) * limit, limit);
+        List<Bill> bills = billservice.billlist((page - 1) * limit, limit,productName,providerName);
         json.put("data", bills);
         return json;
     }

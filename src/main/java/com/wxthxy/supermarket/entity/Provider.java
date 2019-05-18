@@ -10,7 +10,7 @@ public class Provider {
 	/**
 	 * 供应商id（主键）
 	 */
-	private Long id;
+	private Integer id;
 	/**
 	 * 供应商代码
 	 */
@@ -80,11 +80,11 @@ public class Provider {
 		this.orgCodePicPath = orgCodePicPath;
 	}
 
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

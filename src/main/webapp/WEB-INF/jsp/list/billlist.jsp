@@ -10,31 +10,17 @@
 <%@include file="../menu.jsp" %>
 
 <hr>
-<table>
-    <form method="POST" class="layui-form"
-          action="/user/userlist.html">
-        <tr>
-            <td><span>&nbsp;&nbsp;&nbsp;&nbsp;商品名称：</span></td>
-            <td>
-                <input name="queryProductName" class="layui-input"
-                       type="text" value="${queryProductName}">
-            </td>
-            <td><span>&nbsp;&nbsp;&nbsp;&nbsp;供应商：</span></td>
-            <td>
-                <input name="queryProductName" class="layui-input"
-                       type="text" value="${queryProductName}">
-            </td>
-
-            <td><input value="查 询" type="submit" class="layui-btn layui-btn-normal">
-            </td>
-            <td>
-                <button type="button" class="layui-btn layui-btn-normal"
-                        onclick="addHtml('/bill/billadd.html')">添加订货单
-                </button>
-            </td>
-        </tr>
-    </form>
-</table>
+<div class="demoTable">
+    商品名称：
+    <div class="layui-inline">
+        <input class="layui-input" name="productName" id="productName" autocomplete="off">
+    </div>
+    供应商名称：
+    <div class="layui-inline">
+        <input class="layui-input" name="providerName" id="providerName" autocomplete="off">
+    </div>
+    <button class="layui-btn" data-type="reload">搜索</button>
+</div>
 <table id="billlist" lay-filter="test"></table>
 <script type="text/html" id="toolbar">
     <div class="layui-btn-container">
@@ -50,6 +36,7 @@
         var table = layui.table;
         table.render({
             elem: '#billlist'
+            ,id:'testReload'
             , height: 500
             , url: '/bill/json/billlist' //数据接口
             , page: true //开启分页
@@ -86,16 +73,37 @@
             var data = obj.data;
             if (obj.event === 'del') {
                 layer.confirm('真的删除行么', function (index) {
-                    del("/bill/deletebillbyid/"+data.id);
+                    del("/bill/deletebillbyid/" + data.id);
                     obj.del();
                     layer.close(index);
                 });
             } else if (obj.event === 'edit') {
-                editHtml('/bill/updatebill.html/'+data.id);
+                editHtml('/bill/updatebill.html/' + data.id);
             }
         });
 
+        var $ = layui.$, active = {
+            reload: function () {
+                var productName = $('#productName');
+                var providerName = $('#providerName');
+                //执行重载
+                table.reload('testReload', {
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                    , where: {
+                            productName: productName.val(),
+                            providerName: providerName.val()
+                    }
+                });
+            }
+        };
+        $('.demoTable .layui-btn').on('click', function () {
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
     });
+
 </script>
 <%@include file="../foot.jsp" %>
 </body>

@@ -58,4 +58,5 @@ public interface ProviderDAO {
      * @return 删除的条数
      */
     int deleteproviderbyid(@Param("id") Integer id);
+    Provider getProviderbyName(@Param("proName")String proName);
 }

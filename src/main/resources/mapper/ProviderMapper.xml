@@ -35,6 +35,12 @@
 		ORDER BY creationDate DESC
 		LIMIT #{page},#{limit}
 	</select>
+
+	<select id="getProviderbyName" resultType="com.wxthxy.supermarket.entity.Provider" parameterType="String">
+		SELECT *
+		FROM
+		smbms.smbms_provider where proName=#{proName}
+	</select>
 	<!-- 查询符合条件的总记录数 -->
 	<select id="getCount" resultType="Integer">
 		SELECT count(1)

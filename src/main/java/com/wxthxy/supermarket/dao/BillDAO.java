@@ -12,7 +12,7 @@ public interface BillDAO {
      *
      * @return 订单列表
      */
-    List<Bill> billlist(Integer page,Integer limit);
+    List<Bill> billlist(Integer page,Integer limit,String productName,Integer providerId);
 
     /**
      * 按条件查询到的总记录数

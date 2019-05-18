@@ -13,7 +13,7 @@ public interface BillService {
 	 * 分页查询订单
 	 * @return 订单列表
 	 */
-	 List<Bill> billlist(Integer page,Integer limit);
+	 List<Bill> billlist(Integer page,Integer limit,String productName,String providerName);
 	/**
 	 * 订单记录数
 	 * @return 订单列表
