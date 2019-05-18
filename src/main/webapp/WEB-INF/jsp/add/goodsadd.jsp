@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" href="/static/css/layui.min.css">
     <title>超市管理系统</title>
 </head>
-<form method="post" action="/goods/savegoods.html" class="layui-form" enctype="multipart/form-data">
+<form onsubmit="return add('/goods/savegoods.html')" class="layui-form" enctype="multipart/form-data">
     <table class="layui-table" lay-skin="row" lay-size="lg">
         <tr>
             <td>商品编码：</td>
@@ -16,7 +16,7 @@
         </tr>
         <tr>
             <td>商品名称：</td>
-            <td><input class="layui-input" type="text" name="gname"  value=""></td>
+            <td><input class="layui-input" type="text" name="gname" value=""></td>
         </tr>
         <tr>
             <td>单位：</td>
@@ -36,17 +36,17 @@
         </tr>
         <tr>
             <td>商品数量：</td>
-            <td><input class="layui-input" type="text" name="gnumber"  value=""></td>
+            <td><input class="layui-input" type="text" name="gnumber" value=""></td>
         </tr>
         <tr>
             <td>进价：</td>
             <td>
-                <input  class="layui-input" type="text" name="pprice" value="">
+                <input class="layui-input" type="text" name="pprice" value="" placeholder="请精确到0.00">
             </td>
         </tr>
         <tr>
             <td colspan="2">
-                <input type="submit" class="layui-btn layui-btn-primary"  value="保存">
+                <input type="submit" class="layui-btn layui-btn-primary" value="保存">
             </td>
         </tr>
 
@@ -55,3 +55,4 @@
 </html>
 <script type="text/javascript" src="/static/js/jquery-1.8.3.min.js"></script>
 <script type="text/javascript" src="/static/js/layui.all.js"></script>
+<%@include file="../foot.jsp" %>

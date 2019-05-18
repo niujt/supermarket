@@ -18,18 +18,14 @@
   <update id="updategoodsbynumber" parameterType="com.wxthxy.supermarket.entity.Goods">
  	update smbms_goods set gnumber=gnumber-#{gnumber} where gname=#{gname}
  </update>
- 
-  <update id="updategoodsbynumber2" parameterType="com.wxthxy.supermarket.entity.Goods">
- 	update smbms_goods set gnumber=gnumber+#{gnumber} where sname=#{sname}
- </update>
- 
- <update id="updategoodsbynumber3" parameterType="com.wxthxy.supermarket.entity.Goods">
- 	update smbms_goods set gnumber=#{gnumber} where sname=#{sname}
+
+ <update id="addgoods" parameterType="com.wxthxy.supermarket.entity.Goods">
+ 	update smbms_goods set gnumber=gnumber+#{gnumber},gcode=#{gcode} where gname=#{gname}
  </update>
  
   <insert id="savegoods" parameterType="com.wxthxy.supermarket.entity.Goods">
-  	insert into smbms_goods(gcode,gname,gnumber,pprice,createdBy,creationDate,sname,gunit)
-  	values(#{gcode},#{gname},#{gnumber},#{pprice},#{createdBy},#{creationDate},#{sname},#{gunit})
+  	insert into smbms_goods(gcode,gname,gnumber,pprice,createdBy,creationDate,gunit)
+  	values(#{gcode},#{gname},#{gnumber},#{pprice},#{createdBy},#{creationDate},#{gunit})
   </insert>
   <select id="findgoodsbyid" parameterType="Integer" resultType="com.wxthxy.supermarket.entity.Goods">
   	select * from smbms_goods where id=#{id}

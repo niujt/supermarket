@@ -68,15 +68,8 @@ public class GoodsServiceImpl implements GoodsService{
 		return goodsdao.deletegoodsbydname(gname);
 	}
 
-
-	public int updategoodsbynumber2(int gnumber, String sname) {
-		return goodsdao.updategoodsbynumber2(gnumber, sname);
+	@Override
+	public int addgoods(Goods g) {
+		return goodsdao.addgoods(g);
 	}
-
-
-	public int updategoodsbynumber3(int gnumber, String sname) {
-		return goodsdao.updategoodsbynumber3(gnumber, sname);
-	}
-	
-
 }

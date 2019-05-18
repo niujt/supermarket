@@ -152,7 +152,6 @@ public class BillController {
                 BigDecimal b2 = bill.getProductCount();
                 g.setGnumber(b1.intValue() / b2.intValue());
                 g.setPprice(bill.getProductCount());
-                g.setSname(bill.getProductName());
                 g.setGname(bill.getProductName());
                 g.setGunit(bill.getProductUnit());
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");

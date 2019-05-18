@@ -21,11 +21,7 @@ public interface GoodsDAO {
     int deletegoodsbyid(@Param("id") Integer id);
 
     int updategoodsbynumber(@Param("gnumber") int gnumber, @Param("gname") String gname);
-
-    int updategoodsbynumber2(@Param("gnumber") int gnumber, @Param("sname") String sname);
-
-    int updategoodsbynumber3(@Param("gnumber") int gnumber, @Param("sname") String sname);
-
+    int addgoods(Goods goods);
     Goods findgoodsbygname(@Param("gname") String gname);
 
     int deletegoodsbydname(@Param("gname") String gname);

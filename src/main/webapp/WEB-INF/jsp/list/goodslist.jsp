@@ -54,8 +54,9 @@
             , cols: [[ //表头
                 {field: 'gcode', title: '库存编码', width: 140, sort: true}
                 , {field: 'gname', title: '库存商品名称', width: 140, sort: true}
-                , {field: 'gnumber', title: '库存商品数量', width: 140}
-                , {field: 'pprice', title: '进价(元)', width: 140}
+                , {field: 'gnumber', title: '库存商品数量', width: 140, sort: true}
+                , {field: 'pprice', title: '进价(元)', width: 140, sort: true}
+                , {field: 'gunit', title: '单位', width: 140}
                 , {field: 'creationDate', title: '创建时间', width: 140, sort: true}
                 , {fixed: 'right', title: '操作', width: 178, align: 'center', toolbar: '#toolbar'}
             ]], done: function (res, curr, count) {

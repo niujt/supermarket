@@ -66,7 +66,7 @@ public class GoodsController {
         return "info/goodsmodify";
     }
 
-    @RequestMapping(value = "/deletegoodsbyid/{id}",method = RequestMethod.DELETE)
+    @RequestMapping(value = "/deletegoodsbyid/{id}", method = RequestMethod.DELETE)
     @ResponseBody
     public JSONObject deletegoods(@PathVariable Integer id, HttpSession session) {
         JSONObject json = new JSONObject();
@@ -83,31 +83,33 @@ public class GoodsController {
             refuse.setRefReasion("清空" + goods.getGname() + "的库存");
             refuse.setRefunit(goods.getGunit());
             refuseservice.saveRefuse(refuse);
-            json.put("message",goods.getGname()+"库存已清空");
-        }
-        else {
-            json.put("message","删除失败");
+            json.put("message", goods.getGname() + "库存已清空");
+        } else {
+            json.put("message", "删除失败");
         }
         return json;
     }
 
-    @RequestMapping("/savegoods.html")
-    public String savegoods(Goods goods
-            , HttpSession session, String gname, HttpServletRequest request) {
+    @RequestMapping(value = "/savegoods.html", method = RequestMethod.POST)
+    @ResponseBody
+    public JSONObject savegoods(@RequestBody Goods goods, HttpSession session) {
+        JSONObject json = new JSONObject();
         //登陆人的id
         long loginerid = ((User) (session.getAttribute(Constants.SESSION))).getId();
-        System.out.println("loginerid===========" + loginerid);
         goods.setCreatedBy(loginerid);
-        goods.setSname(gname);
         goods.setCreationDate(new Date());
-        if (goodsservice.findgoodsbygname(goods.getGname()) != null) {
-            request.setAttribute("error", "库存里已存在该商品");
-            return "goodsadd";
+        if (goodsservice.findgoodsbygname(goods.getGname()) != null && goodsservice.findgoodsbygname(goods.getGname()).getPprice().equals(goods.getPprice())) {
+            goodsservice.addgoods(goods);
+            json.put("message", "添加成功,"+goods.getGname() + "新增" + goods.getGnumber() + goods.getGunit());
+        }
+        else if (goodsservice.findgoodsbygname(goods.getGname()) != null && !goodsservice.findgoodsbygname(goods.getGname()).getPprice().equals(goods.getPprice())) {
+            json.put("message", "添加"+goods.getGname() +"成功,进价为"+goods.getPprice()+"元");
+            goodsservice.savegoods(goods);
         } else {
             goodsservice.savegoods(goods);
-            return "redirect:/goods/goodslist.html";
+            json.put("message", "添加成功");
         }
-
+        return json;
     }
 
     @RequestMapping("/saveupdategoods")
