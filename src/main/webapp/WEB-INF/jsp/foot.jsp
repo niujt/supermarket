@@ -47,4 +47,16 @@
             }
         });
     }
+    function del(url){
+        $.ajax({
+            url:url,
+            type:'delete',
+            success:function(data){
+                layer.alert(data.message);
+            },
+            error:function (data) {
+                layer.alert(data.message);
+            }
+        });
+    }
 </script>
