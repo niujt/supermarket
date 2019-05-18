@@ -42,6 +42,8 @@ public class RoleServiceImpl implements RoleService{
 		return roledao.updateole(role);
 	}
 
-
-
+	@Override
+	public Integer deleteUser(Integer id) {
+		return roledao.deleteRole(id);
+	}
 }

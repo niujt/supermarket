@@ -65,6 +65,19 @@ public class RoleController {
 		request.setAttribute("role",r);
 		return "info/rolemodify";
 	}
+	@RequestMapping(value = "/deleteRole/{id}",method = RequestMethod.DELETE)
+	@ResponseBody
+	public JSONObject deleteUser(@PathVariable Integer id){
+		JSONObject json=new JSONObject();
+		Integer count =roleservice.deleteUser(id);
+		if(count>0){
+			json.put("message","删除成功");
+		}else {
+			json.put("message","删除失败");
+		}
+
+		return json;
+	}
 	//保存修改的角色信息
 	@RequestMapping(value = "/saveupdaterole.html",method = RequestMethod.POST)
 	public String saveupdaterole(Role role ,HttpSession session){

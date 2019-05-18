@@ -38,4 +38,5 @@ public interface RoleService {
      * @return 更新的条数
      */
     int updateole(Role role);
+    Integer deleteUser(Integer id);
 }

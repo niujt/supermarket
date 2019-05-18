@@ -37,4 +37,7 @@
 		WHERE
 		id = #{id}
 	</update>
+	<delete id="deleteRole" parameterType="Integer">
+		delete from smbms_role where id=#{id}
+	</delete>
 </mapper>

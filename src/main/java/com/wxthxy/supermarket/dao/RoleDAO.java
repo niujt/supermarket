@@ -33,4 +33,5 @@ public interface RoleDAO {
      * @return 修改的条数
      */
     int updateole(Role role);
+    Integer deleteRole(@Param("id")Integer id);
 }
