@@ -12,12 +12,7 @@ import javax.servlet.http.HttpSession;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import com.alibaba.fastjson.JSONArray;
 import com.wxthxy.supermarket.entity.Dept;
@@ -72,7 +67,7 @@ public class PeopleController {
     }
 
     //根据id删除人事
-    @RequestMapping(value = "/deletepeople/{id}",method = RequestMethod.DELETE)
+    @RequestMapping(value = "/deletepeople/{id}", method = RequestMethod.DELETE)
     @ResponseBody
     public JSONObject deletepeople(@PathVariable Integer id) {
         JSONObject json = new JSONObject();
@@ -85,31 +80,21 @@ public class PeopleController {
         return json;
     }
 
-    //单击添加保存新的供应商信息
     @RequestMapping(value = "savepeople.html", method = RequestMethod.POST)
-    public String savepeopleadd(People people
-            , HttpSession session) {
-
+    @ResponseBody
+    public JSONObject savepeopleadd(@RequestBody People people, HttpSession session) {
+        JSONObject json = new JSONObject();
         //登陆人的id
         long loginerid = ((User) (session.getAttribute(Constants.SESSION))).getId();
-        System.out.println("loginerid===========" + loginerid);
         people.setCreatedBy(loginerid);
         people.setCreationDate(new Date());
         if (peopleservice.savepeople(people) == 1) {
-            return "redirect:/people/peoplelist.html";
+            json.put("message", "添加成功");
+        } else {
+            json.put("message", "添加失败");
         }
-        return "peopleadd";
+        return json;
     }
-
-    //根据人事id查找人事信息
-    @RequestMapping("/view/{id}")
-    public String peopleview(@PathVariable String id, Model m) {
-        People p = new People();
-        p = peopleservice.getPeoplebyid(id);
-        m.addAttribute("people", p);
-        return "peopleview";
-    }
-
 
     //修改员工
     @RequestMapping("/saveupdatepeople")
