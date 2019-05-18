@@ -10,18 +10,31 @@
 <%@include file="../menu.jsp" %>
 <!--退货列表-->
 <hr>
-<%--<div class="search">--%>
-<%--<form method="post" action="${pageContext.request.contextPath }/refuse/refuselist.html" enctype="multipart/form-data">--%>
-<%--<span>退货编码：</span>--%>
-<%--<input name="queryRefCode" type="text" value="${queryRefCode }">--%>
-<%--<span>退货名称：</span>--%>
-<%--<input name="queryRefName" type="text" value="${queryRefName}">--%>
-<%--<input type="hidden" name="pageIndex" value="1"/>--%>
-<%--<input value="查 询" type="submit" id="searchbutton">--%>
-<%--<a href="${pageContext.request.contextPath }/refuse/refuseadd.html">添加退货单</a> --%>
-<%--</form>--%>
-<%--</div>--%>
+<table>
+    <form method="POST" class="layui-form"
+          action="/user/userlist.html">
+        <tr>
+            <td><span>&nbsp;&nbsp;&nbsp;&nbsp;退货编码：</span></td>
+            <td>
+                <input name="queryRefCode" class="layui-input"
+                       type="text" value="${queryRefCode}">
+            </td>
+            <td><span>&nbsp;&nbsp;&nbsp;&nbsp;退货名称：</span></td>
+            <td>
+                <input name="queryRefName" class="layui-input"
+                       type="text" value="${queryRefName}">
+            </td>
 
+            <td><input value="查 询" type="submit" class="layui-btn layui-btn-normal">
+            </td>
+            <td>
+                <button type="button" class="layui-btn layui-btn-normal"
+                        onclick="addHtml('/refuse/refuseadd.html')">添加退货单
+                </button>
+            </td>
+        </tr>
+    </form>
+</table>
 <table id="refuselist" lay-filter="test"></table>
 <script type="text/html" id="toolbar">
     <div class="layui-btn-container">
@@ -67,4 +80,5 @@
     });
 
 </script>
+<%@include file="../foot.jsp" %>
 </html>

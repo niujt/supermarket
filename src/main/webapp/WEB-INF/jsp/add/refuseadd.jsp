@@ -1,42 +1,41 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@include file="/WEB-INF/jsp/common/head.jsp"%>
+         pageEncoding="UTF-8" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="/static/css/layui.min.css">
+    <title>超市管理系统</title>
+</head>
+<form method="post" action="/user/saveuser.html" class="layui-form" enctype="multipart/form-data">
+    <table class="layui-table" lay-skin="row" lay-size="lg">
+        <tr>
+            <td>退货单编码：</td>
+            <td>
+                <input class="layui-input" type="text" name="refCode">
+            </td>
+        </tr>
+        <tr>
+            <td>退货名称：</td>
+            <td><input class="layui-input" type="text" name="refName"  value=""></td>
+        </tr>
+        <tr>
+            <td>退货数量：</td>
+            <td><input  class="layui-input" type="text" name="refnumber" value=""></td>
+        </tr>
+        <tr>
+            <td>退货理由：</td>
+            <td>
+                <input  class="layui-input" type="text" name="refReasion" value="">
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="submit" class="layui-btn layui-btn-primary"  value="保存">
+            </td>
+        </tr>
 
-<div class="right">
-     <div class="location">
-         <strong>你现在所在的位置是:</strong>
-         <span>退货单管理页面 >> 退货单添加页面</span>
-     </div>
-     <div class="providerAdd">
-         <form id="refuseForm" name="refuseForm" method="post" action="${pageContext.request.contextPath }/refuse/saverefuse.html">
-             <!--div的class 为error是验证错误，ok是验证成功-->
-             <div class="">
-                 <label for="refCode">退货单编码：</label>
-                 <input type="text" name="refCode" class="text" id="refCode" value=""> 
-				 <!-- 放置提示信息 -->
-				 <font color="red"></font>
-             </div>
-             <div>
-                 <label for="refName">退货名称：</label>
-                <select id="refName" name="refName"></select>
-             </div>
-             <div>
-                 <label for="refnumber">退货数量：</label>
-                <input type="text" name="refnumber" id="refnumber" value=""> 
-				 <font color="red"></font>
-             </div>
-             <div>
-                 <label for="refReasion">退货理由：</label>
-                 <input type="text" name="refReasion" id="refReasion" value=""> 
-				 <font color="red"></font>
-             </div>
-             <div class="providerAddBtn">
-                  <input type="button" name="add" id="add" value="保存">
-				  <input type="button" id="back" name="back" value="返回" >
-             </div>
-         </form>
-     </div>
- </div>
-</section>
-<%@include file="/WEB-INF/jsp/common/foot.jsp" %>
-<script type="text/javascript" src="${pageContext.request.contextPath }/statics/js/refuseadd.js"></script>
+    </table>
+</form>
+</html>
+<script type="text/javascript" src="/static/js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="/static/js/layui.all.js"></script>

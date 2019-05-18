@@ -50,8 +50,9 @@ public class RefuseController {
 	}
 	//进入添加订单列表
 	@RequestMapping("/refuseadd.html")
-	public String refuseadd(@ModelAttribute Refuse refuse){
-		return "refuseadd";
+	public String refuseadd(){
+
+		return "add/refuseadd";
 	}
 	//把要添加的订单保存到数据库
 	@RequestMapping("/saverefuse.html")
