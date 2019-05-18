@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.alibaba.fastjson.JSONObject;
@@ -54,6 +55,14 @@ public class RefuseController {
 
 		return "add/refuseadd";
 	}
+	//进入修改页面
+	@RequestMapping(value="updaterefuse.html/{id}",method = RequestMethod.GET)
+	public String updaterefuse(@PathVariable String id, HttpServletRequest request){
+		//根据id查找到订单信息
+		Refuse r= refuseservice.getRefusebyid(id);
+		request.setAttribute("refuse",r);
+		return "info/refusemodify";
+	}
 	//把要添加的订单保存到数据库
 	@RequestMapping("/saverefuse.html")
 	public String saverefuse(Refuse refuse,HttpSession session){
@@ -81,18 +90,7 @@ public class RefuseController {
 		return "refuseview";
 	}
 
-	//进入修改页面
-	@RequestMapping(value="updaterefuse/{id}",method = RequestMethod.GET)
-	public String updaterefuse(@PathVariable String id,@ModelAttribute Refuse refuse,Model m){
-		//根据id查找到订单信息
-		Refuse r= refuseservice.getRefusebyid(id);
-		if(goodsservice.findgoodsbygname(r.getRefName()).getGnumber()>=r.getRefnumber()) {
-			goodsservice.updategoodsbynumber(r.getRefnumber(), r.getRefName());
-		}
-		m.addAttribute("error","抱歉,"+r.getRefName()+"的库存不足");
-		m.addAttribute("refuse",r);
-		return "refusemodify";
-	}
+
 	//点击保存修改的订单信息
 	@RequestMapping(value="saveupdaterefuse.html",method=RequestMethod.POST)
 	public String saveupdaterefuse(Refuse refuse,HttpSession session){
