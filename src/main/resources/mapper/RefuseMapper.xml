@@ -1,42 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wxthxy.supermarket.dao.RefuseDAO">
-	<resultMap id="BaseResultMap" type="com.wxthxy.supermarket.entity.Refuse">
-		<id column="id" jdbcType="BIGINT" property="id" />
-		<result column="refCode" jdbcType="VARCHAR" property="refCode" />
-		<result column="refName" jdbcType="VARCHAR" property="refName" />
-		<result column="refReasion" jdbcType="VARCHAR" property="refReasion" />
-		<result column="createBy" jdbcType="BIGINT" property="createBy" />
-		<result column="creationDate" jdbcType="TIMESTAMP" property="creationDate" />
-		<result column="modifyDate" jdbcType="TIMESTAMP" property="modifyDate" />
-		<result column="modifyBy" jdbcType="BIGINT" property="modifyBy" />
-	</resultMap>
-	<sql id="Base_Column_List">
+    <resultMap id="BaseResultMap" type="com.wxthxy.supermarket.entity.Refuse">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="refCode" jdbcType="VARCHAR" property="refCode"/>
+        <result column="refName" jdbcType="VARCHAR" property="refName"/>
+        <result column="refReasion" jdbcType="VARCHAR" property="refReasion"/>
+        <result column="createBy" jdbcType="BIGINT" property="createBy"/>
+        <result column="creationDate" jdbcType="TIMESTAMP" property="creationDate"/>
+        <result column="modifyDate" jdbcType="TIMESTAMP" property="modifyDate"/>
+        <result column="modifyBy" jdbcType="BIGINT" property="modifyBy"/>
+    </resultMap>
+    <sql id="Base_Column_List">
 		id, refCode, refName, refReasion,
 		createBy,
 		creationDate, modifyDate, modifyBy
 	</sql>
-	<!-- 查询所有的退货单信息 -->
-	<select id="refuselist" resultType="com.wxthxy.supermarket.entity.Refuse">
+    <!-- 查询所有的退货单信息 -->
+    <select id="refuselist" resultType="com.wxthxy.supermarket.entity.Refuse">
 		SELECT *
 		FROM
 		smbms.smbms_refuse
 	</select>
-	<!-- 按照条件分页查询退货单信息 -->
-	<select id="getRefuseList" resultType="com.wxthxy.supermarket.entity.Refuse" parameterType="Integer">
+    <!-- 按照条件分页查询退货单信息 -->
+    <select id="getRefuseList" resultType="com.wxthxy.supermarket.entity.Refuse" parameterType="Integer">
 		SELECT *
 		FROM
 		smbms.smbms_refuse
 		LIMIT #{page},#{limit}
 	</select>
-	<!-- 查询符合条件的总记录数 -->
-	<select id="getCount" resultType="Integer">
+    <!-- 查询符合条件的总记录数 -->
+    <select id="getCount" resultType="Integer">
 		SELECT count(1)
 		FROM
 		smbms.smbms_refuse
 	</select>
-	<!--添加一条退货单信息 -->
-	<insert id="saveRefuse" parameterType="com.wxthxy.supermarket.entity.Refuse">
+    <!--添加一条退货单信息 -->
+    <insert id="saveRefuse" parameterType="com.wxthxy.supermarket.entity.Refuse">
 		INSERT INTO
 		smbms.smbms_refuse
 		(
@@ -63,20 +63,18 @@
 		#{modifyBy}
 		)
 	</insert>
-	<!-- 根据退货单id查找退货单信息 -->
-	<select id="getRefusebyid" resultType="com.wxthxy.supermarket.entity.Refuse">
+    <!-- 根据退货单id查找退货单信息 -->
+    <select id="getRefusebyid" resultType="com.wxthxy.supermarket.entity.Refuse">
 		SELECT *
 		FROM
 		smbms.smbms_refuse
 		WHERE id = #{id}
 	</select>
-	<!-- 根据退货单id修改退货单信息 -->
-	<update id="updateRefusebyid" parameterType="com.wxthxy.supermarket.entity.Refuse">
+    <!-- 根据退货单id修改退货单信息 -->
+    <update id="updateRefusebyid" parameterType="com.wxthxy.supermarket.entity.Refuse">
 		UPDATE
 		smbms.smbms_refuse
 		SET
-		refName = #{refName} ,
-		refnumber=#{refnumber},
 		refReasion =
 		#{refReasion} ,
 		modifyDate =
@@ -84,8 +82,8 @@
 		modifyBy = #{modifyBy}
 		WHERE id = #{id}
 	</update>
-	<!--删除退货单 -->
-	<delete id="deleteRefusebyid" parameterType="Integer">
+    <!--删除退货单 -->
+    <delete id="deleteRefusebyid" parameterType="Integer">
 		DELETE FROM smbms.smbms_refuse
 		WHERE
 		id = #{id}

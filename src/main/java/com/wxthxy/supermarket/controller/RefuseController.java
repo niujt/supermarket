@@ -52,8 +52,8 @@ public class RefuseController {
     //进入添加订单列表
     @RequestMapping("/refuseadd.html")
     public String refuseadd(HttpServletRequest request) {
-        List<Goods> goods=goodsservice.goodslist(0,99999);
-        request.setAttribute("goods",goods);
+        List<Goods> goods = goodsservice.goodslist(0, 99999);
+        request.setAttribute("goods", goods);
         return "add/refuseadd";
     }
 
@@ -82,7 +82,7 @@ public class RefuseController {
 
     @RequestMapping(value = "/saverefuse.html", method = RequestMethod.POST)
     @ResponseBody
-    public JSONObject saverefuse(@RequestBody  Refuse refuse, HttpSession session) {
+    public JSONObject saverefuse(@RequestBody Refuse refuse, HttpSession session) {
         JSONObject json = new JSONObject();
         //登陆人的id
         long loginerid = ((User) (session.getAttribute(Constants.SESSION))).getId();
@@ -99,16 +99,20 @@ public class RefuseController {
     }
 
     //点击保存修改的订单信息
-    @RequestMapping(value = "saveupdaterefuse.html", method = RequestMethod.POST)
-    public String saveupdaterefuse(Refuse refuse, HttpSession session) {
+    @RequestMapping(value = "/saveupdaterefuse.html", method = RequestMethod.PUT)
+    @ResponseBody
+    public JSONObject saveupdaterefuse(@RequestBody Refuse refuse, HttpSession session) {
+        JSONObject json = new JSONObject();
         //登陆人的id
         long loginerid = ((User) (session.getAttribute(Constants.SESSION))).getId();
         refuse.setModifyBy(loginerid);
         //创建时间
         refuse.setModifyDate(new Date());
         if (refuseservice.updateRefusebyid(refuse) == 1) {
-            return "redirect:/refuse/refuselist.html";
+            json.put("message", "修改成功");
+        } else {
+            json.put("message", "修改失败");
         }
-        return "refuseadd";
+        return json;
     }
 }
