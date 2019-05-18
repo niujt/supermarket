@@ -41,7 +41,7 @@ public class GoodsServiceImpl implements GoodsService{
 	}
 
 
-	public int deletegoodsbyid(String id) {
+	public int deletegoodsbyid(Integer id) {
 		return goodsdao.deletegoodsbyid(id);
 	}
 

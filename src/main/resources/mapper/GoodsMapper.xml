@@ -39,7 +39,7 @@
   	gname=#{gname},gnumber=#{gnumber},pprice=#{pprice},modifyBy=#{modifyBy},modifyDate=#{modifyDate}
   	where id=#{id}
   </update>
-  <delete id="deletegoodsbyid">
+  <delete id="deletegoodsbyid" parameterType="Integer">
   	delete from smbms_goods where id=#{id}
   </delete>
     <select id="findgoodsbygname" resultType="com.wxthxy.supermarket.entity.Goods">

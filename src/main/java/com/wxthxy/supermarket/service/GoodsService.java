@@ -19,7 +19,7 @@ public interface GoodsService {
 
     Goods findgoodsbyid(Integer id);
 
-    int deletegoodsbyid(String id);
+    int deletegoodsbyid(Integer id);
 
     int updategoodsbynumber(int gnumber, String sname);
 
