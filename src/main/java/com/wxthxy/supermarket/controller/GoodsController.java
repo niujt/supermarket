@@ -51,8 +51,8 @@ public class GoodsController {
 		return json;
 	}
 	@RequestMapping("/goodsadd.html")
-	public String goodsadd(@ModelAttribute Goods g) {
-		return "goodsadd";
+	public String goodsadd() {
+		return "add/goodsadd";
 		
 	}
 	@RequestMapping("/savegoods.html")

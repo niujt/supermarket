@@ -3,7 +3,7 @@
 <script type="text/javascript">
     layui.use('element', function () {
         //实例化element
-        var element = layui.element();
+        var element = layui.element;
         //初始化动态元素，一些动态生成的元素如果不设置初始化，将不会有默认的动态效果
         element.init();
         //导航条点击监听

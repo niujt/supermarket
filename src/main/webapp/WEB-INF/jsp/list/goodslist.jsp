@@ -8,19 +8,32 @@
 </head>
 <body>
 <%@include file="../menu.jsp" %>
+<hr>
+<table>
+    <form method="POST" class="layui-form"
+          action="/user/userlist.html">
+        <tr>
+            <td><span>&nbsp;&nbsp;&nbsp;&nbsp;库存编码：</span></td>
+            <td>
+                <input name="querygcode" class="layui-input"
+                       type="text" value="${querygcode}">
+            </td>
+            <td><span>&nbsp;&nbsp;&nbsp;&nbsp;库存商品名称：</span></td>
+            <td>
+                <input name="querygname" class="layui-input"
+                       type="text" value="${querygname}">
+            </td>
 
-<%--<div class="search">--%>
-<%--<form method="post" action="${pageContext.request.contextPath }/goods/goodslist.html">--%>
-<%--<span>库存编码：</span>--%>
-<%--<input name="querygcode" type="text" value="${querygcode}">--%>
-<%--<span>库存商品名称：</span>--%>
-<%--<input name="querygname" type="text" value="${querygname}">--%>
-<%--<input type="hidden" name="pageIndex" value="1"/>--%>
-<%--<input	value="查 询" type="submit" id="searchbutton">--%>
-<%--<span><button type="button" id="btnExport">导出excel</button></span>--%>
-<%--<a href="${pageContext.request.contextPath }/goods/goodsadd.html">添加库存</a>--%>
-<%--</form>--%>
-<%--</div>--%>
+            <td><input value="查 询" type="submit" class="layui-btn layui-btn-normal">
+            </td>
+            <td>
+                <button type="button" class="layui-btn layui-btn-normal"
+                        onclick="addHtml('/goods/goodsadd.html')">添加库存
+                </button>
+            </td>
+        </tr>
+    </form>
+</table>
 <table id="goodslist" lay-filter="test"></table>
 <script type="text/html" id="toolbar">
     <div class="layui-btn-container">
@@ -30,7 +43,6 @@
 </script>
 <script type="text/javascript" src="/static/js/jquery-1.8.3.min.js"></script>
 <script type="text/javascript" src="/static/js/layui.all.js"></script>
-<%--<script type="text/javascript" src="/static/js/billlist.js"></script>--%>
 <script type="text/javascript">
     layui.use('table', function () {
         var table = layui.table;
@@ -64,5 +76,6 @@
 
     });
 </script>
+<%@include file="../foot.jsp" %>
 </body>
 </html>
