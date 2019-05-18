@@ -1,97 +1,70 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@include file="/WEB-INF/jsp/common/head.jsp"%>
-<div class="right">
-	<div class="location">
-		<strong>你现在所在的位置是:</strong> <span>用户管理页面 >> 用户修改页面</span>
-	</div>
-	<div class="providerAdd">
-		<form id="userForm" name="userForm" method="post"
-			action="${pageContext.request.contextPath }/user/modifysave.html"
-			enctype="multipart/form-data">
-			<input type="hidden" name="id" value="${user.id}" />
-			<div>
-				<label for="userName">用户编码：</label> <input type="text"
-					value="${user.userCode }" readonly="readonly">
-			</div>
-			<div>
-				<label for="userName">用户名称：</label> <input type="text"
-					name="userName" id="userName" value="${user.userName }"> <font
-					color="red"></font>
-			</div>
-			<div>
-				<label>用户性别：</label> 
-					<select name="gender" id="gender">
-					<c:choose>
-						<c:when test="${user.gender == 1 }">
-							<option value="1" selected="selected">男</option>
-							<option value="2">女</option>
-						</c:when>
-						<c:otherwise>
-							<option value="1">男</option>
-							<option value="2" selected="selected">女</option>
-						</c:otherwise>
-					</c:choose>
+		 pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="/static/css/layui.min.css">
+	<title>超市管理系统</title>
+</head>
+<form method="post" action="/user/saveuser.html" class="layui-form" enctype="multipart/form-data">
+	<table class="layui-table" lay-skin="row" lay-size="lg">
+		<tr>
+			<td>账号：</td>
+			<td>
+				<input class="layui-input" type="text" name="userCode" value="${user.userCode}">
+				<input class="layui-input" type="hidden" name="id" value="${user.id}">
+			</td>
+		</tr>
+		<tr>
+			<td>姓名：</td>
+			<td><input class="layui-input" type="text" name="userName" value="${user.userName}"></td>
+		</tr>
+		<tr>
+			<td>密码：</td>
+			<td><input  class="layui-input" type="text" name="userPassword" value="${user.userPassword}"></td>
+		</tr>
+		<tr>
+			<td>性别：</td>
+			<td>
+				<select name="gender" id="gender">
+					<option value="1" <c:if test="${user.gender==1}">男</c:if>>男</option>
+					<option value="2" <c:if test="${user.gender==2}">女</c:if>>女</option>
 				</select>
-			</div>
-			<div>
-				<label for="data">出生日期：</label> <input type="text" Class="Wdate"
-					id="birthday" name="birthday"
-					value="<fmt:formatDate value="${user.birthday }" pattern="yyyy-MM-dd"/>"
-					readonly="readonly" onclick="WdatePicker();"> <font
-					color="red"></font>
-			</div>
+			</td>
+		</tr>
+		<tr>
+			<td>出生日期：</td>
+			<td><input class="layui-input" type="date" name="birthday" value="<fmt:formatDate value="${user.birthday}" pattern="yyyy-MM-dd"/>"></td>
+		</tr>
+		<tr>
+			<td>电话：</td>
+			<td><input class="layui-input" type="text" name="phone" value="${user.phone}"></td>
+		</tr>
+		<tr>
+			<td>地址：</td>
+			<td><input class="layui-input" name="address" value="${user.address}"></td>
+		</tr>
+		<tr>
+			<td>用户角色：</td>
+			<td>
+				<select name="userRole" id="userRole">
+					<option value="">-请选择-</option>
+					<c:forEach items="${role}" var="r">
+					<option <c:if test="${user.userRole==r.id}">selected</c:if> value="${r.id}">${r.roleName}</option>
+					</c:forEach>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<input type="submit" class="layui-btn layui-btn-primary"  value="保存">
+			</td>
+		</tr>
 
-			<div>
-				<label for="userphone">用户电话：</label> <input type="text" name="phone"
-					id="phone" value="${user.phone}"> <font color="red"></font>
-			</div>
-			<div>
-				<label for="userAddress">用户地址：</label> <input type="text"
-					name="address" id="address" value="${user.address}">
-			</div>
-			<div>
-				<label>用户角色：</label>
-				<!-- 列出所有的角色分类 -->
-				<input type="hidden" value="${user.userRole}" id="rid" /> <select
-					name="userRole" id="userRole">
-				</select> <font color="red"></font>
-			</div>
-			<div>
-				<label for="m_idPicPath">证件照：</label>
-				<c:choose>
-					<c:when test="${user.idPicPath == null || user.idPicPath == ''}">
-						<input type="hidden" id="errorinfo" value="${uploadFileError}" />
-						<input type="file" name="attachs" id="m_idPicPath" />
-						<font color="red"></font>
-					</c:when>
-					<c:otherwise>
-						<img src="${user.idPicPath}" style="width:100px;height:80px" />
-					</c:otherwise>
-				</c:choose>
-			</div>
-			<div>
-				<label for="m_workPicPath">工作证照片：</label>
-				<c:choose>
-					<c:when
-						test="${user.workPicPath == null || user.workPicPath == ''}">
-						<input type="hidden" id="errorinfo_wp" value="${uploadWpError}" />
-						<input type="file" name="attachs" id="m_workPicPath" />
-						<font color="red"></font>
-					</c:when>
-					<c:otherwise>
-						<img src="${user.workPicPath}" style="width:100px;height:80px" />
-					</c:otherwise>
-				</c:choose>
-			</div>
-			<div class="providerAddBtn">
-				<input type="button" name="save" id="save" value="保存" /> <input
-					type="button" id="back" name="back" value="返回" />
-			</div>
-		</form>
-	</div>
-</div>
-</section>
-<%@include file="/WEB-INF/jsp/common/foot.jsp"%>
-<script type="text/javascript"
-	src="${pageContext.request.contextPath }/statics/js/usermodify.js"></script>
+	</table>
+</form>
+</html>
+<script type="text/javascript" src="/static/js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="/static/js/layui.all.js"></script>

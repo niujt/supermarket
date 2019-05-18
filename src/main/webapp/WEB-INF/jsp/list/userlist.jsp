@@ -22,16 +22,8 @@
             </td>
             <td><span>&nbsp;&nbsp;&nbsp;&nbsp;用户角色：</span></td>
             <td>
-                <select name="queryUserRole">
-                    <%--<c:if test="${roleList != null}">--%>
-                    <%--<option value="">--请选择--</option>--%>
-                    <%--<c:forEach var="role" items="${roleList}">--%>
-                    <%--<option--%>
-                    <%--<c:if test="${role.id == queryUserRole}">selected="selected"</c:if>--%>
-                    <%--value="${role.id}">${role.roleName}</option>--%>
-                    <%--</c:forEach>--%>
-                    <%--</c:if>--%>
-                </select>
+                    <input name="queryUserRole" class="layui-input"
+                           type="text" value="${queryUserRole}">
             </td>
             <td><input value="查 询" type="submit" id="searchbutton" class="layui-btn layui-btn-normal">
             </td>
@@ -101,7 +93,7 @@
                     layer.close(index);
                 });
             } else if (obj.event === 'edit') {
-                layer.alert('编辑行：<br>' + JSON.stringify(data))
+               editHtml("/user/modifyuser.html/"+data.id);
             }
         });
 

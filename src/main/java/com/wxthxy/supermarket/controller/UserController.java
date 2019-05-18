@@ -60,6 +60,19 @@ public class UserController {
     public String adduser() {
         return "add/useradd";
     }
+    /**
+     * 单击修改按钮进入修改页面并根据id先查询指定的用户信息
+     *
+     * @param request
+     * @return
+     */
+    @RequestMapping("/modifyuser.html/{id}")
+    public String modifyuser(@PathVariable Integer id,HttpServletRequest request) {
+        User user = userservice.getUserbyid(id);
+        request.setAttribute("role",roleservice.getRolelist(0,9999));
+        request.setAttribute("user",user);
+        return "info/usermodify";
+    }
 
     /**
      * 单击保存按钮  把要添加 的用户保存到数据库中
@@ -111,50 +124,9 @@ public class UserController {
         return JSON.toJSON(map);
     }
 
-    /**
-     * @param uid
-     * @return
-     */
-    @RequestMapping(value = "/view", method = RequestMethod.GET)
-    @ResponseBody
-    public Object view(@RequestParam String uid) {
-        User user = null;
-        if (uid == null || uid == "") {
-            return "nodata";
-        } else {
-
-            try {
-                user = userservice.getUserbyid(Integer.parseInt(uid));
-
-            } catch (Exception e) {
-                e.getStackTrace();
-                return "failed";
-            }
-        }
-        return user;
-    }
 
 
-    /**
-     * 单击修改按钮进入修改页面并根据id先查询指定的用户信息
-     *
-     * @param uid
-     * @param m
-     * @param request
-     * @return
-     */
-    @RequestMapping("/modify.html")
-    public String modifyuser(@RequestParam String uid, Model m
-            , HttpServletRequest request) {
-        User user = new User();
-        try {
-            user = userservice.getUserbyid(Integer.parseInt(uid));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        m.addAttribute(user);
-        return "info/usermodify";
-    }
+
 
     /**
      * @param user
