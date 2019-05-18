@@ -8,8 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.alibaba.fastjson.JSONObject;
-import com.wxthxy.supermarket.entity.Sale;
-import com.wxthxy.supermarket.service.SaleService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import com.wxthxy.supermarket.entity.Goods;
