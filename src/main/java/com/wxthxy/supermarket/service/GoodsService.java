@@ -21,7 +21,7 @@ public interface GoodsService {
 
     int deletegoodsbyid(Integer id);
 
-    int updategoodsbynumber(int gnumber, String sname);
+    int updategoodsbynumber(int gnumber, String gname);
 
     int updategoodsbynumber2(int gnumber, String sname);
 

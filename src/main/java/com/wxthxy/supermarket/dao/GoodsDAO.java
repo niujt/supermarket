@@ -20,7 +20,7 @@ public interface GoodsDAO {
 
     int deletegoodsbyid(@Param("id") Integer id);
 
-    int updategoodsbynumber(@Param("gnumber") int gnumber, @Param("sname") String sname);
+    int updategoodsbynumber(@Param("gnumber") int gnumber, @Param("gname") String gname);
 
     int updategoodsbynumber2(@Param("gnumber") int gnumber, @Param("sname") String sname);
 

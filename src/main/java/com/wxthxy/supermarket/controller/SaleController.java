@@ -52,7 +52,9 @@ public class SaleController {
     }
 
     @RequestMapping("/saleadd.html")
-    public String saleadd() {
+    public String saleadd(HttpServletRequest request) {
+        List<Goods> goods = goodsservice.goodslist(0, 99999);
+        request.setAttribute("goods", goods);
         return "add/saleadd";
     }
 
@@ -63,7 +65,7 @@ public class SaleController {
         return "info/salemodify";
     }
 
-    @RequestMapping(value = "/deletesalebyid/{id}",method = RequestMethod.DELETE)
+    @RequestMapping(value = "/deletesalebyid/{id}", method = RequestMethod.DELETE)
     @ResponseBody
     public JSONObject deletesale(@PathVariable Integer id) {
         JSONObject json = new JSONObject();
@@ -76,30 +78,27 @@ public class SaleController {
         return json;
     }
 
-    @RequestMapping("/savesale.html")
-    public String savesale(Sale sale, HttpSession session, String snumber
-            , String sname, Model m) {
+    @RequestMapping(value = "/savesale.html", method = RequestMethod.POST)
+    @ResponseBody
+    public JSONObject savesale(@RequestBody Sale sale, HttpSession session) {
+        JSONObject json = new JSONObject();
         //登陆人的id
         long loginerid = ((User) (session.getAttribute(Constants.SESSION))).getId();
         sale.setCreatedBy(loginerid);
-        ;
-        sale.setPprice(goodsservice.findgoodsbygname(sname).getPprice());
+        sale.setPprice(goodsservice.findgoodsbygname(sale.getSname()).getPprice());
         //创建时间
         sale.setCreationDate(new Date());
-        if (saleservice.savesale(sale) == 1) {
-            Goods g = goodsservice.findgoodsbygname(sname);
-            int gnumber = g.getGnumber();
-            int _snumber = Integer.parseInt(snumber);
-            if (gnumber - _snumber >= 0) {
-                System.out.println("==========================添加到销售单的个数=" + _snumber);
-                goodsservice.updategoodsbynumber(_snumber, sname);
-                return "redirect:/sale/salelist.html";
-            }
-            String error = "仓库的" + sname + "数量不足";
-            m.addAttribute("error", error);
-            return "saleadd";
+        Goods g = goodsservice.findgoodsbygname(sale.getSname());
+        int gnumber = g.getGnumber();
+        int snumber = sale.getSnumber();
+        if (gnumber - snumber >= 0) {
+            saleservice.savesale(sale);
+            goodsservice.updategoodsbynumber(snumber, sale.getSname());
+            json.put("message", "添加成功,库存中的" + sale.getSname() + "已减少" + sale.getSnumber());
+        } else {
+            json.put("message", "添加失败,仓库的" + sale.getSname() + "数量不足");
         }
-        return "saleadd";
+        return json;
     }
 
     @RequestMapping("/saveupdatesale.html")

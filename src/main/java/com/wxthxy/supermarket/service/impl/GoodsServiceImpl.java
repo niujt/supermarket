@@ -52,9 +52,9 @@ public class GoodsServiceImpl implements GoodsService{
 	}
 
 
-	public int updategoodsbynumber(int gnumber, String sname) {
+	public int updategoodsbynumber(int gnumber, String gname) {
 		
-		return goodsdao.updategoodsbynumber(gnumber, sname);
+		return goodsdao.updategoodsbynumber(gnumber, gname);
 	}
 
 

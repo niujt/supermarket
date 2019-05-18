@@ -16,7 +16,7 @@
   	from smbms_goods
   </select>
   <update id="updategoodsbynumber" parameterType="com.wxthxy.supermarket.entity.Goods">
- 	update smbms_goods set gnumber=gnumber-#{gnumber} where sname=#{sname}
+ 	update smbms_goods set gnumber=gnumber-#{gnumber} where gname=#{gname}
  </update>
  
   <update id="updategoodsbynumber2" parameterType="com.wxthxy.supermarket.entity.Goods">
