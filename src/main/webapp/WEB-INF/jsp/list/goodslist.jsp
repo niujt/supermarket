@@ -9,31 +9,20 @@
 <body>
 <%@include file="../menu.jsp" %>
 <hr>
-<table>
-    <form method="POST" class="layui-form"
-          action="/user/userlist.html">
-        <tr>
-            <td><span>&nbsp;&nbsp;&nbsp;&nbsp;库存编码：</span></td>
-            <td>
-                <input name="querygcode" class="layui-input"
-                       type="text" value="${querygcode}">
-            </td>
-            <td><span>&nbsp;&nbsp;&nbsp;&nbsp;库存商品名称：</span></td>
-            <td>
-                <input name="querygname" class="layui-input"
-                       type="text" value="${querygname}">
-            </td>
-
-            <td><input value="查 询" type="submit" class="layui-btn layui-btn-normal">
-            </td>
-            <td>
-                <button type="button" class="layui-btn layui-btn-normal"
-                        onclick="addHtml('/goods/goodsadd.html')">添加库存
-                </button>
-            </td>
-        </tr>
-    </form>
-</table>
+<div class="demoTable">
+    库存编码：
+    <div class="layui-inline">
+        <input class="layui-input" name="gcode" id="gcode" autocomplete="off">
+    </div>
+    库存商品名称：
+    <div class="layui-inline">
+        <input class="layui-input" name="gname" id="gname" autocomplete="off">
+    </div>
+    <button class="layui-btn" data-type="reload">搜索</button>
+    <button type="button" class="layui-btn "
+            onclick="addHtml('/goods/goodsadd.html')">添加商品库存
+    </button>
+</div>
 <table id="goodslist" lay-filter="test"></table>
 <script type="text/html" id="toolbar">
     <div class="layui-btn-container">
@@ -48,6 +37,7 @@
         var table = layui.table;
         table.render({
             elem: '#goodslist'
+            ,id:'testReload'
             , height: 500
             , url: '/goods/json/goodslist' //数据接口
             , page: true //开启分页
@@ -75,7 +65,26 @@
                 editHtml("/goods/updategoods.html/"+data.id)
             }
         });
-
+        var $ = layui.$, active = {
+            reload: function () {
+                var gcode = $('#gcode');
+                var gname = $('#gname');
+                //执行重载
+                table.reload('testReload', {
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                    , where: {
+                        gcode: gcode.val(),
+                        gname: gname.val()
+                    }
+                });
+            }
+        };
+        $('.demoTable .layui-btn').on('click', function () {
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
     });
 </script>
 <%@include file="../foot.jsp" %>

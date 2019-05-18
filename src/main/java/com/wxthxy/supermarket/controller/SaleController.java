@@ -51,7 +51,7 @@ public class SaleController {
 
     @RequestMapping("/saleadd.html")
     public String saleadd(HttpServletRequest request) {
-        List<Goods> goods = goodsservice.goodslist(0, 99999);
+        List<Goods> goods = goodsservice.goodslist(0, 99999,"","");
         request.setAttribute("goods", goods);
         return "add/saleadd";
     }

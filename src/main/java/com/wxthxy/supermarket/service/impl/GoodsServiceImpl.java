@@ -1,6 +1,7 @@
 package com.wxthxy.supermarket.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.annotation.Resource;
 
@@ -46,9 +47,11 @@ public class GoodsServiceImpl implements GoodsService{
 	}
 
 
-	public List<Goods> goodslist(Integer page,Integer limit) {
-		
-		return goodsdao.goodslist(page,limit);
+	public List<Goods> goodslist(Integer page,Integer limit,String gcode,String gname) {
+		gcode= Optional.ofNullable(gcode).orElse("");
+		gname= Optional.ofNullable(gname).orElse("");
+
+		return goodsdao.goodslist(page,limit,gcode,gname);
 	}
 
 

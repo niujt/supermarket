@@ -9,7 +9,7 @@ import com.wxthxy.supermarket.entity.Goods;
 
 
 public interface GoodsService {
-    List<Goods> goodslist(Integer page,Integer limit);
+    List<Goods> goodslist(Integer page,Integer limit,String gcode,String gname);
 
     int getcount();
 

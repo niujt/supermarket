@@ -8,7 +8,7 @@ import com.wxthxy.supermarket.entity.Bill;
 import com.wxthxy.supermarket.entity.Goods;
 
 public interface GoodsDAO {
-    List<Goods> goodslist(Integer page,Integer limit);
+    List<Goods> goodslist(Integer page,Integer limit,String gcode,String gname);
 
     int getcount();
 

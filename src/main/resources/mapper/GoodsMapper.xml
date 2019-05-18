@@ -7,6 +7,13 @@
 
   <select id="goodslist" resultType="com.wxthxy.supermarket.entity.Goods" parameterType="Integer">
   	select * from smbms_goods
+  	where 1=1
+      <if test="gcode!=''">
+          and gcode=#{gcode}
+      </if>
+      <if test="gname!=''">
+          and gname=#{gname}
+      </if>
   	ORDER BY creationDate DESC
 		LIMIT #{page},#{limit}
   </select>

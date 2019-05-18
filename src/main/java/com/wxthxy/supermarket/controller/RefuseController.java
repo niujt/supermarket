@@ -53,7 +53,7 @@ public class RefuseController {
     //进入添加订单列表
     @RequestMapping("/refuseadd.html")
     public String refuseadd(HttpServletRequest request) {
-        List<Goods> goods = goodsservice.goodslist(0, 99999);
+        List<Goods> goods = goodsservice.goodslist(0, 99999,"","");
         request.setAttribute("goods", goods);
         return "add/refuseadd";
     }
