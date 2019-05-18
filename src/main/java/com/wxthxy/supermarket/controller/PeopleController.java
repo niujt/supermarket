@@ -57,13 +57,22 @@ public class PeopleController {
 		request.setAttribute("depts",deptservice.deptlist());
 		return "add/peopleadd";
 	}
+	//进入修改人事页面
+	@RequestMapping("/updatepeople.html/{id}")
+	public String peoplemodify(@PathVariable String id,HttpServletRequest request){
+		People people = peopleservice.getPeoplebyid(id);
+		List<Dept> deptlist=deptservice.deptlist();
+		request.setAttribute("depts",deptlist);
+		request.setAttribute("people",people);
+		return "info/peoplemodify";
+	}
 	//单击添加保存新的供应商信息
 	@RequestMapping(value="savepeople.html",method = RequestMethod.POST)
 	public String savepeopleadd(People people
 			,HttpSession session){
 
 		//登陆人的id
-		long   loginerid   = ((User)(session.getAttribute(Constants.SESSION))).getId();  
+		long   loginerid   = ((User)(session.getAttribute(Constants.SESSION))).getId();
 		System.out.println("loginerid==========="+loginerid);
 		people.setCreatedBy(loginerid);
 		people.setCreationDate(new Date());
@@ -82,21 +91,13 @@ public class PeopleController {
 		return "peopleview";
 	}
 
-	//进入修改人事页面
-	@RequestMapping("/updatepeople/{id}")
-	public String peoplemodify(@PathVariable String id ,@ModelAttribute People people,Model m,HttpServletRequest request){
-		people = peopleservice.getPeoplebyid(id);
-		List<Dept> deptlist=deptservice.deptlist();
-		m.addAttribute("deptlist",deptlist);
-		m.addAttribute("people",people);
-		return "peoplemodify";
-	}
+
 	//修改员工
 	@RequestMapping("/saveupdatepeople")
 	public String savepeoplemodify(People people
 			,HttpSession session){
 		//登陆人的id
-		long   loginerid   = ((User)(session.getAttribute(Constants.SESSION))).getId();  
+		long   loginerid   = ((User)(session.getAttribute(Constants.SESSION))).getId();
 		people.setModifyBy(loginerid);
 		//创建时间
 		people.setModifyDate( new  Date());
