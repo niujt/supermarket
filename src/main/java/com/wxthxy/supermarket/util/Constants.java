@@ -7,10 +7,7 @@ package com.wxthxy.supermarket.util;
 public class Constants {
 
 public static final	String SESSION = "userSession";
-/**
- * 页面容量
- */
-public static final int pageSize = 10; 
+
 
 /**
  * error
