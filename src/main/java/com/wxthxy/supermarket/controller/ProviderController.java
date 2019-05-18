@@ -100,93 +100,21 @@ public class ProviderController {
     }
 
     //修改供应商
-    @RequestMapping("/saveupdateprovider")
-    public String saveprovidermodify(Provider provider
-            , HttpSession session
-            , HttpServletRequest request
-            , @RequestParam(value = "attachs", required = false) MultipartFile[] attachs) {
-        String companyLicPicPath = ""; //营业执照
-        String orgCodePicPath = "";//组织机构代码证
-        //设置上传路径
-        String path = request.getSession().getServletContext().getRealPath("statics" + File.separator + "uploadfiles");
-        //设置上传文件的最大字节数；
-        int filesize = 500000;
-        //错误信息出自
-        String errorinfo = "";
-        //设置一个标识符 判断 上船的文件是否出错
-        boolean flag = true;
-        //	if(attachs!=null){
-
-
-        //循环遍历上传表单标签 的数组
-//			for (int i = 0; i<attachs.length ;i++) {
-//				MultipartFile attach = attachs[i];
-//				//如果上传的工作照片不为空时
-//				if(!attach.isEmpty()){
-//					if(i==0){
-//						errorinfo = "uploadFileError";
-//					}else if(i==1){
-//						errorinfo = "uploadOcError";
-//					}
-//					//获取上传文件的原文件名
-//					String oldPathName = attach.getOriginalFilename();
-//					//获取上传文件的后缀名
-//					String prefix = FilenameUtils.getExtension(oldPathName);
-//					//先判断文件大小
-//					if(attach.getSize()>filesize){ //如果上传文件的大小大于设置的最大字节
-//						request.setAttribute(errorinfo,"上传文件过大！");
-//						flag=false;
-//					}else if(prefix.equalsIgnoreCase("jpg")
-//							||prefix.equalsIgnoreCase("png")
-//							||prefix.equalsIgnoreCase("jpeg")
-//							||prefix.equalsIgnoreCase("pneg")){
-//						//如果上传文件满足各条件
-//						//设置新的文件名
-//						String fileName = System.currentTimeMillis()+RandomUtils.nextInt(10000000)+"_Personal.jpg";
-//						//指定文件夹存放上传的图片
-//						File targetFile = new File(path,fileName);
-//						//如果该文件夹不存在，就重新创建一个
-//						if(!targetFile.exists()){
-//							targetFile.mkdirs();
-//						}
-//						//把上传文件保存到新建的文件夹中
-//						try {
-//							attach.transferTo(targetFile);
-//						} catch (Exception e) {
-//							request.setAttribute(errorinfo,"上传失败！");
-//							flag = false;
-//						}
-//						//如果保存成功  就把该文件的绝对路径获取出来
-//						if(i==0){
-//							companyLicPicPath = path+File.separator+fileName;
-//						}else if(i==1){
-//							orgCodePicPath =  path+File.separator+fileName;
-//						}
-//
-//					}else{ //如果上传文件的后缀不等于指定的这几个
-//						request.setAttribute(errorinfo,"上传文件类型不正确！");
-//						flag= false;
-//					}
-//				}
-
-//			}
-//		}
-//		if(flag){
-//			//登陆人的id
-//			long   loginerid   = ((User)(session.getAttribute(Constants.SESSION))).getId();
-//			provider.setModifyBy(loginerid);
-//			//创建时间
-//			provider.setModifyDate( new  Date());
-//			//营业执照
-//			provider.setCompanyLicPicPath(companyLicPicPath);
-//			//组织机构代码证
-//			provider.setOrgCodePicPath(orgCodePicPath);
-//
-//			if(providerservice.updateProviderbyid(provider)==1){
-//				return "redirect:/provider/providerlist.html";
-//			}
-//		}
-        return "provideradd";
+    @RequestMapping(value = "/saveupdateprovider", method = RequestMethod.PUT)
+    @ResponseBody
+    public JSONObject saveprovidermodify(@RequestBody Provider provider, HttpSession session) {
+        JSONObject json = new JSONObject();
+        //登陆人的id
+        long loginerid = ((User) (session.getAttribute(Constants.SESSION))).getId();
+        provider.setModifyBy(loginerid);
+        //创建时间
+        provider.setModifyDate(new Date());
+        if (providerservice.updateProviderbyid(provider) == 1) {
+            json.put("message", "修改成功");
+        } else {
+            json.put("message", "修改失败");
+        }
+        return json;
     }
 
 

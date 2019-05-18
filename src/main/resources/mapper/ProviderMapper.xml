@@ -1,34 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wxthxy.supermarket.dao.ProviderDAO">
-	<resultMap id="BaseResultMap" type="com.wxthxy.supermarket.entity.Provider">
-		<id column="id" jdbcType="BIGINT" property="id" />
-		<result column="proCode" jdbcType="VARCHAR" property="proCode" />
-		<result column="proName" jdbcType="VARCHAR" property="proName" />
-		<result column="proDesc" jdbcType="VARCHAR" property="proDesc" />
-		<result column="proContact" jdbcType="VARCHAR" property="proContact" />
-		<result column="proPhone" jdbcType="VARCHAR" property="proPhone" />
-		<result column="proAddress" jdbcType="VARCHAR" property="proAddress" />
-		<result column="proFax" jdbcType="VARCHAR" property="proFax" />
-		<result column="createdBy" jdbcType="BIGINT" property="createdBy" />
-		<result column="creationDate" jdbcType="TIMESTAMP" property="creationDate" />
-		<result column="modifyDate" jdbcType="TIMESTAMP" property="modifyDate" />
-		<result column="modifyBy" jdbcType="BIGINT" property="modifyBy" />
-	</resultMap>
-	<sql id="Base_Column_List">
+    <resultMap id="BaseResultMap" type="com.wxthxy.supermarket.entity.Provider">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="proCode" jdbcType="VARCHAR" property="proCode"/>
+        <result column="proName" jdbcType="VARCHAR" property="proName"/>
+        <result column="proDesc" jdbcType="VARCHAR" property="proDesc"/>
+        <result column="proContact" jdbcType="VARCHAR" property="proContact"/>
+        <result column="proPhone" jdbcType="VARCHAR" property="proPhone"/>
+        <result column="proAddress" jdbcType="VARCHAR" property="proAddress"/>
+        <result column="proFax" jdbcType="VARCHAR" property="proFax"/>
+        <result column="createdBy" jdbcType="BIGINT" property="createdBy"/>
+        <result column="creationDate" jdbcType="TIMESTAMP" property="creationDate"/>
+        <result column="modifyDate" jdbcType="TIMESTAMP" property="modifyDate"/>
+        <result column="modifyBy" jdbcType="BIGINT" property="modifyBy"/>
+    </resultMap>
+    <sql id="Base_Column_List">
 		id, proCode, proName, proDesc, proContact, proPhone,
 		proAddress, proFax,
 		createdBy,
 		creationDate, modifyDate, modifyBy
 	</sql>
-	<!-- 查询所有的供应商信息 -->
-	<select id="providerlist" resultType="com.wxthxy.supermarket.entity.Provider">
+    <!-- 查询所有的供应商信息 -->
+    <select id="providerlist" resultType="com.wxthxy.supermarket.entity.Provider">
 		SELECT *
 		FROM
 		smbms.smbms_provider
 	</select>
-	<!-- 按照条件分页查询供应商信息 -->
-	<select id="getProviderList" resultType="com.wxthxy.supermarket.entity.Provider" parameterType="Integer">
+    <!-- 按照条件分页查询供应商信息 -->
+    <select id="getProviderList" resultType="com.wxthxy.supermarket.entity.Provider" parameterType="Integer">
 		SELECT *
 		FROM
 		smbms.smbms_provider
@@ -36,19 +36,19 @@
 		LIMIT #{page},#{limit}
 	</select>
 
-	<select id="getProviderbyName" resultType="com.wxthxy.supermarket.entity.Provider" parameterType="String">
+    <select id="getProviderbyName" resultType="com.wxthxy.supermarket.entity.Provider" parameterType="String">
 		SELECT *
 		FROM
 		smbms.smbms_provider where proName=#{proName}
 	</select>
-	<!-- 查询符合条件的总记录数 -->
-	<select id="getCount" resultType="Integer">
+    <!-- 查询符合条件的总记录数 -->
+    <select id="getCount" resultType="Integer">
 		SELECT count(1)
 		FROM
 		smbms.smbms_provider
 	</select>
-	<!--添加一条供应商信息 -->
-	<insert id="saveprovider" parameterType="com.wxthxy.supermarket.entity.Provider">
+    <!--添加一条供应商信息 -->
+    <insert id="saveprovider" parameterType="com.wxthxy.supermarket.entity.Provider">
 		INSERT INTO
 		smbms.smbms_provider
 		(
@@ -75,15 +75,15 @@
 		#{creationDate}
 		)
 	</insert>
-	<!-- 根据供应商id查找供应商信息 -->
-	<select id="getProviderbyid" resultType="com.wxthxy.supermarket.entity.Provider" parameterType="Integer">
+    <!-- 根据供应商id查找供应商信息 -->
+    <select id="getProviderbyid" resultType="com.wxthxy.supermarket.entity.Provider" parameterType="Integer">
 		SELECT *
 		FROM
 		smbms.smbms_provider
 		WHERE id = #{id}
 	</select>
-	<!-- 根据供应商id修改供应商信息 -->
-	<update id="updateProviderbyid" parameterType="com.wxthxy.supermarket.entity.Provider">
+    <!-- 根据供应商id修改供应商信息 -->
+    <update id="updateProviderbyid" parameterType="com.wxthxy.supermarket.entity.Provider">
 		UPDATE
 		smbms.smbms_provider
 		SET
@@ -97,15 +97,11 @@
 		proFax = #{proFax},
 		modifyDate =
 		#{modifyDate},
-		<if test="companyLicPicPath!=null and companyLicPicPath!=''">companyLicPicPath =
-			#{companyLicPicPath} ,
-		</if>
-		<if test="orgCodePicPath!=null and orgCodePicPath!=''"> orgCodePicPath = #{orgCodePicPath},</if>
 		modifyBy = #{modifyBy}
 		WHERE id = #{id}
 	</update>
-	<!--删除供应商 -->
-	<delete id="deleteproviderbyid" parameterType="Integer">
+    <!--删除供应商 -->
+    <delete id="deleteproviderbyid" parameterType="Integer">
 		DELETE FROM smbms.smbms_provider
 		WHERE
 		id = #{id}
