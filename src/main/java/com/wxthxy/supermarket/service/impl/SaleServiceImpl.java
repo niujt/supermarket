@@ -1,6 +1,7 @@
 package com.wxthxy.supermarket.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.annotation.Resource;
 
@@ -15,8 +16,10 @@ public class SaleServiceImpl implements SaleService {
     @Resource
     private SaleDAO saledao;
 
-    public List<Sale> getsaleList(Integer page,Integer limit) {
-        return saledao.getsaleList(page,limit);
+    public List<Sale> getsaleList(Integer page,Integer limit,String sname,String scode) {
+        sname= Optional.ofNullable(sname).orElse("");
+        scode= Optional.ofNullable(scode).orElse("");
+        return saledao.getsaleList(page,limit, sname,scode);
     }
 
     public int getcount() {

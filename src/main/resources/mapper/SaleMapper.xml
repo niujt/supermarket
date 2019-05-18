@@ -6,6 +6,13 @@
   </sql>
   <select id="getsaleList" resultType="com.wxthxy.supermarket.entity.Sale" parameterType="Integer">
   	select * from smbms_sale
+  	where 1=1
+      <if test="scode!=''">
+          and scode=#{scode}
+      </if>
+      <if test="sname!=''">
+          and sname=#{sname}
+      </if>
   	order by creationDate desc
   	limit #{page},#{limit}
   </select>

@@ -9,31 +9,20 @@
 <body>
 <%@include file="../menu.jsp" %>
 <hr>
-<table>
-	<form method="POST" class="layui-form"
-		  action="/user/userlist.html">
-		<tr>
-			<td><span>&nbsp;&nbsp;&nbsp;&nbsp;销售编码：</span></td>
-			<td>
-				<input name="queryscode" class="layui-input"
-					   type="text" value="${queryscode}">
-			</td>
-			<td><span>&nbsp;&nbsp;&nbsp;&nbsp;商品名称：</span></td>
-			<td>
-				<input name="queryscode" class="layui-input"
-					   type="text" value="${querysname}">
-			</td>
-
-			<td><input value="查 询" type="submit" class="layui-btn layui-btn-normal">
-			</td>
-			<td>
-				<button type="button" class="layui-btn layui-btn-normal"
-						onclick="addHtml('/sale/saleadd.html')">添加销售单
-				</button>
-			</td>
-		</tr>
-	</form>
-</table>
+<div class="demoTable">
+	销售编码：
+	<div class="layui-inline">
+		<input class="layui-input" name="scode" id="scode" autocomplete="off">
+	</div>
+	商品名称：
+	<div class="layui-inline">
+		<input class="layui-input" name="sname" id="sname" autocomplete="off">
+	</div>
+	<button class="layui-btn" data-type="reload">搜索</button>
+	<button type="button" class="layui-btn "
+			onclick="addHtml('/sale/saleadd.html')">添加订单
+	</button>
+</div>
 <table id="salelist" lay-filter="test"></table>
 <script type="text/html" id="toolbar">
 	<div class="layui-btn-container">
@@ -49,6 +38,7 @@
 		var table = layui.table;
 		table.render({
 			elem: '#salelist'
+			,id:'testReload'
 			, height: 500
 			, url: '/sale/json/salelist' //数据接口
 			, page: true //开启分页
@@ -77,7 +67,26 @@
 				editHtml("/sale/updatesale.html/"+data.id);
 			}
 		});
-
+		var $ = layui.$, active = {
+			reload: function () {
+				var sname = $('#sname');
+				var scode = $('#scode');
+				//执行重载
+				table.reload('testReload', {
+					page: {
+						curr: 1 //重新从第 1 页开始
+					}
+					, where: {
+						sname: sname.val(),
+						scode: scode.val()
+					}
+				});
+			}
+		};
+		$('.demoTable .layui-btn').on('click', function () {
+			var type = $(this).data('type');
+			active[type] ? active[type].call(this) : '';
+		});
 	});
 </script>
 <%@include file="../foot.jsp" %>

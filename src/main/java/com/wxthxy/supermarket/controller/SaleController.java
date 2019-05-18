@@ -38,12 +38,13 @@ public class SaleController {
 
     @RequestMapping(value = "/json/salelist", method = RequestMethod.GET)
     @ResponseBody
-    public JSONObject showsalelist(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "limit", required = false) Integer limit) {
+    public JSONObject showsalelist(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "limit", required = false) Integer limit
+    ,@RequestParam(value = "sname",required = false)String sname,@RequestParam(value = "scode",required = false)String scode) {
         JSONObject json = new JSONObject();
         json.put("code", 0);
         json.put("msg", "");
         json.put("count", saleservice.getcount());
-        List<Sale> sales = saleservice.getsaleList((page - 1) * limit, limit);
+        List<Sale> sales = saleservice.getsaleList((page - 1) * limit, limit,sname,scode);
         json.put("data", sales);
         return json;
     }

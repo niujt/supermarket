@@ -5,7 +5,7 @@ import org.apache.ibatis.annotations.Param;
 import com.wxthxy.supermarket.entity.Sale;
 
 public interface SaleDAO {
-    List<Sale> getsaleList(Integer page,Integer limit);
+    List<Sale> getsaleList(Integer page,Integer limit,String sname,String scode);
 
     int getcount();
 
