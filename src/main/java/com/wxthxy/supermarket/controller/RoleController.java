@@ -9,7 +9,6 @@ import javax.servlet.http.HttpSession;
 
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import com.wxthxy.supermarket.entity.Role;
