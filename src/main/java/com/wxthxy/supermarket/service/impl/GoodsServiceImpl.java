@@ -35,7 +35,7 @@ public class GoodsServiceImpl implements GoodsService{
 	}
 
 
-	public Goods findgoodsbyid(String id) {
+	public Goods findgoodsbyid(Integer id) {
 		
 		return goodsdao.findgoodsbyid(id);
 	}

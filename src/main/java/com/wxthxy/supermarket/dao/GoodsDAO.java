@@ -16,7 +16,7 @@ public interface GoodsDAO {
 
     int updategoodsbyid(Goods g);
 
-    Goods findgoodsbyid(@Param("id") String id);
+    Goods findgoodsbyid(@Param("id") Integer id);
 
     int deletegoodsbyid(@Param("id") String id);
 

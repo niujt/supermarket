@@ -55,6 +55,12 @@ public class GoodsController {
 		return "add/goodsadd";
 		
 	}
+	@RequestMapping("/updategoods.html/{id}")
+	public String updategoods(@PathVariable Integer id,HttpServletRequest request) {
+		Goods goods = goodsservice.findgoodsbyid(id);
+		request.setAttribute("goods",goods);
+		return "info/goodsmodify";
+	}
 	@RequestMapping("/savegoods.html")
 	public String savegoods(Goods goods
 			,HttpSession session,String gname,HttpServletRequest request){
@@ -74,19 +80,7 @@ public class GoodsController {
 		}
 		
 	}
-	@RequestMapping("/view/{id}")
-	public String goodsView(@PathVariable String id,Model m) {
-		Goods g=new Goods();
-		g=goodsservice.findgoodsbyid(id);
-		m.addAttribute("goods", g);
-		return "goodsview";
-	}
-	@RequestMapping("/updategoods/{id}")
-	public String updategoods(@PathVariable String id ,@ModelAttribute Goods goods,Model m) {
-		goods = goodsservice.findgoodsbyid(id);
-		m.addAttribute("goods",goods);
-		return "goodsmodify";
-	}
+
 	@RequestMapping("/saveupdategoods")
 	public String saveupdategoods(Goods goods
 			,HttpSession session) {
@@ -101,30 +95,30 @@ public class GoodsController {
 	}
 	@RequestMapping("/deletegoodsbyid/{id}")
 	@ResponseBody
-	public String  deletegoods(@PathVariable String id,HttpSession session) {
-		HashMap<String,Object> m = new HashMap<String,Object>();
-		if(id==null||id==""){
-			m.put("delResult", "notexist");
-		}else{
-			Goods goods=goodsservice.findgoodsbyid(id);
-			int count=  goodsservice.deletegoodsbyid(id);
-			Refuse refuse=new Refuse();
-			refuse.setCreateBy(((User)session.getAttribute(Constants.SESSION)).getId());
-			refuse.setCreationDate(new Date());
-			SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd");
-			refuse.setRefCode("TH"+sdf.format(new Date()));
-			refuse.setRefName(goods.getGname());
-			refuse.setRefnumber(goods.getGnumber());
-			refuse.setRefReasion("清空"+goods.getGname()+"的库存");
-			refuse.setRefunit(goods.getGunit());
-			refuseservice.saveRefuse(refuse);
-			if(count>0){
-				m.put("delResult", "true");
-			}else{
-				m.put("delResult", "false");
-			}
-		}
-		return JSONArray.toJSONString(m);
+	public String  deletegoods(@PathVariable Integer id,HttpSession session) {
+//		HashMap<String,Object> m = new HashMap<String,Object>();
+//		if(id==null||id==""){
+//			m.put("delResult", "notexist");
+//		}else{
+//			Goods goods=goodsservice.findgoodsbyid(id);
+//			int count=  goodsservice.deletegoodsbyid(id);
+//			Refuse refuse=new Refuse();
+//			refuse.setCreateBy(((User)session.getAttribute(Constants.SESSION)).getId());
+//			refuse.setCreationDate(new Date());
+//			SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd");
+//			refuse.setRefCode("TH"+sdf.format(new Date()));
+//			refuse.setRefName(goods.getGname());
+//			refuse.setRefnumber(goods.getGnumber());
+//			refuse.setRefReasion("清空"+goods.getGname()+"的库存");
+//			refuse.setRefunit(goods.getGunit());
+//			refuseservice.saveRefuse(refuse);
+//			if(count>0){
+//				m.put("delResult", "true");
+//			}else{
+//				m.put("delResult", "false");
+//			}
+//		}
+		return null;
 	}
 	
 	

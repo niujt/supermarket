@@ -1,44 +1,59 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@include file="/WEB-INF/jsp/common/head.jsp"%>
+         pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="/static/css/layui.min.css">
+    <title>超市管理系统</title>
+</head>
+<form method="post" action="/goods/savegoods.html" class="layui-form" enctype="multipart/form-data">
+    <table class="layui-table" lay-skin="row" lay-size="lg">
+        <tr>
+            <td>商品编码：</td>
+            <td>
+                <input class="layui-input" type="text" name="gcode" value="${goods.gcode}">
+                <input class="layui-input" type="hidden" name="id" value="${goods.id}">
+            </td>
+        </tr>
+        <tr>
+            <td>商品名称：</td>
+            <td><input class="layui-input" type="text" name="gname"  value="${goods.gname}"></td>
+        </tr>
+        <tr>
+            <td>单位：</td>
+            <td>
+                <select name="gunit">
+                    <option value="瓶" <c:if test="${goods.gunit=='瓶'}">selected</c:if>>瓶</option>
+                    <option value="斤" <c:if test="${goods.gunit=='斤'}">selected</c:if>>斤</option>
+                    <option value="个" <c:if test="${goods.gunit=='个'}">selected</c:if>>个</option>
+                    <option value="根" <c:if test="${goods.gunit=='根'}">selected</c:if>>根</option>
+                    <option value="条" <c:if test="${goods.gunit=='条'}">selected</c:if>>条</option>
+                    <option value="只" <c:if test="${goods.gunit=='只'}">selected</c:if>>只</option>
+                    <option value="颗" <c:if test="${goods.gunit=='颗'}">selected</c:if>>颗</option>
+                    <option value="箱" <c:if test="${goods.gunit=='箱'}">selected</c:if>>箱</option>
+                    <option value="束" <c:if test="${goods.gunit=='束'}">selected</c:if>>束</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>商品数量：</td>
+            <td><input class="layui-input" type="text" name="gnumber"  value="${goods.gnumber}"></td>
+        </tr>
+        <tr>
+            <td>进价：</td>
+            <td>
+                <input  class="layui-input" type="text" name="pprice" value="${goods.pprice}">
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="submit" class="layui-btn layui-btn-primary"  value="保存">
+            </td>
+        </tr>
 
-  <div class="right">
-      <div class="location">
-          <strong>你现在所在的位置是:</strong>
-          <span>库存管理页面 >> 库存修改页</span>
-      </div>
-      <div class="providerAdd">
-          <form id="goodsForm" name="goodsForm" method="post" action="${pageContext.request.contextPath }/goods/saveupdategoods" enctype="multipart/form-data">
-              <input type="hidden" name="id" value="${goods.id }"/>
-              <!--div的class 为error是验证错误，ok是验证成功-->
-              <div class="">
-                  <label for="gcode">库存编码：</label>
-                  <input type="text" name="gcode" id="gcode" value="${goods.gcode}" readonly="readonly"> 
-              </div>
-              <div>
-                  <label for="gname">库存商品名称：</label>
-                 <input type="text" name="gname" id="gname" value="${goods.gname }"> 
-			<font color="red"></font>
-              </div>
-              
-              <div>
-                  <label for="gnumber">库存数量：</label>
-                  <input type="text" name="gnumber" id="gnumber" value="${goods.gnumber }"> 
-			<font color="red"></font>
-              </div>
-              
-              <div>
-                  <label for="pprice">进价：</label>
-                  <input type="text" name="pprice" id="pprice" value="${goods.pprice}"> 
-			<font color="red"></font>
-              </div>
-              <div class="providerAddBtn">
-                  <input type="button" name="save" id="save" value="保存">
-				  <input type="button" id="back" name="back" value="返回" >
-              </div>
-          </form>
-      </div>
-  </div>
-</section>
-<%@include file="/WEB-INF/jsp/common/foot.jsp" %>
-<script type="text/javascript" src="${pageContext.request.contextPath }/statics/js/goodsmodify.js"></script>
+    </table>
+</form>
+</html>
+<script type="text/javascript" src="/static/js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="/static/js/layui.all.js"></script>
