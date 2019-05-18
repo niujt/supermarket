@@ -30,98 +30,100 @@ import com.wxthxy.supermarket.util.Constants;
 @Controller
 @RequestMapping("/people")
 public class PeopleController {
-	@Resource
-	private DeptService deptservice;
-	@Resource
-	private PeopleService  peopleservice;
-	//进入员工列表页面
-	@RequestMapping("/peoplelist.html")
-	public String peoplelistshow(HttpServletRequest request){
-		request.setAttribute("depts",deptservice.deptlist());
-		return "list/peoplelist";
-	}
-	@RequestMapping(value = "/json/peoplelist",method = RequestMethod.GET)
-	@ResponseBody
-	public JSONObject peoplelist(@RequestParam(value = "page",required = false)Integer page, @RequestParam(value = "limit",required = false)Integer limit){
-		JSONObject json=new JSONObject();
-		json.put("code",0);
-		json.put("msg","");
-		json.put("count",peopleservice.getcount());
-		List<People> peoples=peopleservice.peoplelist((page-1)*limit, limit);
-		json.put("data",peoples);
-		return json;
-	}
-	//进入添加供应商列表
-	@RequestMapping("/peopleadd.html")
-	public String provideradd(HttpServletRequest request){
-		request.setAttribute("depts",deptservice.deptlist());
-		return "add/peopleadd";
-	}
-	//进入修改人事页面
-	@RequestMapping("/updatepeople.html/{id}")
-	public String peoplemodify(@PathVariable String id,HttpServletRequest request){
-		People people = peopleservice.getPeoplebyid(id);
-		List<Dept> deptlist=deptservice.deptlist();
-		request.setAttribute("depts",deptlist);
-		request.setAttribute("people",people);
-		return "info/peoplemodify";
-	}
-	//单击添加保存新的供应商信息
-	@RequestMapping(value="savepeople.html",method = RequestMethod.POST)
-	public String savepeopleadd(People people
-			,HttpSession session){
+    @Resource
+    private DeptService deptservice;
+    @Resource
+    private PeopleService peopleservice;
 
-		//登陆人的id
-		long   loginerid   = ((User)(session.getAttribute(Constants.SESSION))).getId();
-		System.out.println("loginerid==========="+loginerid);
-		people.setCreatedBy(loginerid);
-		people.setCreationDate(new Date());
-		if(peopleservice.savepeople(people)==1){
-			return "redirect:/people/peoplelist.html";
-		}
-		return "peopleadd";
-	}
+    //进入员工列表页面
+    @RequestMapping("/peoplelist.html")
+    public String peoplelistshow(HttpServletRequest request) {
+        request.setAttribute("depts", deptservice.deptlist());
+        return "list/peoplelist";
+    }
 
-	//根据人事id查找人事信息
-	@RequestMapping("/view/{id}")
-	public String peopleview(@PathVariable String id,Model m){
-		People p = new People();
-		p = peopleservice.getPeoplebyid(id);
-		m.addAttribute("people",p);
-		return "peopleview";
-	}
+    @RequestMapping(value = "/json/peoplelist", method = RequestMethod.GET)
+    @ResponseBody
+    public JSONObject peoplelist(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "limit", required = false) Integer limit) {
+        JSONObject json = new JSONObject();
+        json.put("code", 0);
+        json.put("msg", "");
+        json.put("count", peopleservice.getcount());
+        List<People> peoples = peopleservice.peoplelist((page - 1) * limit, limit);
+        json.put("data", peoples);
+        return json;
+    }
+
+    //进入添加供应商列表
+    @RequestMapping("/peopleadd.html")
+    public String provideradd(HttpServletRequest request) {
+        request.setAttribute("depts", deptservice.deptlist());
+        return "add/peopleadd";
+    }
+
+    //进入修改人事页面
+    @RequestMapping("/updatepeople.html/{id}")
+    public String peoplemodify(@PathVariable String id, HttpServletRequest request) {
+        People people = peopleservice.getPeoplebyid(id);
+        List<Dept> deptlist = deptservice.deptlist();
+        request.setAttribute("depts", deptlist);
+        request.setAttribute("people", people);
+        return "info/peoplemodify";
+    }
+
+    //根据id删除人事
+    @RequestMapping(value = "/deletepeople/{id}",method = RequestMethod.DELETE)
+    @ResponseBody
+    public JSONObject deletepeople(@PathVariable Integer id) {
+        JSONObject json = new JSONObject();
+        int count = peopleservice.deletepeoplebyid(id);
+        if (count > 0) {
+            json.put("message", "删除成功");
+        } else {
+            json.put("message", "删除失败");
+        }
+        return json;
+    }
+
+    //单击添加保存新的供应商信息
+    @RequestMapping(value = "savepeople.html", method = RequestMethod.POST)
+    public String savepeopleadd(People people
+            , HttpSession session) {
+
+        //登陆人的id
+        long loginerid = ((User) (session.getAttribute(Constants.SESSION))).getId();
+        System.out.println("loginerid===========" + loginerid);
+        people.setCreatedBy(loginerid);
+        people.setCreationDate(new Date());
+        if (peopleservice.savepeople(people) == 1) {
+            return "redirect:/people/peoplelist.html";
+        }
+        return "peopleadd";
+    }
+
+    //根据人事id查找人事信息
+    @RequestMapping("/view/{id}")
+    public String peopleview(@PathVariable String id, Model m) {
+        People p = new People();
+        p = peopleservice.getPeoplebyid(id);
+        m.addAttribute("people", p);
+        return "peopleview";
+    }
 
 
-	//修改员工
-	@RequestMapping("/saveupdatepeople")
-	public String savepeoplemodify(People people
-			,HttpSession session){
-		//登陆人的id
-		long   loginerid   = ((User)(session.getAttribute(Constants.SESSION))).getId();
-		people.setModifyBy(loginerid);
-		//创建时间
-		people.setModifyDate( new  Date());
-		if(peopleservice.updatepeoplebyid(people)==1){
-			return "redirect:/people/peoplelist.html";
-		}
-		return "peopleadd";
-	}
+    //修改员工
+    @RequestMapping("/saveupdatepeople")
+    public String savepeoplemodify(People people
+            , HttpSession session) {
+        //登陆人的id
+        long loginerid = ((User) (session.getAttribute(Constants.SESSION))).getId();
+        people.setModifyBy(loginerid);
+        //创建时间
+        people.setModifyDate(new Date());
+        if (peopleservice.updatepeoplebyid(people) == 1) {
+            return "redirect:/people/peoplelist.html";
+        }
+        return "peopleadd";
+    }
 
-	//根据id删除人事
-	@RequestMapping("/deletepeople/{id}")
-	@ResponseBody
-	public Object deletepeople(@PathVariable String id){
-		HashMap<String,Object> m = new HashMap<String,Object>();
-		if(id==null||id==""){
-			m.put("delResult", "notexist");
-		}else{
-			int count=  peopleservice.deletepeoplebyid(id);
-			if(count>0){
-				m.put("delResult", "true");
-			}else{
-				m.put("delResult", "false");
-			}
-		}
-		return JSONArray.toJSONString(m);
-	}
 }

@@ -42,7 +42,7 @@ public class PeopleServiceImpl implements PeopleService{
 	}
 
 
-	public int deletepeoplebyid(String id) {
+	public int deletepeoplebyid(Integer id) {
 		return dao.deletepeoplebyid(id);
 		
 	}

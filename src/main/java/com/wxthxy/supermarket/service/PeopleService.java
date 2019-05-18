@@ -17,5 +17,5 @@ public interface PeopleService {
 
     int updatepeoplebyid(People p);
 
-    int deletepeoplebyid(@Param("id") String id);
+    int deletepeoplebyid(Integer id);
 }

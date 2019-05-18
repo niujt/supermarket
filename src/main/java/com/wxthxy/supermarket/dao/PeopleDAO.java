@@ -19,5 +19,5 @@ public interface PeopleDAO {
 
     int updatepeoplebyid(People p);
 
-    int deletepeoplebyid(@Param("id") String id);
+    int deletepeoplebyid(@Param("id") Integer id);
 }
