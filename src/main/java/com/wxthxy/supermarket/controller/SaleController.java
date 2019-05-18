@@ -47,8 +47,8 @@ public class SaleController {
 		return json;
 	}
 	@RequestMapping("/saleadd.html")
-	public String saleadd(@ModelAttribute Sale sale){
-		return "saleadd";
+	public String saleadd(){
+		return "add/saleadd";
 	}
 	
 	@RequestMapping("/savesale.html")
@@ -71,11 +71,6 @@ public class SaleController {
 				return "redirect:/sale/salelist.html";
 			}
 				String error="仓库的"+sname+"数量不足";
-			/*int _gnumber=g.getGnumber();
-			System.out.println("=========================snumber="+snumber);
-			System.out.println("=========================sname="+sname);
-			System.out.println("==========================数量="+_gnumber);
-			_gnumber=_gnumber-Integer.parseInt(snumber);*/
 			m.addAttribute("error", error);
 			return "saleadd";
 		}

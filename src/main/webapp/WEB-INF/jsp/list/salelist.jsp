@@ -9,19 +9,31 @@
 <body>
 <%@include file="../menu.jsp" %>
 <hr>
+<table>
+	<form method="POST" class="layui-form"
+		  action="/user/userlist.html">
+		<tr>
+			<td><span>&nbsp;&nbsp;&nbsp;&nbsp;销售编码：</span></td>
+			<td>
+				<input name="queryscode" class="layui-input"
+					   type="text" value="${queryscode}">
+			</td>
+			<td><span>&nbsp;&nbsp;&nbsp;&nbsp;商品名称：</span></td>
+			<td>
+				<input name="queryscode" class="layui-input"
+					   type="text" value="${querysname}">
+			</td>
 
-       <%--<div class="search">--%>
-       <%--<form method="post" action="${pageContext.request.contextPath }/sale/salelist.html">--%>
-			<%--<span>销售编码：</span>--%>
-			<%--<input name="queryscode" type="text" value="${queryscode}">--%>
-			<%--<span>商品名称：</span>--%>
-			<%--<input name="querysname" type="text" value="${querysname}">--%>
-			 <%--<input type="hidden" name="pageIndex" value="1"/>--%>
-			 <%--<input	value="查 询" type="submit" id="searchbutton">--%>
-			 <%--<span><button type="button" id="btnExport">导出excel</button></span>--%>
-			 <%--<a href="${pageContext.request.contextPath }/sale/saleadd.html">添加销售单</a>--%>
-		<%--</form>--%>
-       <%--</div>--%>
+			<td><input value="查 询" type="submit" class="layui-btn layui-btn-normal">
+			</td>
+			<td>
+				<button type="button" class="layui-btn layui-btn-normal"
+						onclick="addHtml('/sale/saleadd.html')">添加销售单
+				</button>
+			</td>
+		</tr>
+	</form>
+</table>
 <table id="salelist" lay-filter="test"></table>
 <script type="text/html" id="toolbar">
 	<div class="layui-btn-container">
@@ -66,6 +78,6 @@
 		});
 
 	});
-
 </script>
+<%@include file="../foot.jsp" %>
 </html>

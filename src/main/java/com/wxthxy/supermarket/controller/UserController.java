@@ -54,14 +54,10 @@ public class UserController {
     /**
      * 添加用户
      * 先进入到添加用户界面
-     *
-     * @param user
-     * @param request
      * @return
      */
     @RequestMapping(value = "/adduser.html", method = RequestMethod.GET)
-    public String adduser(@ModelAttribute("user") User user
-            , HttpServletRequest request) {
+    public String adduser() {
         return "add/useradd";
     }
 
@@ -280,7 +276,7 @@ public class UserController {
      * @param session
      * @return
      */
-    @RequestMapping(value = "/savepass.html",method = RequestMethod.POST)
+    @RequestMapping(value = "/savepass.html", method = RequestMethod.POST)
     public String savepass(User newUser, HttpSession session, HttpServletRequest request) {
         User user = ((User) (session.getAttribute(Constants.SESSION)));
         String message = "";

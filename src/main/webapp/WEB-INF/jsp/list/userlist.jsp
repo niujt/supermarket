@@ -36,8 +36,8 @@
             <td><input value="查 询" type="submit" id="searchbutton" class="layui-btn layui-btn-normal">
             </td>
             <td>
-                <button class="layui-btn layui-btn-normal"
-                        onclick="location.href='/user/adduser.html'">添加用户
+                <button type="button" class="layui-btn layui-btn-normal"
+                        onclick="addHtml('/user/adduser.html')">添加用户
                 </button>
             </td>
         </tr>
@@ -106,7 +106,7 @@
         });
 
     });
-
 </script>
+<%@include file="../foot.jsp" %>
 </html>
 
