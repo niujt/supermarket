@@ -27,6 +27,13 @@
 		SELECT *
 		FROM
 		smbms.smbms_refuse
+		where 1=1
+		<if test="refCode!=''">
+			and refCode=#{refCode}
+		</if>
+		<if test="refName!=''">
+			and refName=#{refName}
+		</if>
 		LIMIT #{page},#{limit}
 	</select>
     <!-- 查询符合条件的总记录数 -->

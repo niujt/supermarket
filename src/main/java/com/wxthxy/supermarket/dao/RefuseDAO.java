@@ -20,7 +20,7 @@ public interface RefuseDAO {
      * @param
      * @return
      */
-    List<Refuse> getRefuseList(Integer page,Integer limit);
+    List<Refuse> getRefuseList(Integer page,Integer limit,String refCode,String refName);
 
     /**
      * 查找符合条件的总记录数

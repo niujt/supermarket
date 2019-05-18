@@ -39,12 +39,13 @@ public class RefuseController {
 
     @RequestMapping(value = "/json/refuselist", method = RequestMethod.GET)
     @ResponseBody
-    public JSONObject showproviderlist(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "limit", required = false) Integer limit) {
+    public JSONObject showproviderlist(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "limit", required = false) Integer limit
+    ,@RequestParam(value="refCode",required = false)String refCode,@RequestParam(value="refName",required = false)String refName) {
         JSONObject json = new JSONObject();
         json.put("code", 0);
         json.put("msg", "");
         json.put("count", refuseservice.getCount());
-        List<Refuse> refuses = refuseservice.getRefuseList((page - 1) * limit, limit);
+        List<Refuse> refuses = refuseservice.getRefuseList((page - 1) * limit, limit,refCode,refName);
         json.put("data", refuses);
         return json;
     }

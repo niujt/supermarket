@@ -1,6 +1,7 @@
 package com.wxthxy.supermarket.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.annotation.Resource;
 
@@ -20,8 +21,10 @@ public class RefuseServiceImpl implements RefuseService {
 		return refusedao.refuselist();
 	}
 
-	public List<Refuse> getRefuseList(Integer page,Integer limit) {
-		return refusedao.getRefuseList(page,limit);
+	public List<Refuse> getRefuseList(Integer page,Integer limit,String refCode,String refName) {
+		refCode= Optional.ofNullable(refCode).orElse("");
+		refName= Optional.ofNullable(refName).orElse("");
+		return refusedao.getRefuseList(page,limit,refCode,refName);
 	}
 
 

@@ -10,31 +10,20 @@
 <%@include file="../menu.jsp" %>
 <!--退货列表-->
 <hr>
-<table>
-    <form method="POST" class="layui-form"
-          action="/user/userlist.html">
-        <tr>
-            <td><span>&nbsp;&nbsp;&nbsp;&nbsp;退货编码：</span></td>
-            <td>
-                <input name="queryRefCode" class="layui-input"
-                       type="text" value="${queryRefCode}">
-            </td>
-            <td><span>&nbsp;&nbsp;&nbsp;&nbsp;退货名称：</span></td>
-            <td>
-                <input name="queryRefName" class="layui-input"
-                       type="text" value="${queryRefName}">
-            </td>
-
-            <td><input value="查 询" type="submit" class="layui-btn layui-btn-normal">
-            </td>
-            <td>
-                <button type="button" class="layui-btn layui-btn-normal"
-                        onclick="addHtml('/refuse/refuseadd.html')">添加退货单
-                </button>
-            </td>
-        </tr>
-    </form>
-</table>
+<div class="demoTable">
+    退货编码：
+    <div class="layui-inline">
+        <input class="layui-input" name="refCode" id="refCode" autocomplete="off">
+    </div>
+    供应商名称：
+    <div class="layui-inline">
+        <input class="layui-input" name="refName" id="refName" autocomplete="off">
+    </div>
+    <button class="layui-btn" data-type="reload">搜索</button>
+    <button type="button" class="layui-btn "
+            onclick="addHtml('/provider/provideradd.html')">添加订单
+    </button>
+</div>
 <table id="refuselist" lay-filter="test"></table>
 <script type="text/html" id="toolbar">
     <div class="layui-btn-container">
@@ -50,6 +39,7 @@
         var table = layui.table;
         table.render({
             elem: '#refuselist'
+            ,id:'testReload'
             , height: 500
             , url: '/refuse/json/refuselist' //数据接口
             , page: true //开启分页
@@ -77,6 +67,26 @@
                 editHtml('/refuse/updaterefuse.html/'+data.id);
 
             }
+        });
+        var $ = layui.$, active = {
+            reload: function () {
+                var refCode = $('#refCode');
+                var refName = $('#refName');
+                //执行重载
+                table.reload('testReload', {
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                    , where: {
+                        refCode: refCode.val(),
+                        refName: refName.val()
+                    }
+                });
+            }
+        };
+        $('.demoTable .layui-btn').on('click', function () {
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
         });
 
     });
