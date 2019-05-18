@@ -24,7 +24,7 @@ public interface GoodsService {
     int updategoodsbynumber(int gnumber, String gname);
     int addgoods(Goods g);
 
-    Goods findgoodsbygname(String gname);
+    List<Goods> findgoodsbygname(String gname);
 
     int deletegoodsbydname(String gname);
 }

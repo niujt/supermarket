@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.alibaba.fastjson.JSONObject;
+import com.wxthxy.supermarket.entity.Sale;
+import com.wxthxy.supermarket.service.SaleService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import com.wxthxy.supermarket.entity.Goods;
@@ -78,7 +80,7 @@ public class GoodsController {
             refuse.setRefReasion("清空" + goods.getGname() + "的库存");
             refuse.setRefunit(goods.getGunit());
             refuseservice.saveRefuse(refuse);
-            json.put("message", goods.getGname() + "库存已清空");
+            json.put("message", "进价为"+goods.getPprice()+"元的"+goods.getGname() + "库存已清空");
         } else {
             json.put("message", "删除失败");
         }
@@ -93,30 +95,39 @@ public class GoodsController {
         long loginerid = ((User) (session.getAttribute(Constants.SESSION))).getId();
         goods.setCreatedBy(loginerid);
         goods.setCreationDate(new Date());
-        if (goodsservice.findgoodsbygname(goods.getGname()) != null && goodsservice.findgoodsbygname(goods.getGname()).getPprice().equals(goods.getPprice())) {
-            goodsservice.addgoods(goods);
-            json.put("message", "添加成功," + goods.getGname() + "新增" + goods.getGnumber() + goods.getGunit());
-        } else if (goodsservice.findgoodsbygname(goods.getGname()) != null && !goodsservice.findgoodsbygname(goods.getGname()).getPprice().equals(goods.getPprice())) {
-            json.put("message", "添加" + goods.getGname() + "成功,进价为" + goods.getPprice() + "元");
-            goodsservice.savegoods(goods);
+        List<Goods> goodsList = goodsservice.findgoodsbygname(goods.getGname());
+        if (goodsList.size() > 0) {
+            goodsList.forEach(g -> {
+                if (g.getGname().equals(goods.getGname()) &&g.getPprice().equals(goods.getPprice())) {
+                    goodsservice.addgoods(goods);
+                    json.put("message", "添加成功," + goods.getGname() + "新增" + goods.getGnumber() + goods.getGunit());
+                } else if (g.getGname().equals(goods.getGname()) && !g.getPprice().equals(goods.getPprice())) {
+                    json.put("message", "添加" + goods.getGname() + "成功,进价为" + goods.getPprice() + "元");
+                    goodsservice.savegoods(goods);
+                }
+            });
         } else {
             goodsservice.savegoods(goods);
             json.put("message", "添加成功");
         }
         return json;
-    }
+}
 
-    @RequestMapping("/saveupdategoods")
-    public String saveupdategoods(Goods goods
+    @RequestMapping(value = "/saveupdategoods", method = RequestMethod.PUT)
+    @ResponseBody
+    public JSONObject saveupdategoods(@RequestBody Goods goods
             , HttpSession session) {
+        JSONObject json = new JSONObject();
         long loginerid = ((User) (session.getAttribute(Constants.SESSION))).getId();
         goods.setModifyBy(loginerid);
         //创建时间
         goods.setModifyDate(new Date());
         if (goodsservice.updategoodsbyid(goods) == 1) {
-            return "redirect:/goods/goodslist.html";
+            json.put("message", "修改成功");
+        } else {
+            json.put("message", "修改失败");
         }
-        return "goodsadd";
+        return json;
     }
 
 

@@ -16,4 +16,5 @@ public interface SaleDAO {
     int deletesalebyid(@Param("id") Integer id);
 
     int updatesalebyid(Sale sale);
+    List<Sale> findsaleByName(String sname);
 }

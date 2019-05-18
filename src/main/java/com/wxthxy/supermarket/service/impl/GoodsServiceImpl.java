@@ -58,7 +58,7 @@ public class GoodsServiceImpl implements GoodsService{
 	}
 
 
-	public Goods findgoodsbygname(String gname) {
+	public List<Goods> findgoodsbygname(String gname) {
 		
 		return goodsdao.findgoodsbygname(gname);
 	}

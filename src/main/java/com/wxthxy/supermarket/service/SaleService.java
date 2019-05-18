@@ -20,4 +20,5 @@ public interface SaleService {
     int deletesalebyid(Integer id);
 
     int updatesalebyid(Sale sale);
+    List<Sale> findsaleByName(String sname);
 }

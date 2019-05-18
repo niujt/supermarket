@@ -46,6 +46,12 @@
             </td>
         </tr>
         <tr>
+            <td>进价：</td>
+            <td>
+                <input class="layui-input" type="text" name="pprice" value="">
+            </td>
+        </tr>
+        <tr>
             <td>售价：</td>
             <td>
                 <input class="layui-input" type="text" name="sprice" value="">

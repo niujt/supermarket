@@ -22,7 +22,7 @@ public interface GoodsDAO {
 
     int updategoodsbynumber(@Param("gnumber") int gnumber, @Param("gname") String gname);
     int addgoods(Goods goods);
-    Goods findgoodsbygname(@Param("gname") String gname);
+    List<Goods> findgoodsbygname(@Param("gname") String gname);
 
     int deletegoodsbydname(@Param("gname") String gname);
 }

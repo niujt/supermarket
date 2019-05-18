@@ -82,19 +82,25 @@ public class SaleController {
         //登陆人的id
         long loginerid = ((User) (session.getAttribute(Constants.SESSION))).getId();
         sale.setCreatedBy(loginerid);
-        sale.setPprice(goodsservice.findgoodsbygname(sale.getSname()).getPprice());
         //创建时间
         sale.setCreationDate(new Date());
-        Goods g = goodsservice.findgoodsbygname(sale.getSname());
-        int gnumber = g.getGnumber();
-        int snumber = sale.getSnumber();
-        if (gnumber - snumber >= 0) {
-            saleservice.savesale(sale);
-            goodsservice.updategoodsbynumber(snumber, sale.getSname());
-            json.put("message", "添加成功,库存中的" + sale.getSname() + "已减少" + sale.getSnumber());
-        } else {
-            json.put("message", "添加失败,仓库的" + sale.getSname() + "数量不足");
-        }
+        List<Goods> goods = goodsservice.findgoodsbygname(sale.getSname());
+        goods.forEach(g->{
+            if(g.getPprice().equals(sale.getPprice())){
+                int gnumber = g.getGnumber();
+                int snumber = sale.getSnumber();
+                if (gnumber - snumber >= 0) {
+                    saleservice.savesale(sale);
+                    goodsservice.updategoodsbynumber(snumber, sale.getSname());
+                    json.put("message", "添加成功,库存中的" + sale.getSname() + "已减少" + sale.getSnumber());
+                } else {
+                    json.put("message", "添加失败,仓库的" + sale.getSname() + "数量不足");
+                }
+            }
+            else {
+                json.put("message", "添加失败,进价不一致，请去库存查看");
+            }
+        });
         return json;
     }
 

@@ -9,7 +9,13 @@
   	order by creationDate desc
   	limit #{page},#{limit}
   </select>
-  <!-- 按照条件查询出总记录数 -->
+
+
+    <select id="findsaleByName" resultType="com.wxthxy.supermarket.entity.Sale" parameterType="String">
+  	select *
+  	from smbms_sale where sname=#{sname}
+  </select>
+    <!-- 按照条件查询出总记录数 -->
   <select id="getcount" resultType="Integer">
   	select count(*) 
   	from smbms_sale

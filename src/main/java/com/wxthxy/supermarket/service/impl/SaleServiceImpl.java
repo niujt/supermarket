@@ -39,5 +39,8 @@ public class SaleServiceImpl implements SaleService {
         return saledao.updatesalebyid(sale);
     }
 
-
+    @Override
+    public List<Sale> findsaleByName(String sname) {
+        return saledao.findsaleByName(sname);
+    }
 }

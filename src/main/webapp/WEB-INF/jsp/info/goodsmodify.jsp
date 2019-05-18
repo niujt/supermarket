@@ -7,23 +7,23 @@
     <link rel="stylesheet" type="text/css" href="/static/css/layui.min.css">
     <title>超市管理系统</title>
 </head>
-<form method="post" action="/goods/savegoods.html" class="layui-form" enctype="multipart/form-data">
+<form onsubmit="return edit('/goods/saveupdategoods')" class="layui-form" enctype="multipart/form-data">
     <table class="layui-table" lay-skin="row" lay-size="lg">
         <tr>
             <td>商品编码：</td>
             <td>
-                <input class="layui-input" type="text" name="gcode" value="${goods.gcode}">
+                <input class="layui-input" type="text" name="gcode" value="${goods.gcode}" readonly>
                 <input class="layui-input" type="hidden" name="id" value="${goods.id}">
             </td>
         </tr>
         <tr>
             <td>商品名称：</td>
-            <td><input class="layui-input" type="text" name="gname"  value="${goods.gname}"></td>
+            <td><input class="layui-input" type="text" name="gname"  value="${goods.gname}" readonly></td>
         </tr>
         <tr>
             <td>单位：</td>
             <td>
-                <select name="gunit">
+                <select name="gunit" readonly>
                     <option value="瓶" <c:if test="${goods.gunit=='瓶'}">selected</c:if>>瓶</option>
                     <option value="斤" <c:if test="${goods.gunit=='斤'}">selected</c:if>>斤</option>
                     <option value="个" <c:if test="${goods.gunit=='个'}">selected</c:if>>个</option>
@@ -57,3 +57,4 @@
 </html>
 <script type="text/javascript" src="/static/js/jquery-1.8.3.min.js"></script>
 <script type="text/javascript" src="/static/js/layui.all.js"></script>
+<%@include file="../foot.jsp" %>
