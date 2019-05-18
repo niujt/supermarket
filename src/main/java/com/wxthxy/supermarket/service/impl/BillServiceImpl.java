@@ -25,8 +25,8 @@ public class BillServiceImpl implements BillService {
      * 根据条件分页查询订单列表
      */
     public List<Bill> billlist(Integer page, Integer limit, String productName, String providerName) {
-        productName = Optional.ofNullable(productName.trim()).orElse("");
-        providerName = Optional.ofNullable(providerName.trim()).orElse("");
+        productName = Optional.ofNullable(productName).orElse("");
+        providerName = Optional.ofNullable(providerName).orElse("");
         Provider provider = Optional.ofNullable(providerDAO.getProviderbyName(providerName)).orElse(new Provider());
         Integer providerId = Optional.ofNullable(provider.getId()).orElse(0);
         if (!providerName.equals("")&&providerId==0) {

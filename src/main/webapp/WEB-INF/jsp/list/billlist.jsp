@@ -20,6 +20,9 @@
         <input class="layui-input" name="providerName" id="providerName" autocomplete="off">
     </div>
     <button class="layui-btn" data-type="reload">搜索</button>
+    <button type="button" class="layui-btn "
+            onclick="addHtml('/bill/billadd.html')">添加订单
+    </button>
 </div>
 <table id="billlist" lay-filter="test"></table>
 <script type="text/html" id="toolbar">
