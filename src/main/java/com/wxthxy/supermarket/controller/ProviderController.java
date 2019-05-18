@@ -54,10 +54,32 @@ public class ProviderController {
 	}
 	//进入修改供应商页面
 	@RequestMapping("/updateprovider.html/{id}")
-	public String providermodify(@PathVariable String id,HttpServletRequest request){
+	public String providermodify(@PathVariable Integer id,HttpServletRequest request){
 		Provider p = providerservice.getProviderbyid(id);
 		request.setAttribute("provider",p);
 		return "info/providermodify";
+	}
+	//根据id删除供应商
+	@RequestMapping(value = "/deleteprovider/{id}",method =RequestMethod.DELETE )
+	@ResponseBody
+	public JSONObject deleteprovider(@PathVariable Integer id){
+		JSONObject json=new JSONObject();
+		//查询出该供应商下的订单集合
+		List<Bill> billlist=billservice.getbillbypproviderid(id);
+		//根据供应商id查找供应商
+		Provider provider = providerservice.getProviderbyid(id);
+		if(billlist.size()!=0){
+			json.put("message", "供应商"+provider.getProName()+"存在订单,无法删除!!!");
+		}else{
+			Integer count=providerservice.deleteproviderbyid(id);
+			if(count>0){
+				json.put("message","删除成功");
+			}
+			else {
+				json.put("message","删除失败");
+			}
+		}
+		return json;
 	}
 	//单击添加保存新的供应商信息
 	@RequestMapping(value="/saveprovideradd.html",method = RequestMethod.POST)
@@ -143,26 +165,6 @@ public class ProviderController {
 //			}
 //		}
 		return "provideradd";
-	}
-	//根据供应商id查找供应商信息
-	@RequestMapping("/view/{id}")
-	public String provicerview(@PathVariable String id,Model m,HttpServletRequest request){
-//		Provider p = new Provider();
-//		try {
-//			p = providerservice.getProviderbyid(id);
-//			if(p.getCompanyLicPicPath() != null && !"".equals(p.getCompanyLicPicPath())){
-//				String[] paths = p.getCompanyLicPicPath().split("\\"+File.separator);
-//				p.setCompanyLicPicPath(request.getContextPath()+"/statics/uploadfiles/"+paths[paths.length-1]);
-//			}
-//			if(p.getOrgCodePicPath() != null && !"".equals(p.getOrgCodePicPath())){
-//				String[] paths = p.getOrgCodePicPath().split("\\"+File.separator);
-//				p.setOrgCodePicPath(request.getContextPath()+"/statics/uploadfiles/"+paths[paths.length-1]);
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		m.addAttribute("provider",p);
-		return "providerview";
 	}
 
 	//修改供应商
@@ -276,39 +278,5 @@ public class ProviderController {
 //			file.delete();
 //		}
 //	}
-	//根据id删除供应商
-	@RequestMapping("/deleteprovider/{id}")
-	@ResponseBody
-	public Object deleteprovider(@PathVariable String id){
-		HashMap<String,Object> m = new HashMap<String,Object>();
-		//查询出该供应商下的订单集合
-		List<Bill> billlist=billservice.getbillbypproviderid(id);	
-		//根据供应商id查找供应商
-		Provider provider = providerservice.getProviderbyid(id);
-		if(id==null||id==""){
-			m.put("delResult", "notexist");
-		}else{
-//			if(billlist.size()>0){//先根据id查询该供应商下面是否有订单， 如果有则不能执行删除，否则执行删除操作
-//				m.put("delResult",billlist.size());
-//			}else{
-//				try {
-//					//执行删除操作
-//					int count=  providerservice.deleteproviderbyid(id);
-//					if(count>0){
-//						deleteFile(provider.getCompanyLicPicPath());
-//						deleteFile(provider.getOrgCodePicPath());
-//						m.put("delResult", "true");
-//					}else{
-//						m.put("delResult", "false");
-//					}
-//				} catch (Exception e) {
-//					e.getStackTrace();
-//					m.put("delResult", "false");
-//				}
-//
-//			}
-		}
 
-		return JSONArray.toJSONString(m);
-	}
 }

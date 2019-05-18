@@ -70,6 +70,7 @@
             var data = obj.data;
             if (obj.event === 'del') {
                 layer.confirm('真的删除行么', function (index) {
+                    del("/provider/deleteprovider/"+data.id);
                     obj.del();
                     layer.close(index);
                 });

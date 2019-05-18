@@ -63,8 +63,7 @@ public interface BillDAO {
     /**
      * 根据供应商id 查询  订单集合
      *
-     * @param pid 供应商id
      * @return 订单列表
      */
-    List<Bill> getbillbypproviderid(@Param("pid") String pid);
+    List<Bill> getbillbypproviderid(@Param("providerId") Integer providerId);
 }

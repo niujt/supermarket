@@ -118,6 +118,6 @@
 	 <select id="getbillbypproviderid" resultType="com.wxthxy.supermarket.entity.Bill">
 		SELECT *
 		FROM
-		smbms.smbms_bill WHERE providerId = #{pid}
+		smbms.smbms_bill WHERE providerId = #{providerId}
 	</select>
 </mapper>

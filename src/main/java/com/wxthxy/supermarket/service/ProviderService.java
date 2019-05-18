@@ -40,7 +40,7 @@ public interface ProviderService {
      * @param id 供应商id
      * @return 供应商
      */
-    Provider getProviderbyid(@Param("id") String id);
+    Provider getProviderbyid(Integer id);
 
     /**
      * 修改供应商
@@ -56,5 +56,5 @@ public interface ProviderService {
      * @param id 供应商id
      * @return 删除的条数
      */
-    int deleteproviderbyid(@Param("id") String id);
+    int deleteproviderbyid(Integer id);
 }

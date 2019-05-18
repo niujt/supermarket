@@ -41,7 +41,7 @@ public class ProviderServiceImpl implements ProviderService {
 	/**
 	 * 根据供应商id查找供应商
 	 */
-	public Provider getProviderbyid(String id) {
+	public Provider getProviderbyid(Integer id) {
 		return providerdao.getProviderbyid(id);
 	}
 	/**
@@ -54,7 +54,7 @@ public class ProviderServiceImpl implements ProviderService {
 	/**
 	 * 删除供应商
 	 */
-	public int deleteproviderbyid(String id) {
+	public int deleteproviderbyid(Integer id) {
 	
 		return providerdao.deleteproviderbyid(id);
 	}

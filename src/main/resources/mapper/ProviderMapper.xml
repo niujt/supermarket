@@ -70,7 +70,7 @@
 		)
 	</insert>
 	<!-- 根据供应商id查找供应商信息 -->
-	<select id="getProviderbyid" resultType="com.wxthxy.supermarket.entity.Provider">
+	<select id="getProviderbyid" resultType="com.wxthxy.supermarket.entity.Provider" parameterType="Integer">
 		SELECT *
 		FROM
 		smbms.smbms_provider
@@ -102,6 +102,6 @@
 	<delete id="deleteproviderbyid" parameterType="Integer">
 		DELETE FROM smbms.smbms_provider
 		WHERE
-		id = #{pid}
+		id = #{id}
 	</delete>
 </mapper>

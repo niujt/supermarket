@@ -54,5 +54,5 @@ public interface BillService {
 	 * @param pid 供应商id
 	 * @return 订单列表
 	 */
-	 List<Bill> getbillbypproviderid(@Param("pid")String pid);
+	 List<Bill> getbillbypproviderid(Integer pid);
 }

@@ -64,8 +64,8 @@ public class BillServiceImpl implements BillService{
 	/**
 	 * 根据供应商id 查询  订单集合
 	 */
-	public List<Bill> getbillbypproviderid(String pid) {
-		return billdao.getbillbypproviderid(pid);
+	public List<Bill> getbillbypproviderid(Integer providerId) {
+		return billdao.getbillbypproviderid(providerId);
 	}
 
 }

@@ -41,7 +41,7 @@ public interface ProviderDAO {
      * @param id 供应商id
      * @return 供应商
      */
-    Provider getProviderbyid(@Param("id") String id);
+    Provider getProviderbyid(@Param("id") Integer id);
 
     /**
      * 修改供应商
@@ -54,8 +54,8 @@ public interface ProviderDAO {
     /**
      * 删除供应商
      *
-     * @param pid 供应商id
+     * @param id 供应商id
      * @return 删除的条数
      */
-    int deleteproviderbyid(@Param("pid") String pid);
+    int deleteproviderbyid(@Param("id") Integer id);
 }
