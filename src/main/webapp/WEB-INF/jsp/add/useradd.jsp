@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href="/static/css/layui.min.css">
     <title>超市管理系统</title>
 </head>
-<form method="post" action="/user/saveuser.html" class="layui-form" enctype="multipart/form-data">
+<form onsubmit="return add('/user/saveuser.html')" class="layui-form" enctype="multipart/form-data">
     <table class="layui-table" lay-skin="row" lay-size="lg">
         <tr>
             <td>账号：</td>
@@ -47,7 +48,9 @@
             <td>用户角色：</td>
             <td>
                 <select name="userRole" id="userRole">
-                    <option value="">-请选择-</option>
+                    <c:forEach items="${role}" var="r">
+                        <option value="${r.id}">${r.roleName}</option>
+                    </c:forEach>
                 </select>
             </td>
         </tr>
@@ -62,3 +65,4 @@
 </html>
 <script type="text/javascript" src="/static/js/jquery-1.8.3.min.js"></script>
 <script type="text/javascript" src="/static/js/layui.all.js"></script>
+<%@include file="../foot.jsp" %>

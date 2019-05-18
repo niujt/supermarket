@@ -1,8 +1,6 @@
 package com.wxthxy.supermarket.controller;
 
-import java.io.File;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -10,11 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.mysql.jdbc.StringUtils;
 import com.wxthxy.supermarket.entity.User;
 import com.wxthxy.supermarket.service.RoleService;
 import com.wxthxy.supermarket.service.UserService;
@@ -111,7 +105,8 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/adduser.html", method = RequestMethod.GET)
-    public String adduser() {
+    public String adduser(HttpServletRequest request) {
+        request.setAttribute("role",roleservice.getRolelist(0,9999));
         return "add/useradd";
     }
 
@@ -138,23 +133,24 @@ public class UserController {
      *
      * @param user
      * @param session
-     * @param request
      * @return
      */
     @RequestMapping(value = "/saveuser.html", method = RequestMethod.POST)
-    public String saveuser(User user
-            , HttpSession session
-            , HttpServletRequest request) {
-
+    @ResponseBody
+    public JSONObject saveuser(@RequestBody User user, HttpSession session) {
+        JSONObject json=new JSONObject();
         //登陆人的id
         long loginerid = ((User) (session.getAttribute(Constants.SESSION))).getId();
         user.setCreatedBy(loginerid);
         //创建时间
         user.setCreationDate(new Date());
         if (userservice.adduser(user) == 1) {
-            return "redirect:/user/userlist.html";
+            json.put("message","添加成功");
         }
-        return "useradd";
+        else {
+            json.put("message","添加失败");
+        }
+        return json;
     }
 
 
