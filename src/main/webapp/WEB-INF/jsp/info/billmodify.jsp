@@ -1,76 +1,88 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@include file="/WEB-INF/jsp/common/head.jsp"%>
+		 pageEncoding="UTF-8" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="/static/css/layui.min.css">
+	<title>超市管理系统</title>
+</head>
+<form method="post" action="/user/saveuser.html" class="layui-form" enctype="multipart/form-data">
+	<table class="layui-table" lay-skin="row" lay-size="lg">
+		<tr>
+			<td>订单编码：</td>
+			<td>
+				<input class="layui-input" type="text" name="billCode" value="${bill.billCode}">
+			</td>
+		</tr>
+		<tr>
+			<td>商品名称：</td>
+			<td><input class="layui-input" type="text" name="productName" value="${bill.productName}"></td>
+		</tr>
+		<tr>
+			<td>单位：</td>
+			<td>
+				<select name="productUnit" >
+					<option value="瓶" <c:if test="${bill.productUnit} == '瓶'">selected</c:if>>瓶</option>
+					<option value="斤" <c:if test="${bill.productUnit} == '斤'">selected</c:if>>斤</option>
+					<option value="个" <c:if test="${bill.productUnit} == '个'">selected</c:if>>个</option>
+					<option value="根" <c:if test="${bill.productUnit} == '根'">selected</c:if>>根</option>
+					<option value="条" <c:if test="${bill.productUnit} == '条'">selected</c:if>>条</option>
+					<option value="只" <c:if test="${bill.productUnit} == '只'">selected</c:if>>只</option>
+					<option value="颗" <c:if test="${bill.productUnit} == '颗'">selected</c:if>>颗</option>
+					<option value="箱" <c:if test="${bill.productUnit} == '箱'">selected</c:if>>箱</option>
+					<option value="束" <c:if test="${bill.productUnit} == '束'">selected</c:if>>束</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td>商品金额：</td>
+			<td>
+				<input class="layui-input" type="text" name="productCount" value="${bill.productCount}">
+			</td>
+		</tr>
+		<tr>
+			<td>总金额：</td>
+			<td>
+				<input class="layui-input" type="text" name="totalPrice" value="${bill.totalPrice}">
+			</td>
+		</tr>
+		<tr>
+			<td>供应商：</td>
+			<td>
+				<select name="productName">
 
-<div class="right">
-	<div class="location">
-		<strong>你现在所在的位置是:</strong> <span>订单管理页面 >> 订单添加页面</span>
-	</div>
-	<div class="providerAdd">
-		<form id="billForm" name="billForm" method="post"
-			action="${pageContext.request.contextPath }/bill/saveupdatebill.html">
-			<input type="hidden" name="id" value="${bill.id }">
-			<!--div的class 为error是验证错误，ok是验证成功-->
-			<div class="">
-				<label for="billCode">订单编码：</label> <input type="text"
-					name="billCode" id="billCode" value="${bill.billCode }"
-					readonly="readonly">
-			</div>
-			<div>
-				<label for="productName">商品名称：</label> <input type="text"
-					name="productName" id="productName" value="${bill.productName}">
-				<font color="red"></font>
-			</div>
-			<div>
-				<label for="productUnit">商品单位：</label> <input type="text"
-					name="productUnit" id="productUnit" value="${bill.productUnit }" readonly="readonly">
-				<font color="red"></font>
-			</div>
-			<div>
-				<label for="productCount">商品价格：</label> <input type="text"
-					name="productCount" id="productCount" value="${bill.productCount }">
-				<font color="red"></font>
-			</div>
-			<div>
-				<label for="totalPrice">总金额：</label> <input type="text"
-					name="totalPrice" id="totalPrice" value="${bill.totalPrice }">
-				<font color="red"></font>
-			</div>
-			<div>
-				<label for="providerId">供应商：</label> <input type="hidden"
-					value="${bill.providerId }" id="pid" /> <select name="providerId"
-					id="providerId">
-					<c:if test="${providerList != null }">
-						<option value="">--请选择--</option>
-						<c:forEach var="provider" items="${providerList}">
-							<option
-								<c:if test="${provider.id == bill.providerId}">selected="selected"</c:if>
-								value="${provider.id}">${provider.proName}</option>
-						</c:forEach>
-					</c:if>
-				</select> <font color="red"></font>
-			</div>
-			<div>
-				<label>是否付款：</label>
-				<c:if test="${bill.isPayment == 1 }">
-					<input type="radio" name="isPayment" value="1" checked="checked">未付款
-						<input type="radio" name="isPayment" value="2">已付款
-					</c:if>
-				<c:if test="${bill.isPayment == 2 }">
-					<input type="radio" name="isPayment" value="1">未付款
-						<input type="radio" name="isPayment" value="2" checked="checked">已付款
-					</c:if>
-			</div>
-			<div class="providerAddBtn">
-				<input type="button" name="save" id="save" value="保存"> <input
-					type="button" id="back" name="back" value="返回">
-			</div>
-		</form>
-	</div>
+					<c:forEach var="p" items="${providers}">
+						<option value="${p.id}" <c:if test="${bill.productName==p.proName}">selected</c:if>>${p.proName}</option>
+					</c:forEach>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td>是否付款：</td>
+			<td>
+				<input type="radio" name="isPayment" value="1" <c:if test="${bill.isPayment==1}">checked</c:if>>已付款
+				<input type="radio" name="isPayment" value="2" <c:if test="${bill.isPayment==2}">checked</c:if>>未付款
+			</td>
+		</tr>
+		<tr>
+			<td>是否入库：</td>
+			<td>
+				<select name="isin" >
+					<option value="1" <c:if test="${bill.isin==1}">selected</c:if>>入库</option>
+					<option value="2" <c:if test="${bill.isin==2}">selected</c:if>>未入库</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<input type="submit" class="layui-btn layui-btn-primary" value="保存">
+			</td>
+		</tr>
 
-</div>
-</section>
-
-<%@include file="/WEB-INF/jsp/common/foot.jsp"%>
-<script type="text/javascript"
-	src="${pageContext.request.contextPath }/statics/js/billmodify.js"></script>
+	</table>
+</form>
+</html>
+<script type="text/javascript" src="/static/js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="/static/js/layui.all.js"></script>
+<%@include file="../foot.jsp" %>

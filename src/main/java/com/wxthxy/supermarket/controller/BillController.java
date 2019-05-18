@@ -132,19 +132,17 @@ public class BillController {
 	/**
 	 * 进入修改页面
 	 * @param id
-	 * @param bill
-	 * @param m
 	 * @return
 	 */
-	@RequestMapping(value="updatebill/{id}",method = RequestMethod.GET)
-	public String updatebill(@PathVariable String id,@ModelAttribute Bill bill,Model m){
+	@RequestMapping(value="updatebill.html/{id}",method = RequestMethod.GET)
+	public String updatebill(@PathVariable String id,HttpServletRequest request){
 		//根据id查找到订单信息
 		Bill b= billservice.getBillbyid(id);
-		m.addAttribute("bill", b);
+		request.setAttribute("bill", b);
 		//供应商列表
-		List<Provider> providerlist= providerservice.providerlist();
-		m.addAttribute("providerList", providerlist);
-		return "billmodify";
+		List<Provider> providerlist= providerservice.getProviderList(0,9999);
+		request.setAttribute("providers", providerlist);
+		return "info/billmodify";
 	}
 	/**
 	 * 点击保存修改的订单信息
