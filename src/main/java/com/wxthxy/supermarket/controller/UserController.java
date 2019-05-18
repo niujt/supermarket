@@ -106,7 +106,7 @@ public class UserController {
      */
     @RequestMapping(value = "/adduser.html", method = RequestMethod.GET)
     public String adduser(HttpServletRequest request) {
-        request.setAttribute("role",roleservice.getRolelist(0,9999));
+        request.setAttribute("role", roleservice.getRolelist(0, 9999));
         return "add/useradd";
     }
 
@@ -121,8 +121,7 @@ public class UserController {
         JSONObject json = new JSONObject();
         if (userservice.delUserbyId(id) > 0) {
             json.put("message", "删除成功");
-        }
-        else {
+        } else {
             json.put("message", "删除失败");
         }
         return json;
@@ -138,17 +137,16 @@ public class UserController {
     @RequestMapping(value = "/saveuser.html", method = RequestMethod.POST)
     @ResponseBody
     public JSONObject saveuser(@RequestBody User user, HttpSession session) {
-        JSONObject json=new JSONObject();
+        JSONObject json = new JSONObject();
         //登陆人的id
         long loginerid = ((User) (session.getAttribute(Constants.SESSION))).getId();
         user.setCreatedBy(loginerid);
         //创建时间
         user.setCreationDate(new Date());
         if (userservice.adduser(user) == 1) {
-            json.put("message","添加成功");
-        }
-        else {
-            json.put("message","添加失败");
+            json.put("message", "添加成功");
+        } else {
+            json.put("message", "添加失败");
         }
         return json;
     }
@@ -159,10 +157,10 @@ public class UserController {
      * @param session
      * @return
      */
-    @RequestMapping(value = "/modifysave.html")
-    public String modifysaveuser(User user, HttpSession session
-    ) {
-
+    @RequestMapping(value = "/modifysave.html", method = RequestMethod.PUT)
+    @ResponseBody
+    public JSONObject modifysaveuser(@RequestBody User user, HttpSession session) {
+        JSONObject json = new JSONObject();
         //登陆人的id
         long loginerid = ((User) (session.getAttribute(Constants.SESSION))).getId();
         //修改人
@@ -170,10 +168,11 @@ public class UserController {
         //修改日期
         user.setModifyDate(new Date());
         if (userservice.updateuserbyid(user) == 1) {
-            return "redirect:/user/userlist.html";
+            json.put("message", "修改成功");
+        } else {
+            json.put("message", "修改失败");
         }
-
-        return "usermodify";
+        return json;
     }
 
 
