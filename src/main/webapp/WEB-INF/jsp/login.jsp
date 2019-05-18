@@ -275,7 +275,7 @@
             <tr>
                 <td>密码：</td>
                 <td>
-                    <input type="text" name="userPassword" id="userPassword" tabindex="1" autocomplete="off"/>
+                    <input type="password" name="userPassword" id="userPassword" tabindex="1" autocomplete="off"/>
                 </td>
             </tr>
             <tr>
