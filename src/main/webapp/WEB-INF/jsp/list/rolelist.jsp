@@ -9,7 +9,16 @@
 <body>
 <%@include file="../menu.jsp" %>
 <hr>
+<table>
+        <tr>
+            <td>
+                <button type="button" class="layui-btn layui-btn-normal"
+                        onclick="addHtml('/role/addrole.html')">添加角色
+                </button>
+            </td>
+        </tr>
 
+</table>
 <%--<div class="search">--%>
 <%--<a href="${pageContext.request.contextPath}/role/addrole.html" >添加角色</a>--%>
 <%--</div>--%>
@@ -56,4 +65,5 @@
     });
 
 </script>
+<%@include file="../foot.jsp" %>
 </html>

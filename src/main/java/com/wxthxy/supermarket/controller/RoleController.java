@@ -40,8 +40,9 @@ public class RoleController {
 	}
 	//进入添加角色页面
 	@RequestMapping(value = "/addrole.html",method = RequestMethod.GET)
-	public String addrole(@ModelAttribute Role role){
-		return "roleadd";
+	public String addrole(){
+
+		return "add/roleadd";
 	}
 	//保存添加角色
 	@RequestMapping(value = "/saveaddrole.html")
