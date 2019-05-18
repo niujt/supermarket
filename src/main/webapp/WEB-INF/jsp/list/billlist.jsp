@@ -50,7 +50,7 @@
         var table = layui.table;
         table.render({
             elem: '#billlist'
-            , height: 800
+            , height: 500
             , url: '/bill/json/billlist' //数据接口
             , page: true //开启分页
             , cols: [[ //表头

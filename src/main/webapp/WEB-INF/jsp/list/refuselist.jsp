@@ -50,7 +50,7 @@
         var table = layui.table;
         table.render({
             elem: '#refuselist'
-            , height: 800
+            , height: 500
             , url: '/refuse/json/refuselist' //数据接口
             , page: true //开启分页
             , cols: [[ //表头

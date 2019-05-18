@@ -52,7 +52,7 @@
         var table = layui.table;
         table.render({
             elem: '#userlist'
-            , height: 800
+            , height: 500
             , url: '/user/json/userlist' //数据接口
             , page: true //开启分页
             , cols: [[ //表头
