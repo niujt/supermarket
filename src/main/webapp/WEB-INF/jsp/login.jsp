@@ -295,7 +295,7 @@
 </div>
 
 <div class="bottom">
-    ©2018 QAQ&nbsp;&nbsp;&nbsp;&nbsp;<span>超市销售系统登陆页面</span><img
+    ©2019 QAQ&nbsp;&nbsp;&nbsp;&nbsp;<span>超市销售系统登陆页面</span><img
         width="13" height="16" src="/static/images/copy_rignt_24.png"/>
 </div>
 

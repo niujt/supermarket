@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
+<footer style="text-align: center;color: #cccccc"> ©2019 QAQ&nbsp;&nbsp;&nbsp;&nbsp;<span>@Created&nbsp;&nbsp;By&nbsp;&nbsp;ZhouLM</span><img
+        width="13" height="16" src="/static/images/copy_rignt_24.png"/></footer>
 <script type="text/javascript">
     //常规用法
     layui.use('laydate', function () {
