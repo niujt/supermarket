@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.alibaba.fastjson.JSONObject;
@@ -50,7 +51,12 @@ public class SaleController {
 	public String saleadd(){
 		return "add/saleadd";
 	}
-	
+	@RequestMapping("/updatesale.html/{id}")
+	public String updatesale(@PathVariable String id, HttpServletRequest request) {
+		Sale sale = saleservice.findsaleByid(id);
+		request.setAttribute("sale",sale);
+		return "info/salemodify";
+	}
 	@RequestMapping("/savesale.html")
 	public String savesale(Sale sale,HttpSession session,String snumber
 			,String sname,Model m){
@@ -98,12 +104,6 @@ public class SaleController {
 			}
 		}
 		return JSONArray.toJSONString(m);
-	}
-	@RequestMapping("/updatesale/{id}")
-	public String updatesale(@PathVariable String id ,@ModelAttribute Sale sale,Model m) {
-		sale = saleservice.findsaleByid(id);
-		m.addAttribute("sale",sale);
-		return "salemodify";
 	}
 	@RequestMapping("/saveupdatesale.html")
 	public String saveupdatesale(Sale sale
