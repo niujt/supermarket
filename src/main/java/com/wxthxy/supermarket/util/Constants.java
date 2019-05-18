@@ -1,7 +1,7 @@
 package com.wxthxy.supermarket.util;
 /**
  * 常量类
- * @author Dell
+ * @author limiaoZhou
  *
  */
 public class Constants {

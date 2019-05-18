@@ -6,7 +6,7 @@ import java.util.Date;
 /**
  * 库存
  *
- * @author Dell
+ * @author limiaoZhou
  */
 public class Goods {
     /**

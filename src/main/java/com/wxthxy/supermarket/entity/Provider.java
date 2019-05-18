@@ -3,7 +3,7 @@ package com.wxthxy.supermarket.entity;
 import java.util.Date;
 /**
  * 供应商
- * @author Dell
+ * @author limiaoZhou
  *
  */
 public class Provider {

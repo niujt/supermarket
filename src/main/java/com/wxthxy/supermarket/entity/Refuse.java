@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * 退货
  *
- * @author Dell
+ * @author limiaoZhou
  */
 public class Refuse {
     /**

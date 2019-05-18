@@ -20,7 +20,7 @@ import com.wxthxy.supermarket.util.Constants;
 /**
  * 库存Controller
  *
- * @author Dell
+ * @author limiaoZhou
  */
 @Controller
 @RequestMapping("/goods")

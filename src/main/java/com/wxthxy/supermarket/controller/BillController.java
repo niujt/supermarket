@@ -27,7 +27,7 @@ import com.wxthxy.supermarket.util.Constants;
 /**
  * 订单Controller
  *
- * @author Dell
+ * @author limiaoZhou
  */
 @Controller
 @RequestMapping("/bill")

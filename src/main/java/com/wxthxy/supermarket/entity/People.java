@@ -5,7 +5,7 @@ import java.util.Date;
 
 /**
  * 人事管理类
- * @author Dell
+ * @author limiaoZhou
  *
  */
 public class People {

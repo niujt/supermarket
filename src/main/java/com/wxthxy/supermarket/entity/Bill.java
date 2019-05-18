@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 /**
  * 商品类
- * @author Dell
+ * @author limiaoZhou
  *
  */
 public class Bill {

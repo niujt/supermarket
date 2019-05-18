@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 /**
  * 销售
- * @author Dell
+ * @author limiaoZhou
  *
  */
 public class Sale {
