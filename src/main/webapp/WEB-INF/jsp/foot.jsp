@@ -1,6 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <script type="text/javascript">
+    //常规用法
+    layui.use('laydate', function () {
+        var laydate = layui.laydate;
+        laydate.render({
+            elem: '#datetype',
+            trigger: 'click'
+        });
+    });
     layui.use('element', function () {
         //实例化element
         var element = layui.element;

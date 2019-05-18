@@ -34,7 +34,7 @@
         </tr>
         <tr>
             <td>出生日期：</td>
-            <td><input class="layui-input" type="date" name="birthday"></td>
+            <td><input class="layui-input" id="datetype" type="text" name="birthday"></td>
         </tr>
         <tr>
             <td>电话：</td>

@@ -36,7 +36,7 @@
 		</tr>
 		<tr>
 			<td>出生日期：</td>
-			<td><input class="layui-input" type="date" name="birthday" value="<fmt:formatDate value="${user.birthday}" pattern="yyyy-MM-dd"/>"></td>
+			<td><input class="layui-input" id="datetype" type="text" name="birthday" value="<fmt:formatDate value="${user.birthday}" pattern="yyyy-MM-dd"/>"></td>
 		</tr>
 		<tr>
 			<td>电话：</td>
@@ -68,3 +68,4 @@
 </html>
 <script type="text/javascript" src="/static/js/jquery-1.8.3.min.js"></script>
 <script type="text/javascript" src="/static/js/layui.all.js"></script>
+<%@include file="../foot.jsp" %>
