@@ -10,26 +10,31 @@
 <%@include file="../menu.jsp" %>
 
 <hr>
+<table>
+    <form method="POST" class="layui-form"
+          action="/user/userlist.html">
+        <tr>
+            <td><span>&nbsp;&nbsp;&nbsp;&nbsp;商品名称：</span></td>
+            <td>
+                <input name="queryProductName" class="layui-input"
+                       type="text" value="${queryProductName}">
+            </td>
+            <td><span>&nbsp;&nbsp;&nbsp;&nbsp;供应商：</span></td>
+            <td>
+                <input name="queryProductName" class="layui-input"
+                       type="text" value="${queryProductName}">
+            </td>
 
-    <%--<div class="search">--%>
-        <%--<form method="post" action="${pageContext.request.contextPath }/bill/billlist.html">--%>
-            <%--<span>商品名称：</span>--%>
-            <%--<input name="queryProductName" type="text" value="${queryProductName}">--%>
-            <%--<span>供应商：</span>--%>
-            <%--<select name="queryProviderId" id="queryProviderId">--%>
-            <%--</select>--%>
-            <%--<span>是否付款：</span>--%>
-            <%--<select name="queryIsPayment">--%>
-                <%--<option value="">--请选择--</option>--%>
-                <%--<option value="1" ${queryIsPayment == 1 ? "selected=\"selected\"":"" }>未付款</option>--%>
-                <%--<option value="2" ${queryIsPayment == 2 ? "selected=\"selected\"":"" }>已付款</option>--%>
-            <%--</select>--%>
-            <%--<input type="hidden" name="pageIndex" value="1"/>--%>
-            <%--<input value="查 询" type="submit" id="searchbutton">--%>
-            <%--<span><button type="button" id="btnExport">导出excel</button></span>--%>
-            <%--<a href="${pageContext.request.contextPath }/bill/billadd.html">添加订单</a>--%>
-        <%--</form>--%>
-    <%--</div>--%>
+            <td><input value="查 询" type="submit" class="layui-btn layui-btn-normal">
+            </td>
+            <td>
+                <button type="button" class="layui-btn layui-btn-normal"
+                        onclick="addHtml('/bill/billadd.html')">添加订货单
+                </button>
+            </td>
+        </tr>
+    </form>
+</table>
 <table id="billlist" lay-filter="test"></table>
 <script type="text/html" id="toolbar">
     <div class="layui-btn-container">
@@ -40,7 +45,6 @@
 
 <script type="text/javascript" src="/static/js/jquery-1.8.3.min.js"></script>
 <script type="text/javascript" src="/static/js/layui.all.js"></script>
-<%--<script type="text/javascript" src="/static/js/billlist.js"></script>--%>
 <script type="text/javascript">
     layui.use('table', function () {
         var table = layui.table;
@@ -92,5 +96,6 @@
 
     });
 </script>
+<%@include file="../foot.jsp" %>
 </body>
 </html>

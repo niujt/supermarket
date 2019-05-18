@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.alibaba.fastjson.JSONObject;
@@ -68,12 +69,13 @@ public class BillController {
 	}
 	/**
 	 * 进入添加订单列表
-	 * @param bill
 	 * @return
 	 */
 	@RequestMapping("/billadd.html")
-	public String billadd(@ModelAttribute Bill bill){
-		return "billadd";
+	public String billadd(HttpServletRequest request){
+		List<Provider> providers=providerservice.getProviderList(0,9999);
+		request.setAttribute("providers",providers);
+		return "add/billadd";
 	}
 	/**
 	 * 把要添加的订单保存到数据库
