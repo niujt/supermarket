@@ -101,17 +101,22 @@ public class SaleController {
         return json;
     }
 
-    @RequestMapping("/saveupdatesale.html")
-    public String saveupdatesale(Sale sale
+    @RequestMapping(value = "/saveupdatesale.html", method = RequestMethod.PUT)
+    @ResponseBody
+    public JSONObject saveupdatesale(@RequestBody Sale sale
             , HttpSession session) {
+        JSONObject json = new JSONObject();
         long loginerid = ((User) (session.getAttribute(Constants.SESSION))).getId();
         sale.setModifyBy(loginerid);
         //创建时间
         sale.setModifyDate(new Date());
         if (saleservice.updatesalebyid(sale) == 1) {
-            return "redirect:/sale/salelist.html";
+           json.put("message","修改成功");
         }
-        return "saleadd";
+        else {
+            json.put("message","修改失败");
+        }
+        return json;
     }
 
 

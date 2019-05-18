@@ -6,22 +6,22 @@
 	<link rel="stylesheet" type="text/css" href="/static/css/layui.min.css">
 	<title>超市管理系统</title>
 </head>
-<form method="post" action="" class="layui-form" enctype="multipart/form-data">
+<form onsubmit="return edit('/sale/saveupdatesale.html')" class="layui-form" enctype="multipart/form-data">
 	<table class="layui-table" lay-skin="row" lay-size="lg">
 		<tr>
 			<td>销售单编码：</td>
 			<td>
-				<input class="layui-input" type="text" name="scode" value="${sale.scode}">
+				<input class="layui-input" type="text" name="scode" value="${sale.scode}" readonly>
 				<input class="layui-input" type="hidden" name="id" value="${sale.id}">
 			</td>
 		</tr>
 		<tr>
 			<td>售货名：</td>
-			<td><input class="layui-input" type="text" name="sname"  value="${sale.sname}"></td>
+			<td><input class="layui-input" type="text" name="sname"  value="${sale.sname}" readonly></td>
 		</tr>
 		<tr>
 			<td>销售数量：</td>
-			<td><input  class="layui-input" type="text" name="snumber" value="${sale.snumber}"></td>
+			<td><input  class="layui-input" type="text" name="snumber" value="${sale.snumber}" readonly></td>
 		</tr>
 		<tr>
 			<td>售价：</td>
@@ -40,3 +40,4 @@
 </html>
 <script type="text/javascript" src="/static/js/jquery-1.8.3.min.js"></script>
 <script type="text/javascript" src="/static/js/layui.all.js"></script>
+<%@include file="../foot.jsp" %>
