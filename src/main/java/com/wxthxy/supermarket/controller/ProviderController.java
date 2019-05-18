@@ -49,8 +49,8 @@ public class ProviderController {
 	}
 	//进入添加供应商列表
 	@RequestMapping("/provideradd.html")
-	public String provideradd(@ModelAttribute Provider provider){
-		return "provideradd";
+	public String provideradd(){
+		return "add/provideradd";
 	}
 	//单击添加保存新的供应商信息
 	@RequestMapping(value="/saveprovideradd.html",method = RequestMethod.POST)

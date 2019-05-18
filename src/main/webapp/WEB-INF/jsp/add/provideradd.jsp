@@ -1,68 +1,59 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@include file="/WEB-INF/jsp/common/head.jsp"%>
+         pageEncoding="UTF-8" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="/static/css/layui.min.css">
+    <title>超市管理系统</title>
+</head>
+<form method="post" action="/provider/saveprovideradd.html.html" class="layui-form" enctype="multipart/form-data">
+    <table class="layui-table" lay-skin="row" lay-size="lg">
+        <tr>
+            <td>供应商编码：</td>
+            <td>
+                <input class="layui-input" type="text" name="proCode">
+            </td>
+        </tr>
+        <tr>
+            <td>供应商名称：</td>
+            <td><input class="layui-input" type="text" name="proName"  value=""></td>
+        </tr>
+        <tr>
+            <td>联系人：</td>
+            <td><input  class="layui-input" type="text" name="proContact" value=""></td>
+        </tr>
+        <tr>
+            <td>联系电话：</td>
+            <td>
+                <input  class="layui-input" type="text" name="proPhone" value="">
+            </td>
+        </tr>
+        <tr>
+            <td>联系地址：</td>
+            <td>
+                <input  class="layui-input" type="text" name="proAddress" value="">
+            </td>
+        </tr>
+        <tr>
+            <td>传真：</td>
+            <td>
+                <input  class="layui-input" type="text" name="proFax" value="">
+            </td>
+        </tr>
+        <tr>
+            <td>描述：</td>
+            <td>
+                <input  class="layui-input" type="text" name="proDesc" value="">
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="submit" class="layui-btn layui-btn-primary"  value="保存">
+            </td>
+        </tr>
 
-<div class="right">
-        <div class="location">
-            <strong>你现在所在的位置是:</strong>
-            <span>供应商管理页面 >> 供应商添加页面</span>
-        </div>
-        <div class="providerAdd">
-           <form id="providerForm" name="providerForm" method="post" action="${pageContext.request.contextPath }/provider/saveprovideradd.html" enctype="multipart/form-data">
-                <!--div的class 为error是验证错误，ok是验证成功-->
-                <div class="">
-                    <label for="proCode">供应商编码：</label>
-                    <input type="text" name="proCode" id="proCode" value=""> 
-					<!-- 放置提示信息 -->
-					<font color="red"></font>
-                </div>
-                <div>
-                    <label for="proName">供应商名称：</label>
-                   <input type="text" name="proName" id="proName" value=""> 
-					<font color="red"></font>
-                </div>
-                <div>
-                    <label for="proContact">联系人：</label>
-                    <input type="text" name="proContact" id="proContact" value=""> 
-					<font color="red"></font>
-
-                </div>
-                <div>
-                    <label for="proPhone">联系电话：</label>
-                    <input type="text" name="proPhone" id="proPhone" value=""> 
-					<font color="red"></font>
-                </div>
-                <div>
-                    <label for="proAddress">联系地址：</label>
-                    <input type="text" name="proAddress" id="proAddress" value=""> 
-                </div>
-                <div>
-                    <label for="proFax">传真：</label>
-                    <input type="text" name="proFax" id="proFax" value=""> 
-                </div>
-                <div>
-                    <label for="proDesc">描述：</label>
-                    <input type="text" name="proDesc" id="proDesc" value=""> 
-                </div>
-                <div>
-                	<input type="hidden" id="errorinfo" value="${uploadFileError}"/>
-                    <label for="a_companyLicPicPath">企业营业执照：</label>
-                   	<input type="file" name="attachs" id="a_companyLicPicPath"/>
-                    <font color="red"></font>
-                </div>
-                 <div>
-                	<input type="hidden" id="errorinfo_oc" value="${uploadOcError}"/>
-                    <label for="a_orgCodePicPath">组织机构代码证：</label>
-                   	<input type="file" name="attachs" id="a_orgCodePicPath"/>
-                    <font color="red"></font>
-                </div>
-                <div class="providerAddBtn">
-                    <input type="button" name="add" id="add" value="保存">
-					<input type="button" id="back" name="back" value="返回" >
-                </div>
-            </form>
-     </div>
-</div>
-</section>
-<%@include file="/WEB-INF/jsp/common/foot.jsp" %>
-<script type="text/javascript" src="${pageContext.request.contextPath }/statics/js/provideradd.js"></script>
+    </table>
+</form>
+</html>
+<script type="text/javascript" src="/static/js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="/static/js/layui.all.js"></script>

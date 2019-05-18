@@ -10,17 +10,31 @@
 <%@include file="../menu.jsp" %>
 
 <hr>
-<%--<div class="search">--%>
-<%--<form method="post" action="${pageContext.request.contextPath }/provider/providerlist.html" enctype="multipart/form-data">--%>
-<%--<span>供应商编码：</span>--%>
-<%--<input name="queryProCode" type="text" value="${queryProCode }">--%>
-<%--<span>供应商名称：</span>--%>
-<%--<input name="queryProName" type="text" value="${queryProName }">--%>
-<%--<input type="hidden" name="pageIndex" value="1"/>--%>
-<%--<input value="查 询" type="submit" id="searchbutton">--%>
-<%--<a href="${pageContext.request.contextPath }/provider/provideradd.html">添加供应商</a>--%>
-<%--</form>--%>
-<%--</div>--%>
+<table>
+    <form method="POST" class="layui-form"
+          action="/user/userlist.html">
+        <tr>
+            <td><span>&nbsp;&nbsp;&nbsp;&nbsp;供应商编码：</span></td>
+            <td>
+                <input name="queryProCode" class="layui-input"
+                       type="text" value="${queryProCode}">
+            </td>
+            <td><span>&nbsp;&nbsp;&nbsp;&nbsp;供应商名称：</span></td>
+            <td>
+                <input name="queryProName" class="layui-input"
+                       type="text" value="${queryProName}">
+            </td>
+
+            <td><input value="查 询" type="submit" class="layui-btn layui-btn-normal">
+            </td>
+            <td>
+                <button type="button" class="layui-btn layui-btn-normal"
+                        onclick="addHtml('/provider/provideradd.html')">添加供应商
+                </button>
+            </td>
+        </tr>
+    </form>
+</table>
 <!--供应商操作表格-->
 <table id="providerlist" lay-filter="test"></table>
 <script type="text/html" id="toolbar">
@@ -66,5 +80,6 @@
 
     });
 </script>
+<%@include file="../foot.jsp" %>
 </body>
 </html>
