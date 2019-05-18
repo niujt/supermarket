@@ -36,7 +36,8 @@ public class PeopleController {
 	private PeopleService  peopleservice;
 	//进入员工列表页面
 	@RequestMapping("/peoplelist.html")
-	public String peoplelistshow(){
+	public String peoplelistshow(HttpServletRequest request){
+		request.setAttribute("depts",deptservice.deptlist());
 		return "list/peoplelist";
 	}
 	@RequestMapping(value = "/json/peoplelist",method = RequestMethod.GET)
@@ -52,8 +53,9 @@ public class PeopleController {
 	}
 	//进入添加供应商列表
 	@RequestMapping("/peopleadd.html")
-	public String provideradd(@ModelAttribute People people){
-		return "peopleadd";
+	public String provideradd(HttpServletRequest request){
+		request.setAttribute("depts",deptservice.deptlist());
+		return "add/peopleadd";
 	}
 	//单击添加保存新的供应商信息
 	@RequestMapping(value="savepeople.html",method = RequestMethod.POST)

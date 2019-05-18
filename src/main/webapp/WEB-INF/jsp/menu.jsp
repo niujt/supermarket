@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
-<ul class="layui-nav">
+<ul class="layui-nav" lay-filter="bigData">
 
     <li class="layui-nav-item layui-this"><a href="/index">首页</a></li>
     <li class="layui-nav-item "><a href="/bill/billlist.html">订单管理</a></li>
