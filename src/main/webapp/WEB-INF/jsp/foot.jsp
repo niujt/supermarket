@@ -19,6 +19,7 @@
         //因此你需要在相应的地方，执行下述方法来手动渲染，跟这类似的还有 element.init();
         form.render();
     });
+
     function addHtml(url) {
         layer.open({
             type: 2,
@@ -28,11 +29,40 @@
             content: [url, 'yes'],
             btn: ['取消'],
             yes: function (index) {
-                //事件
+                parent.location.reload();
                 layer.close(index);
             }
         });
     }
+
+    function add(url) {
+        var d = {};
+        var t = $('form').serializeArray();
+        $.each(t, function () {
+            d[this.name] = this.value;
+        });
+        var json = JSON.stringify(d);
+        $.ajax({
+            url: url,
+            type: 'post',
+            data: json,
+            contentType: "application/json;charset=utf-8",
+            success: function (data) {
+                console.log(data.message);
+                if (data.message == "添加成功") {
+                    layer.alert(data.message);
+
+                } else {
+                    layer.alert(data.message);
+                }
+            },
+            error: function (data) {
+                layer.alert(data);
+            }
+        });
+        return false
+    }
+
     function editHtml(url) {
         layer.open({
             type: 2,
@@ -47,14 +77,15 @@
             }
         });
     }
-    function del(url){
+
+    function del(url) {
         $.ajax({
-            url:url,
-            type:'delete',
-            success:function(data){
+            url: url,
+            type: 'delete',
+            success: function (data) {
                 layer.alert(data.message);
             },
-            error:function (data) {
+            error: function (data) {
                 layer.alert(data.message);
             }
         });

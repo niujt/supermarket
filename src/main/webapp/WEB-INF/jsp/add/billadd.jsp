@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" href="/static/css/layui.min.css">
     <title>超市管理系统</title>
 </head>
-<form method="post" action="/user/saveuser.html" class="layui-form" enctype="multipart/form-data">
+<form onsubmit="return add('/bill/savebill.html')" class="layui-form" enctype="multipart/form-data">
     <table class="layui-table" lay-skin="row" lay-size="lg">
         <tr>
             <td>订单编码：</td>
@@ -50,7 +50,7 @@
         <tr>
             <td>供应商：</td>
             <td>
-                <select>
+                <select name="providerId">
                     <c:forEach var="p" items="${providers}">
                         <option value="${p.id}">${p.proName}</option>
                     </c:forEach>
@@ -60,15 +60,15 @@
         <tr>
             <td>是否付款：</td>
             <td>
-                <input type="radio" name="isPayment" value="1" checked="checked">未付款
-                <input type="radio" name="isPayment" value="2">已付款
+                <input type="radio" name="isPayment" value="1" checked="checked">付款
+                <input type="radio" name="isPayment" value="2">未付款
             </td>
         </tr>
         <tr>
             <td>是否入库：</td>
             <td>
-                <input type="radio" name="isin" value="1" checked="checked">未入库
-                <input type="radio" name="isin" value="2">入库
+                <input type="radio" name="isin" value="1" checked="checked">入库
+                <input type="radio" name="isin" value="2">未入库
             </td>
         </tr>
         <tr>
@@ -82,3 +82,4 @@
 </html>
 <script type="text/javascript" src="/static/js/jquery-1.8.3.min.js"></script>
 <script type="text/javascript" src="/static/js/layui.all.js"></script>
+<%@include file="../foot.jsp" %>

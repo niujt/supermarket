@@ -14,12 +14,7 @@ import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import com.alibaba.fastjson.JSONArray;
 import com.wxthxy.supermarket.entity.Bill;
@@ -139,23 +134,22 @@ public class BillController {
      * @param session
      * @return
      */
-    @RequestMapping("/savebill.html")
-    public String savebill(Bill bill, HttpSession session
-    ) {
+    @RequestMapping(value = "/savebill.html", method = RequestMethod.POST)
+    @ResponseBody
+    public JSONObject savebill(@RequestBody Bill bill, HttpSession session) {
+        JSONObject json = new JSONObject();
         //登陆人的id
         long loginerid = ((User) (session.getAttribute(Constants.SESSION))).getId();
         bill.setCreatedBy(loginerid);
         //创建时间
         bill.setCreationDate(new Date());
         if (billservice.savebill(bill) == 1) {
-            if (bill.getIsin() == 2) {
+            if (bill.getIsin() == 1) {
                 Goods g = new Goods();
                 g.setCreatedBy(loginerid);
                 g.setCreationDate(new Date());
                 BigDecimal b1 = bill.getTotalPrice();
                 BigDecimal b2 = bill.getProductCount();
-                System.out.println("bill单价=============" + b1);
-                System.out.println("bill总价=============" + b2);
                 g.setGnumber(b1.intValue() / b2.intValue());
                 g.setPprice(bill.getProductCount());
                 g.setSname(bill.getProductName());
@@ -164,11 +158,14 @@ public class BillController {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
                 g.setGcode("KC" + sdf.format(new Date()));
                 goodsService.savegoods(g);
+                json.put("message", bill.getProductName()+"已经添加到库存");
+            } else {
+                json.put("message", "添加成功");
             }
-
-            return "redirect:/bill/billlist.html";
+        } else {
+            json.put("message", "添加失败");
         }
-        return "billadd";
+        return json;
     }
 
     /**
