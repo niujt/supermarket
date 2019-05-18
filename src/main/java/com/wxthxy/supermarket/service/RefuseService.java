@@ -40,7 +40,7 @@ public interface RefuseService {
      * @param id
      * @return
      */
-    Refuse getRefusebyid(@Param("id") String id);
+    Refuse getRefusebyid(Integer id);
 
     /**
      * 修改退货信息
@@ -56,6 +56,6 @@ public interface RefuseService {
      * @param id
      * @return
      */
-    int deleteRefusebyid(@Param("id") String id);
+    int deleteRefusebyid(Integer id);
 
 }

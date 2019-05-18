@@ -32,12 +32,5 @@ public class TestCase {
 	public void init(){
 		ac=new ClassPathXmlApplicationContext("applicationContext-mybatis.xml");
 	}
-	@Test
-    public void test01(){
-		service=ac.getBean("refuseService",RefuseService.class);
-		//Goods g=dao.findgoodsbygname("伊利优酸乳");
-		//Long l=new Long(2);
-		System.out.println(service.getRefusebyid("8"));
-		//System.out.println(service.getsaleList("Z", "猪", 0, 5));
-	}
+
 }

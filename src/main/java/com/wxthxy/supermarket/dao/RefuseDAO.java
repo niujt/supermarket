@@ -45,7 +45,7 @@ public interface RefuseDAO {
      * @param id
      * @return
      */
-    Refuse getRefusebyid(@Param("id") String id);
+    Refuse getRefusebyid(@Param("id") Integer id);
 
     /**
      * 修改退货信息
@@ -61,5 +61,5 @@ public interface RefuseDAO {
      * @param id
      * @return
      */
-    int deleteRefusebyid(@Param("id") String id);
+    int deleteRefusebyid(@Param("id") Integer id);
 }

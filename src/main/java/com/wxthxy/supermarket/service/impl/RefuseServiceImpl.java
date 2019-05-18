@@ -35,7 +35,7 @@ public class RefuseServiceImpl implements RefuseService {
 	}
 
 
-	public Refuse getRefusebyid(String id) {
+	public Refuse getRefusebyid(Integer id) {
 		return refusedao.getRefusebyid(id);
 	}
 
@@ -45,7 +45,7 @@ public class RefuseServiceImpl implements RefuseService {
 	}
 
 
-	public int deleteRefusebyid(String id) {
+	public int deleteRefusebyid(Integer id) {
 		return refusedao.deleteRefusebyid(id);
 	}
 }
