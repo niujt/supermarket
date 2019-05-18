@@ -45,19 +45,6 @@ public class RoleController {
 
 		return "add/roleadd";
 	}
-	//保存添加角色
-	@RequestMapping(value = "/saveaddrole.html")
-	public String saveaddrole(Role role ,HttpSession session){
-		//登陆人的id
-		long   loginerid   = ((User)(session.getAttribute(Constants.SESSION))).getId();  
-		role.setCreatedBy(loginerid);
-		//创建时间
-		role.setCreationDate( new  Date());
-		if(roleservice.addrole(role)>=1){
-			return "redirect:/role/rolelist.html";
-		}
-		return "roleadd";
-	}
 	//修改角色信息
 	@RequestMapping(value = "/updaterole.html/{id}",method = RequestMethod.GET)
 	public String updaterole(@PathVariable String id, HttpServletRequest request){
@@ -78,17 +65,23 @@ public class RoleController {
 
 		return json;
 	}
-	//保存修改的角色信息
-	@RequestMapping(value = "/saveupdaterole.html",method = RequestMethod.POST)
-	public String saveupdaterole(Role role ,HttpSession session){
+	//添加角色信息
+	@RequestMapping(value = "/saverole.html",method = RequestMethod.POST)
+	@ResponseBody
+	public JSONObject saverole(@RequestBody Role role ,HttpSession session){
+		JSONObject json=new JSONObject();
 		//登陆人的id
 		long   loginerid   = ((User)(session.getAttribute(Constants.SESSION))).getId();  
-		role.setModifyBy(loginerid);
+		role.setCreatedBy(loginerid);
+		role.setCreationDate(new Date());
 		//创建时间
 		role.setModifyDate(new  Date());
-		if(roleservice.updateole(role)>=1){
-			return "redirect:/role/rolelist.html";
+		if(roleservice.addrole(role)>0){
+			json.put("message","添加成功");
 		}
-		return "roleadd";
+		else {
+			json.put("message","添加失败");
+		}
+		return json;
 	}
 }

@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" href="/static/css/layui.min.css">
     <title>超市管理系统</title>
 </head>
-<form method="post" action="/user/saveuser.html" class="layui-form" enctype="multipart/form-data">
+<form onsubmit="return add('/role/saverole.html')"  class="layui-form" enctype="multipart/form-data">
     <table class="layui-table" lay-skin="row" lay-size="lg">
         <tr>
             <td>角色编码：</td>
@@ -23,9 +23,9 @@
                 <input type="submit" class="layui-btn layui-btn-primary"  value="保存">
             </td>
         </tr>
-
     </table>
 </form>
 </html>
 <script type="text/javascript" src="/static/js/jquery-1.8.3.min.js"></script>
 <script type="text/javascript" src="/static/js/layui.all.js"></script>
+<%@include file="../foot.jsp" %>
