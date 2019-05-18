@@ -45,7 +45,7 @@ public class RefuseController {
 		json.put("code",0);
 		json.put("msg","");
 		json.put("count",refuseservice.getCount());
-		List<Refuse> refuses=refuseservice.getRefuseList(page-1,limit);
+		List<Refuse> refuses=refuseservice.getRefuseList((page-1)*limit,limit);
 		json.put("data",refuses);
 		return json;
 	}

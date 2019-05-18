@@ -43,7 +43,7 @@ public class SaleController {
 		json.put("code",0);
 		json.put("msg","");
 		json.put("count",saleservice.getcount());
-		List<Sale> sales=saleservice.getsaleList(page-1,limit);
+		List<Sale> sales=saleservice.getsaleList((page-1)*limit,limit);
 		json.put("data",sales);
 		return json;
 	}

@@ -46,7 +46,7 @@ public class GoodsController {
 		json.put("code",0);
 		json.put("msg","");
 		json.put("count",goodsservice.getcount());
-		List<Goods> goods=goodsservice.goodslist(page-1,limit);
+		List<Goods> goods=goodsservice.goodslist((page-1)*limit,limit);
 		json.put("data",goods);
 		return json;
 	}

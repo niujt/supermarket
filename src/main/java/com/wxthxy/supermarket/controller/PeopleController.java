@@ -47,7 +47,7 @@ public class PeopleController {
 		json.put("code",0);
 		json.put("msg","");
 		json.put("count",peopleservice.getcount());
-		List<People> peoples=peopleservice.peoplelist(page-1, limit);
+		List<People> peoples=peopleservice.peoplelist((page-1)*limit, limit);
 		json.put("data",peoples);
 		return json;
 	}

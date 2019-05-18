@@ -63,7 +63,7 @@ public class BillController {
 		json.put("code",0);
 		json.put("msg","");
 		json.put("count",billservice.getcount());
-		List<Bill> bills=billservice.billlist(page-1,limit);
+		List<Bill> bills=billservice.billlist((page-1)*limit,limit);
 		json.put("data",bills);
 		return json;
 	}

@@ -45,7 +45,7 @@ public class UserController {
         json.put("code", 0);
         json.put("msg", "");
         json.put("count", userservice.getCount());
-        List<User> users = userservice.getUserList(page - 1, limit);
+        List<User> users = userservice.getUserList((page-1)*limit, limit);
         json.put("data", users);
         return json;
     }

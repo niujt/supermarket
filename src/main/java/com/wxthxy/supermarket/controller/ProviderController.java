@@ -43,7 +43,7 @@ public class ProviderController {
 		json.put("code",0);
 		json.put("msg","");
 		json.put("count",providerservice.getCount());
-		List<Provider> providers=providerservice.getProviderList(page-1,limit);
+		List<Provider> providers=providerservice.getProviderList((page-1)*limit,limit);
 		json.put("data",providers);
 		return json;
 	}

@@ -35,7 +35,7 @@ public class RoleController {
 		json.put("code",0);
 		json.put("msg","");
 		json.put("count",roleservice.getcount());
-		List<Role> sales=roleservice.getRolelist(page-1,limit);
+		List<Role> sales=roleservice.getRolelist((page-1)*limit,limit);
 		json.put("data",sales);
 		return json;
 	}
