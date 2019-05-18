@@ -71,7 +71,7 @@ public class BillController {
      */
     @RequestMapping("/billadd.html")
     public String billadd(HttpServletRequest request) {
-        List<Provider> providers = providerservice.getProviderList(0, 9999);
+        List<Provider> providers = providerservice.getProviderList(0, 9999,"","");
         request.setAttribute("providers", providers);
         return "add/billadd";
     }
@@ -88,7 +88,7 @@ public class BillController {
         Bill b = billservice.getBillbyid(id);
         request.setAttribute("bill", b);
         //供应商列表
-        List<Provider> providerlist = providerservice.getProviderList(0, 9999);
+        List<Provider> providerlist = providerservice.getProviderList(0, 9999,"","");
         request.setAttribute("providers", providerlist);
         return "info/billmodify";
     }

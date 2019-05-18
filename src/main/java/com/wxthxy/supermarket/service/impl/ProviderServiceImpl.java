@@ -1,6 +1,7 @@
 package com.wxthxy.supermarket.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.annotation.Resource;
 
@@ -23,8 +24,10 @@ public class ProviderServiceImpl implements ProviderService {
 	/**
 	 * 根据条件分页查询用户信息
 	 */
-	public List<Provider> getProviderList(Integer page,Integer limit) {
-		return  providerdao.getProviderList(page,limit);
+	public List<Provider> getProviderList(Integer page,Integer limit,String proCode,String proName) {
+        proCode= Optional.ofNullable(proCode).orElse("");
+        proName= Optional.ofNullable(proName).orElse("");
+		return  providerdao.getProviderList(page,limit,proCode,proName);
 	}
 	/**
 	 * 查找符合条件的总记录数

@@ -18,7 +18,7 @@ public interface ProviderService {
      * 根据条件分页查询用户信息
      * @return 供应商列表
      */
-    List<Provider> getProviderList(Integer page,Integer limit);
+    List<Provider> getProviderList(Integer page,Integer limit,String proCode,String proName);
 
     /**
      * 查找符合条件的总记录数

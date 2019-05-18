@@ -32,6 +32,13 @@
 		SELECT *
 		FROM
 		smbms.smbms_provider
+		where 1=1
+		<if test="proName !=''">
+		 and proName=#{proName}
+		</if>
+		<if test="proCode !=''">
+			and proCode=#{proCode}
+		</if>
 		ORDER BY creationDate DESC
 		LIMIT #{page},#{limit}
 	</select>

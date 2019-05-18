@@ -19,7 +19,7 @@ public interface ProviderDAO {
      *
      * @return 供应商列表
      */
-    List<Provider> getProviderList(Integer page,Integer limit);
+    List<Provider> getProviderList(Integer page,Integer limit,String proCode,String proName);
 
     /**
      * 查找符合条件的总记录数

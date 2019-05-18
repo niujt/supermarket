@@ -35,12 +35,13 @@ public class ProviderController {
 
     @RequestMapping(value = "/json/providerlist", method = RequestMethod.GET)
     @ResponseBody
-    public JSONObject showproviderlist(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "limit", required = false) Integer limit) {
+    public JSONObject showproviderlist(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "limit", required = false) Integer limit,
+                                       @RequestParam(value = "proCode",required = false)String proCode,@RequestParam(value = "proName",required = false)String proName) {
         JSONObject json = new JSONObject();
         json.put("code", 0);
         json.put("msg", "");
         json.put("count", providerservice.getCount());
-        List<Provider> providers = providerservice.getProviderList((page - 1) * limit, limit);
+        List<Provider> providers = providerservice.getProviderList((page - 1) * limit, limit,proCode,proName);
         json.put("data", providers);
         return json;
     }
