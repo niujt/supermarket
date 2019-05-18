@@ -94,18 +94,22 @@ public class PeopleController {
     }
 
     //修改员工
-    @RequestMapping("/saveupdatepeople")
-    public String savepeoplemodify(People people
+    @RequestMapping(value = "/saveupdatepeople", method = RequestMethod.PUT)
+    @ResponseBody
+    public JSONObject savepeoplemodify(@RequestBody People people
             , HttpSession session) {
+        JSONObject json = new JSONObject();
         //登陆人的id
         long loginerid = ((User) (session.getAttribute(Constants.SESSION))).getId();
         people.setModifyBy(loginerid);
         //创建时间
         people.setModifyDate(new Date());
         if (peopleservice.updatepeoplebyid(people) == 1) {
-            return "redirect:/people/peoplelist.html";
+            json.put("message", "修改成功");
+        } else {
+            json.put("message", "修改失败");
         }
-        return "peopleadd";
+        return json;
     }
 
 }
