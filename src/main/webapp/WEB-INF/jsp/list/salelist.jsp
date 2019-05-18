@@ -20,7 +20,7 @@
 	</div>
 	<button class="layui-btn" data-type="reload">搜索</button>
 	<button type="button" class="layui-btn "
-			onclick="addHtml('/sale/saleadd.html')">添加订单
+			onclick="addHtml('/sale/saleadd.html')">添加销售单
 	</button>
 </div>
 <table id="salelist" lay-filter="test"></table>

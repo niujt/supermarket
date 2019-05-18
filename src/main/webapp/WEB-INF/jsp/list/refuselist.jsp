@@ -21,7 +21,7 @@
     </div>
     <button class="layui-btn" data-type="reload">搜索</button>
     <button type="button" class="layui-btn "
-            onclick="addHtml('/refuse/refuseadd.html')">添加订单
+            onclick="addHtml('/refuse/refuseadd.html')">添加退货单
     </button>
 </div>
 <table id="refuselist" lay-filter="test"></table>

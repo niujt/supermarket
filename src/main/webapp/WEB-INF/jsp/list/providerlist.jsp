@@ -21,7 +21,7 @@
     </div>
     <button class="layui-btn" data-type="reload">搜索</button>
     <button type="button" class="layui-btn "
-            onclick="addHtml('/provider/provideradd.html')">添加订单
+            onclick="addHtml('/provider/provideradd.html')">添加供应商
     </button>
 </div>
 <!--供应商操作表格-->
