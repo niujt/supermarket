@@ -60,7 +60,7 @@ public class Bill {
     /**
 	 * 供应商id
 	 */
-    private Long providerId;
+    private Integer providerId;
     /**
 	 * 供应商姓名
 	 */
@@ -179,15 +179,15 @@ public class Bill {
         this.modifyDate = modifyDate;
     }
 
-    public Long getProviderId() {
+    public Integer getProviderId() {
         return providerId;
     }
 
-    public void setProviderId(Long providerId) {
+    public void setProviderId(Integer providerId) {
         this.providerId = providerId;
     }
 
-	@Override
+    @Override
 	public String toString() {
 		return "Bill [id=" + id + ", billCode=" + billCode + ", productName=" + productName + ", productDesc="
 				+ productDesc + ", productUnit=" + productUnit + ", productCount=" + productCount + ", totalPrice="

@@ -49,12 +49,7 @@
             contentType: "application/json;charset=utf-8",
             success: function (data) {
                 console.log(data.message);
-                if (data.message == "添加成功") {
-                    layer.alert(data.message);
-
-                } else {
-                    layer.alert(data.message);
-                }
+                layer.alert(data.message);
             },
             error: function (data) {
                 layer.alert(data);
@@ -72,10 +67,37 @@
             content: [url, 'yes'],
             btn: ['取消'],
             yes: function (index) {
-                //事件
+                parent.location.reload();
                 layer.close(index);
             }
         });
+    }
+
+    function edit(url) {
+        var d = {};
+        var t = $('form').serializeArray();
+        $.each(t, function () {
+            d[this.name] = this.value;
+        });
+        var json = JSON.stringify(d);
+        $.ajax({
+            url: url,
+            type: 'put',
+            data: json,
+            contentType: "application/json;charset=utf-8",
+            success: function (data) {
+                console.log(data.message);
+                if (data.message == "修改成功") {
+                    layer.alert(data.message);
+                } else {
+                    layer.alert(data.message);
+                }
+            },
+            error: function (data) {
+                layer.alert(data);
+            }
+        });
+        return false
     }
 
     function del(url) {

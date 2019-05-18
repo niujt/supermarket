@@ -7,12 +7,13 @@
 	<link rel="stylesheet" type="text/css" href="/static/css/layui.min.css">
 	<title>超市管理系统</title>
 </head>
-<form method="post" action="/user/saveuser.html" class="layui-form" enctype="multipart/form-data">
+<form  onsubmit="return edit('/bill/saveupdatebill.html')" class="layui-form" enctype="multipart/form-data">
 	<table class="layui-table" lay-skin="row" lay-size="lg">
 		<tr>
 			<td>订单编码：</td>
 			<td>
 				<input class="layui-input" type="text" name="billCode" value="${bill.billCode}">
+				<input class="layui-input" type="hidden" name="id" value="${bill.id}">
 			</td>
 		</tr>
 		<tr>
@@ -50,7 +51,7 @@
 		<tr>
 			<td>供应商：</td>
 			<td>
-				<select name="productName">
+				<select name="providerId">
 
 					<c:forEach var="p" items="${providers}">
 						<option value="${p.id}" <c:if test="${bill.productName==p.proName}">selected</c:if>>${p.proName}</option>
