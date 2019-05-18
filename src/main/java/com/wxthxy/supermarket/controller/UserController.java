@@ -12,12 +12,7 @@ import com.alibaba.fastjson.JSONObject;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.mysql.jdbc.StringUtils;
@@ -68,7 +63,7 @@ public class UserController {
     @RequestMapping(value = "/adduser.html", method = RequestMethod.GET)
     public String adduser(@ModelAttribute("user") User user
             , HttpServletRequest request) {
-        return "useradd";
+        return "add/useradd";
     }
 
     /**
@@ -163,7 +158,7 @@ public class UserController {
             e.printStackTrace();
         }
         m.addAttribute(user);
-        return "usermodify";
+        return "info/usermodify";
     }
 
     /**
@@ -187,13 +182,6 @@ public class UserController {
 
         return "usermodify";
     }
-    //点击查看进入查看页面
-    //	@RequestMapping("/view.html/{uid}")
-    //	public String view (@PathVariable String uid,Model m){
-    //		User user= userservice.getUserbyid(Integer.parseInt(uid));
-    //		m.addAttribute(user);
-    //		return "userview";
-    //	}
 
 
     /**
@@ -255,12 +243,10 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/updatepass.html", method = RequestMethod.GET)
-    public String updatepass(HttpSession session) {
-        Long role = ((User) (session.getAttribute(Constants.SESSION))).getUserRole();
-        if (role == 1) {
-            return "pwdmodify";
-        }
-        return "user/pwdmodify";
+    public String updatepass(HttpSession session, HttpServletRequest request) {
+        User user = ((User) (session.getAttribute(Constants.SESSION)));
+        request.setAttribute("user", user);
+        return "info/pwdmodify";
     }
 
     /**
@@ -291,22 +277,28 @@ public class UserController {
     /**
      * 保存修改的密码
      *
-     * @param newpassword
+     * @param
      * @param session
      * @return
      */
-    @RequestMapping("/savepass.html")
-    public String savepass(@Param("rnewpassword") String newpassword, HttpSession session) {
+    @RequestMapping(value = "/savepass.html",method = RequestMethod.POST)
+    public String savepass(User newUser, HttpSession session, HttpServletRequest request) {
         User user = ((User) (session.getAttribute(Constants.SESSION)));
-        User updater = new User();
-        updater.setModifyBy(user.getId());
-        updater.setModifyDate(new Date());
-        updater.setUserPassword(newpassword);
-        updater.setId(user.getId());
-        if (userservice.updatepassbyid(updater) == 1) {
+        String message = "";
+        newUser.setModifyBy(user.getId());
+        newUser.setModifyDate(new Date());
+        newUser.setUserPassword(newUser.getNewpassword());
+        if (!newUser.getOldpassword().equals(user.getUserPassword())) {
+            message = "原密码错误";
+            request.setAttribute("message", message);
+            request.setAttribute("user", user);
+            return "info/pwdmodify";
+        } else if (userservice.updatepassbyid(newUser) == 1) {
             return "redirect:/login.html";
+        } else {
+            return "redirect:/user/updatepass.html";
         }
-        return "pwdmodify";
+
     }
 
 

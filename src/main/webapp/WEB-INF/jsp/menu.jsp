@@ -14,7 +14,7 @@
         <dl class="layui-nav-child"> <!-- 二级菜单 -->
             <dd><a href="/user/userlist.html">用户管理</a></dd>
             <dd><a href="/role/rolelist.html">角色管理</a></dd>
-            <dd><a href="">密码修改</a></dd>
+            <dd><a href="/user/updatepass.html">密码修改</a></dd>
         </dl>
     </li>
     <li class="layui-nav-item layui-layout-right"><a href="/outLogin.html"> 欢迎&nbsp;&nbsp;&nbsp;${userSession.userCode}&nbsp;&nbsp;&nbsp;退出系统</a></li>
