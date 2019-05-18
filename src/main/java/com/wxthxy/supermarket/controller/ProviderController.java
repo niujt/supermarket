@@ -52,6 +52,13 @@ public class ProviderController {
 	public String provideradd(){
 		return "add/provideradd";
 	}
+	//进入修改供应商页面
+	@RequestMapping("/updateprovider.html/{id}")
+	public String providermodify(@PathVariable String id,HttpServletRequest request){
+		Provider p = providerservice.getProviderbyid(id);
+		request.setAttribute("provider",p);
+		return "info/providermodify";
+	}
 	//单击添加保存新的供应商信息
 	@RequestMapping(value="/saveprovideradd.html",method = RequestMethod.POST)
 	public String saveprovideradd(Provider provider
@@ -157,27 +164,7 @@ public class ProviderController {
 //		m.addAttribute("provider",p);
 		return "providerview";
 	}
-	//进入修改供应商页面
-	@RequestMapping("/updateprovider/{id}")
-	public String providermodify(@PathVariable String id ,@ModelAttribute Provider provider,Model m,HttpServletRequest request){
-		Provider p = new Provider();
-		try {
-			p = providerservice.getProviderbyid(id);
-			if(p.getCompanyLicPicPath() != null && !"".equals(p.getCompanyLicPicPath())){
-				String[] paths = p.getCompanyLicPicPath().split("/"+File.separator);
-				p.setCompanyLicPicPath(request.getContextPath()+"/statics/uploadfiles/"+paths[paths.length-1]);
-			}
-			if(p.getOrgCodePicPath() != null && !"".equals(p.getOrgCodePicPath())){
-				String[] paths = p.getOrgCodePicPath().split("/"+File.separator);
-				p.setOrgCodePicPath(request.getContextPath()+"/statics/uploadfiles/"+paths[paths.length-1]);
-			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		m.addAttribute("provider",p);
-		return "providermodify";
-	}
+
 	//修改供应商
 	@RequestMapping("/saveupdateprovider")
 	public String saveprovidermodify(Provider provider

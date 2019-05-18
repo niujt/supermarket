@@ -78,6 +78,21 @@ public class BillController {
 		return "add/billadd";
 	}
 	/**
+	 * 进入修改页面
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(value="updatebill.html/{id}",method = RequestMethod.GET)
+	public String updatebill(@PathVariable String id,HttpServletRequest request){
+		//根据id查找到订单信息
+		Bill b= billservice.getBillbyid(id);
+		request.setAttribute("bill", b);
+		//供应商列表
+		List<Provider> providerlist= providerservice.getProviderList(0,9999);
+		request.setAttribute("providers", providerlist);
+		return "info/billmodify";
+	}
+	/**
 	 * 把要添加的订单保存到数据库
 	 * @param bill
 	 * @param session
@@ -129,21 +144,7 @@ public class BillController {
 		return "billview";
 	}
 
-	/**
-	 * 进入修改页面
-	 * @param id
-	 * @return
-	 */
-	@RequestMapping(value="updatebill.html/{id}",method = RequestMethod.GET)
-	public String updatebill(@PathVariable String id,HttpServletRequest request){
-		//根据id查找到订单信息
-		Bill b= billservice.getBillbyid(id);
-		request.setAttribute("bill", b);
-		//供应商列表
-		List<Provider> providerlist= providerservice.getProviderList(0,9999);
-		request.setAttribute("providers", providerlist);
-		return "info/billmodify";
-	}
+
 	/**
 	 * 点击保存修改的订单信息
 	 * @param bill
