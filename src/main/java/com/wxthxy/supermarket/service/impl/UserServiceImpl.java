@@ -47,8 +47,8 @@ public class UserServiceImpl implements UserService {
 		return userdao.getUserbyuserCode(userCode);
 	}
 	//根据用户id删除用户信息
-	public int DelUserbyId(int id) {
-		return userdao.DelUserbyId(id);
+	public int delUserbyId(int id) {
+		return userdao.delUserbyId(id);
 	}
 	//根据id修改�?个用户信�?
 	public int updateuserbyid(User user ){

@@ -59,7 +59,7 @@ public interface UserDAO {
      * @param id 用户id
      * @return 删除的条数
      */
-    int DelUserbyId(@Param("Id") int id);
+    int delUserbyId(@Param("id") int id);
 
     /**
      * 根据id修改一个用户信息

@@ -66,10 +66,10 @@
 		WHERE userCode = #{userCode}
 	</select>
 	<!-- 根据用户id 删除该用户信息 -->
-	<delete id="DelUserbyId">
+	<delete id="delUserbyId" parameterType="Integer">
 		DELETE FROM smbms.smbms_user
 		WHERE
-		id = #{Id}
+		id = #{id}
 	</delete>
 	<!-- 根据id修改用户信息 -->
 	<update id="updateuserbyid">

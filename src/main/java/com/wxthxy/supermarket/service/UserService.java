@@ -58,7 +58,7 @@ public interface UserService {
      * @param id 用户id
      * @return 删除的条数
      */
-    int DelUserbyId(int id);
+    int delUserbyId(int id);
 
     /**
      * 根据id修改一个用户信息
