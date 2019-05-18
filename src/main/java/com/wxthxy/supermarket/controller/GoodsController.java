@@ -2,19 +2,14 @@ package com.wxthxy.supermarket.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import com.alibaba.fastjson.JSONArray;
 import com.wxthxy.supermarket.entity.Goods;
 import com.wxthxy.supermarket.entity.Refuse;
 import com.wxthxy.supermarket.entity.User;
@@ -100,10 +95,9 @@ public class GoodsController {
         goods.setCreationDate(new Date());
         if (goodsservice.findgoodsbygname(goods.getGname()) != null && goodsservice.findgoodsbygname(goods.getGname()).getPprice().equals(goods.getPprice())) {
             goodsservice.addgoods(goods);
-            json.put("message", "添加成功,"+goods.getGname() + "新增" + goods.getGnumber() + goods.getGunit());
-        }
-        else if (goodsservice.findgoodsbygname(goods.getGname()) != null && !goodsservice.findgoodsbygname(goods.getGname()).getPprice().equals(goods.getPprice())) {
-            json.put("message", "添加"+goods.getGname() +"成功,进价为"+goods.getPprice()+"元");
+            json.put("message", "添加成功," + goods.getGname() + "新增" + goods.getGnumber() + goods.getGunit());
+        } else if (goodsservice.findgoodsbygname(goods.getGname()) != null && !goodsservice.findgoodsbygname(goods.getGname()).getPprice().equals(goods.getPprice())) {
+            json.put("message", "添加" + goods.getGname() + "成功,进价为" + goods.getPprice() + "元");
             goodsservice.savegoods(goods);
         } else {
             goodsservice.savegoods(goods);
