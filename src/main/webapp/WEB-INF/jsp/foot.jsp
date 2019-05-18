@@ -33,4 +33,18 @@
             }
         });
     }
+    function editHtml(url) {
+        layer.open({
+            type: 2,
+            title: '修改页面',
+            closeBtn: 0,
+            area: ['800px', '600px'],
+            content: [url, 'yes'],
+            btn: ['取消'],
+            yes: function (index) {
+                //事件
+                layer.close(index);
+            }
+        });
+    }
 </script>

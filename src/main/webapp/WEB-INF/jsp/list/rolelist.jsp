@@ -58,7 +58,7 @@
                     layer.close(index);
                 });
             } else if (obj.event === 'edit') {
-                layer.alert('编辑行：<br>' + JSON.stringify(data))
+                editHtml('/role/updaterole.html/'+data.id);
             }
         });
 

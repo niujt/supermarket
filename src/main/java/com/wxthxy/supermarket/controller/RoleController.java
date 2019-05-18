@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.alibaba.fastjson.JSONObject;
@@ -59,10 +60,10 @@ public class RoleController {
 	}
 	//修改角色信息
 	@RequestMapping(value = "/updaterole.html/{id}",method = RequestMethod.GET)
-	public String updaterole(@PathVariable String id,@ModelAttribute Role role,Model m){
+	public String updaterole(@PathVariable String id, HttpServletRequest request){
 		Role r =roleservice.getrolebyid(id);
-		m.addAttribute("role",r);
-		return "rolemodify";
+		request.setAttribute("role",r);
+		return "info/rolemodify";
 	}
 	//保存修改的角色信息
 	@RequestMapping(value = "/saveupdaterole.html",method = RequestMethod.POST)
