@@ -67,5 +67,4 @@ public class BillServiceImpl implements BillService{
 	public List<Bill> getbillbypproviderid(Integer providerId) {
 		return billdao.getbillbypproviderid(providerId);
 	}
-
 }

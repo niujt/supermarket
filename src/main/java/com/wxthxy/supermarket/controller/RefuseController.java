@@ -1,7 +1,6 @@
 package com.wxthxy.supermarket.controller;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -9,16 +8,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.alibaba.fastjson.JSONObject;
+import com.wxthxy.supermarket.entity.Goods;
+import com.wxthxy.supermarket.service.BillService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
-import com.alibaba.fastjson.JSONArray;
 import com.wxthxy.supermarket.entity.Refuse;
 import com.wxthxy.supermarket.entity.User;
 import com.wxthxy.supermarket.service.GoodsService;
@@ -33,6 +28,8 @@ public class RefuseController {
     private RefuseService refuseservice;
     @Resource
     private GoodsService goodsservice;
+    @Autowired
+    private BillService billService;
 
     //进入退货单列表
     @RequestMapping("/refuselist.html")
@@ -54,8 +51,9 @@ public class RefuseController {
 
     //进入添加订单列表
     @RequestMapping("/refuseadd.html")
-    public String refuseadd() {
-
+    public String refuseadd(HttpServletRequest request) {
+        List<Goods> goods=goodsservice.goodslist(0,99999);
+        request.setAttribute("goods",goods);
         return "add/refuseadd";
     }
 
@@ -82,33 +80,23 @@ public class RefuseController {
         return json;
     }
 
-    //把要添加的订单保存到数据库
-    @RequestMapping("/saverefuse.html")
-    public String saverefuse(Refuse refuse, HttpSession session) {
+    @RequestMapping(value = "/saverefuse.html", method = RequestMethod.POST)
+    @ResponseBody
+    public JSONObject saverefuse(@RequestBody  Refuse refuse, HttpSession session) {
+        JSONObject json = new JSONObject();
         //登陆人的id
         long loginerid = ((User) (session.getAttribute(Constants.SESSION))).getId();
-        //System.out.println("id==============================="+loginerid);
         refuse.setCreateBy(loginerid);
         //创建时间
         refuse.setCreationDate(new Date());
         if (refuseservice.saveRefuse(refuse) == 1) {
-            System.out.println("名称==================================sname====" + refuse.getRefName());
             goodsservice.updategoodsbynumber(refuse.getRefnumber(), refuse.getRefName());
-            return "redirect:/refuse/refuselist.html";
+            json.put("message", "删除成功,库存中" + refuse.getRefName() + "已经减少" + refuse.getRefnumber());
+        } else {
+            json.put("message", "删除失败");
         }
-        return "refuseadd";
+        return json;
     }
-
-    //根据id查询订单信息
-    @RequestMapping(value = "view/{id}", method = RequestMethod.GET)
-    public String getrefusebyid(@PathVariable Integer id, Model m) {
-
-        Refuse refuse = refuseservice.getRefusebyid(id);
-        m.addAttribute("refuse", refuse);
-
-        return "refuseview";
-    }
-
 
     //点击保存修改的订单信息
     @RequestMapping(value = "saveupdaterefuse.html", method = RequestMethod.POST)
