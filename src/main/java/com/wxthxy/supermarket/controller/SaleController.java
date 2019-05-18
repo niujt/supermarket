@@ -20,105 +20,100 @@ import com.wxthxy.supermarket.entity.User;
 import com.wxthxy.supermarket.service.GoodsService;
 import com.wxthxy.supermarket.service.SaleService;
 import com.wxthxy.supermarket.util.Constants;
+
 /**
  * 订单Controller
- * @author Dell
  *
+ * @author Dell
  */
 @Controller
 @RequestMapping("/sale")
 public class SaleController {
-	@Resource
-	private  SaleService saleservice;
-	@Resource
-	private GoodsService goodsservice;
-	@RequestMapping("/salelist.html")
-	public String showsalelist(){
-		return "list/salelist";
-	}
-	@RequestMapping(value = "/json/salelist",method = RequestMethod.GET)
-	@ResponseBody
-	public JSONObject showsalelist(@RequestParam(value = "page",required = false)Integer page, @RequestParam(value = "limit",required = false)Integer limit){
-		JSONObject json=new JSONObject();
-		json.put("code",0);
-		json.put("msg","");
-		json.put("count",saleservice.getcount());
-		List<Sale> sales=saleservice.getsaleList((page-1)*limit,limit);
-		json.put("data",sales);
-		return json;
-	}
-	@RequestMapping("/saleadd.html")
-	public String saleadd(){
-		return "add/saleadd";
-	}
-	@RequestMapping("/updatesale.html/{id}")
-	public String updatesale(@PathVariable String id, HttpServletRequest request) {
-		Sale sale = saleservice.findsaleByid(id);
-		request.setAttribute("sale",sale);
-		return "info/salemodify";
-	}
-	@RequestMapping("/savesale.html")
-	public String savesale(Sale sale,HttpSession session,String snumber
-			,String sname,Model m){
-		//登陆人的id
-		long   loginerid   = ((User)(session.getAttribute(Constants.SESSION))).getId();  
-		sale.setCreatedBy(loginerid);
-		;
-		sale.setPprice(goodsservice.findgoodsbygname(sname).getPprice());
-		//创建时间
-		sale.setCreationDate( new  Date());
-		if(saleservice.savesale(sale)==1){
-			Goods g=goodsservice.findgoodsbygname(sname);
-			int gnumber=g.getGnumber();
-			int _snumber=Integer.parseInt(snumber);
-			if(gnumber-_snumber>=0) {
-				System.out.println("==========================添加到销售单的个数="+_snumber);
-				goodsservice.updategoodsbynumber(_snumber, sname);
-				return "redirect:/sale/salelist.html";
-			}
-				String error="仓库的"+sname+"数量不足";
-			m.addAttribute("error", error);
-			return "saleadd";
-		}
-		return "saleadd";
-	}
-	@RequestMapping("/view/{id}")
-	public String viewsale(@PathVariable String id,Model m) {
-		Sale s=new Sale();
-		s=saleservice.findsaleByid(id);
-		m.addAttribute("sale", s);
-		return "saleview";
-	}
-	@RequestMapping("/deletesalebyid/{id}")
-	@ResponseBody
-	public Object deletesale(@PathVariable String id){
-		HashMap<String,Object> m = new HashMap<String,Object>();
-		if(id==null||id==""){
-			m.put("delResult", "notexist");
-		}else{
-			int count=  saleservice.deletesalebyid(id);
-			if(count>0){
-				m.put("delResult", "true");
-			}else{
-				m.put("delResult", "false");
-			}
-		}
-		return JSONArray.toJSONString(m);
-	}
-	@RequestMapping("/saveupdatesale.html")
-	public String saveupdatesale(Sale sale
-			,HttpSession session) {
-		long   loginerid   = ((User)(session.getAttribute(Constants.SESSION))).getId();  
-		sale.setModifyBy(loginerid);
-		//创建时间
-		sale.setModifyDate( new  Date());
-		if(saleservice.updatesalebyid(sale)==1){
-			return "redirect:/sale/salelist.html";
-		}
-		return "saleadd";
-	}
-	
-	
-	
-	
+    @Resource
+    private SaleService saleservice;
+    @Resource
+    private GoodsService goodsservice;
+
+    @RequestMapping("/salelist.html")
+    public String showsalelist() {
+        return "list/salelist";
+    }
+
+    @RequestMapping(value = "/json/salelist", method = RequestMethod.GET)
+    @ResponseBody
+    public JSONObject showsalelist(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "limit", required = false) Integer limit) {
+        JSONObject json = new JSONObject();
+        json.put("code", 0);
+        json.put("msg", "");
+        json.put("count", saleservice.getcount());
+        List<Sale> sales = saleservice.getsaleList((page - 1) * limit, limit);
+        json.put("data", sales);
+        return json;
+    }
+
+    @RequestMapping("/saleadd.html")
+    public String saleadd() {
+        return "add/saleadd";
+    }
+
+    @RequestMapping("/updatesale.html/{id}")
+    public String updatesale(@PathVariable String id, HttpServletRequest request) {
+        Sale sale = saleservice.findsaleByid(id);
+        request.setAttribute("sale", sale);
+        return "info/salemodify";
+    }
+
+    @RequestMapping(value = "/deletesalebyid/{id}",method = RequestMethod.DELETE)
+    @ResponseBody
+    public JSONObject deletesale(@PathVariable Integer id) {
+        JSONObject json = new JSONObject();
+        int count = saleservice.deletesalebyid(id);
+        if (count > 0) {
+            json.put("message", "删除成功");
+        } else {
+            json.put("message", "删除失败");
+        }
+        return json;
+    }
+
+    @RequestMapping("/savesale.html")
+    public String savesale(Sale sale, HttpSession session, String snumber
+            , String sname, Model m) {
+        //登陆人的id
+        long loginerid = ((User) (session.getAttribute(Constants.SESSION))).getId();
+        sale.setCreatedBy(loginerid);
+        ;
+        sale.setPprice(goodsservice.findgoodsbygname(sname).getPprice());
+        //创建时间
+        sale.setCreationDate(new Date());
+        if (saleservice.savesale(sale) == 1) {
+            Goods g = goodsservice.findgoodsbygname(sname);
+            int gnumber = g.getGnumber();
+            int _snumber = Integer.parseInt(snumber);
+            if (gnumber - _snumber >= 0) {
+                System.out.println("==========================添加到销售单的个数=" + _snumber);
+                goodsservice.updategoodsbynumber(_snumber, sname);
+                return "redirect:/sale/salelist.html";
+            }
+            String error = "仓库的" + sname + "数量不足";
+            m.addAttribute("error", error);
+            return "saleadd";
+        }
+        return "saleadd";
+    }
+
+    @RequestMapping("/saveupdatesale.html")
+    public String saveupdatesale(Sale sale
+            , HttpSession session) {
+        long loginerid = ((User) (session.getAttribute(Constants.SESSION))).getId();
+        sale.setModifyBy(loginerid);
+        //创建时间
+        sale.setModifyDate(new Date());
+        if (saleservice.updatesalebyid(sale) == 1) {
+            return "redirect:/sale/salelist.html";
+        }
+        return "saleadd";
+    }
+
+
 }

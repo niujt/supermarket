@@ -17,7 +17,7 @@ public interface SaleService {
 
     Sale findsaleByid(String id);
 
-    int deletesalebyid(String id);
+    int deletesalebyid(Integer id);
 
     int updatesalebyid(Sale sale);
 }

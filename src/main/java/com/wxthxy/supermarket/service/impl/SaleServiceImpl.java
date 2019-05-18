@@ -31,7 +31,7 @@ public class SaleServiceImpl implements SaleService {
         return saledao.findsaleByid(id);
     }
 
-    public int deletesalebyid(String id) {
+    public int deletesalebyid(Integer id) {
         return saledao.deletesalebyid(id);
     }
 

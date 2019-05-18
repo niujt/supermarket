@@ -69,6 +69,7 @@
 			var data = obj.data;
 			if (obj.event === 'del') {
 				layer.confirm('真的删除行么', function (index) {
+					del("/sale/deletesalebyid/"+data.id);
 					obj.del();
 					layer.close(index);
 				});

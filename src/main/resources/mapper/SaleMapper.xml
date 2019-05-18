@@ -21,7 +21,7 @@
   <select id="findsaleByid"  resultType="com.wxthxy.supermarket.entity.Sale">
   	select * from smbms_sale where id=#{id}
   </select>
-  <delete id="deletesalebyid">
+  <delete id="deletesalebyid" parameterType="Integer">
   	delete from smbms_sale where id=#{id}
   </delete>
   <update id="updatesalebyid" parameterType="com.wxthxy.supermarket.entity.Sale">

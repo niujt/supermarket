@@ -13,7 +13,7 @@ public interface SaleDAO {
 
     Sale findsaleByid(@Param("id") String id);
 
-    int deletesalebyid(@Param("id") String id);
+    int deletesalebyid(@Param("id") Integer id);
 
     int updatesalebyid(Sale sale);
 }
