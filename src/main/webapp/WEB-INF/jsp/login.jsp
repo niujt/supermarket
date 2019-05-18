@@ -259,7 +259,7 @@
 
 <body>
 <div class="login-box">
-	<h1>超市销售系统后台登录</h1>
+	<h1>超市管理系统后台登录</h1>
 	<form method="post"
 		  action="/doLogin.html">
 		<div class="name">

@@ -23,7 +23,7 @@ public class LoginController {
 	 * 登录
 	 * @return login.jsp
 	 */
-	@RequestMapping("/login.html")
+	@RequestMapping("")
 	public String login(){
 		return "login";
 	}
