@@ -9,7 +9,7 @@ import com.wxthxy.supermarket.entity.People;
 public interface PeopleDAO {
     List<People> getpeopleList();
 
-    List<People> peoplelist(Integer page,Integer limit);
+    List<People> peoplelist(Integer page,Integer limit,String peopleName,Integer deptid);
 
     int getcount();
 

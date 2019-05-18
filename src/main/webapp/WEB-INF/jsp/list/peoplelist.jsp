@@ -10,29 +10,20 @@
 <body>
 <%@include file="../menu.jsp" %>
 <hr>
-<table>
-    <form method="POST" class="layui-form" action="/people/savepeople.html">
-        <tr>
-            <td><span>&nbsp;&nbsp;&nbsp;&nbsp;姓名：</span></td>
-            <td>
-                <input name="queryPeopleName" class="layui-input"
-                       type="text" value="${queryPeopleName}">
-            </td>
-            <td><span>&nbsp;&nbsp;&nbsp;&nbsp;职位：</span></td>
-            <td>
-                <input name="querydeptid" class="layui-input" type="text" value="${querydeptid}">
-            </td>
-
-            <td><input value="查 询" type="submit" class="layui-btn layui-btn-normal">
-            </td>
-            <td>
-                <button type="button" class="layui-btn layui-btn-normal"
-                        onclick="addHtml('/people/peopleadd.html')">添加员工
-                </button>
-            </td>
-        </tr>
-    </form>
-</table>
+<div class="demoTable">
+    员工姓名：
+    <div class="layui-inline">
+        <input class="layui-input" name="peopleName" id="peopleName" autocomplete="off">
+    </div>
+    部门：
+    <div class="layui-inline">
+        <input class="layui-input" name="dname" id="dname" autocomplete="off">
+    </div>
+    <button class="layui-btn" data-type="reload">搜索</button>
+    <button type="button" class="layui-btn "
+            onclick="addHtml('/provider/provideradd.html')">添加订单
+    </button>
+</div>
 <table id="peoplelist" lay-filter="test"></table>
 <script type="text/html" id="toolbar">
     <div class="layui-btn-container">
@@ -47,6 +38,7 @@
         var table = layui.table;
         table.render({
             elem: '#peoplelist'
+            ,id:'testReload'
             , height: 500
             , url: '/people/json/peoplelist' //数据接口
             , page: true //开启分页
@@ -82,7 +74,26 @@
                 editHtml('/people/updatepeople.html/'+data.id);
             }
         });
-
+        var $ = layui.$, active = {
+            reload: function () {
+                var peopleName = $('#peopleName');
+                var dname = $('#dname');
+                //执行重载
+                table.reload('testReload', {
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                    , where: {
+                        peopleName: peopleName.val(),
+                        dname: dname.val()
+                    }
+                });
+            }
+        };
+        $('.demoTable .layui-btn').on('click', function () {
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
     });
 </script>
 <%@include file="../foot.jsp" %>

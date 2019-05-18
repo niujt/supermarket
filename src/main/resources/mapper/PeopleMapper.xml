@@ -33,6 +33,12 @@
 		smbms.smbms_dept d,
 		smbms.smbms_people p
 		WHERE p.deptid =d.id
+		<if test="peopleName!=''">
+			and peopleName=#{peopleName}
+		</if>
+		<if test="deptid!=0">
+			and deptid=#{deptid}
+		</if>
 		ORDER BY p.creationDate DESC
 		LIMIT #{page},#{limit}
 	</select>

@@ -36,12 +36,13 @@ public class PeopleController {
 
     @RequestMapping(value = "/json/peoplelist", method = RequestMethod.GET)
     @ResponseBody
-    public JSONObject peoplelist(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "limit", required = false) Integer limit) {
+    public JSONObject peoplelist(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "limit", required = false) Integer limit
+    ,@RequestParam(value = "peopleName",required = false)String peopleName,@RequestParam(value = "dname",required = false)String dname) {
         JSONObject json = new JSONObject();
         json.put("code", 0);
         json.put("msg", "");
         json.put("count", peopleservice.getcount());
-        List<People> peoples = peopleservice.peoplelist((page - 1) * limit, limit);
+        List<People> peoples = peopleservice.peoplelist((page - 1) * limit, limit,peopleName,dname);
         json.put("data", peoples);
         return json;
     }

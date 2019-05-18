@@ -10,16 +10,19 @@ public class Dept {
 	/**
 	 * 职位主键
 	 */
-    private Long id;
+    private Integer id;
     private String dcode;
     private String dname;
     private String dnumber;
-	public Long getId() {
+
+	public Integer getId() {
 		return id;
 	}
-	public void setId(Long id) {
+
+	public void setId(Integer id) {
 		this.id = id;
 	}
+
 	public String getDcode() {
 		return dcode;
 	}
