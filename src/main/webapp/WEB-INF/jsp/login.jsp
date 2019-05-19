@@ -284,6 +284,7 @@
                     <select id="userRole" name="userRole">
                         <option value="1"  selected="selected">系统管理员</option>
                         <option value="2" >经理</option>
+                        <option value="3" >销售人员</option>
                     </select>
                 </td>
             </tr>

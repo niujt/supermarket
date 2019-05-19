@@ -1,15 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <ul class="layui-nav" lay-filter="bigData">
 
     <li class="layui-nav-item layui-this"><a href="/index">首页</a></li>
     <li class="layui-nav-item "><a href="/bill/billlist.html">订单管理</a></li>
     <li class="layui-nav-item "><a href="/provider/providerlist.html">供应商管理</a></li>
     <li class="layui-nav-item"><a href="/refuse/refuselist.html">退货单管理</a></li>
-    <li class="layui-nav-item"><a href="/people/peoplelist.html">人事管理</a></li>
+    <li class="layui-nav-item"><a <c:if test="${userSession.userRole!=2}">style="display:none " </c:if> href="/people/peoplelist.html">人事管理</a></li>
     <li class="layui-nav-item"><a href="/sale/salelist.html">销售管理</a></li>
     <li class="layui-nav-item"><a href="/goods/goodslist.html">库存管理</a></li>
-    <li class="layui-nav-item ">
+    <li class="layui-nav-item " <c:if test="${userSession.userRole!=1}">style="display:none " </c:if>>
         <a href="javascript:;">系统设置</a>
         <dl class="layui-nav-child"> <!-- 二级菜单 -->
             <dd><a href="/user/userlist.html">用户管理</a></dd>
