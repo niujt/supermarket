@@ -34,4 +34,5 @@ public interface RoleDAO {
      */
     int updateole(Role role);
     Integer deleteRole(@Param("id")Integer id);
+    Role getRolebyName(String roleName);
 }

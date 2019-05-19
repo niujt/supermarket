@@ -27,7 +27,7 @@ public interface UserDAO {
      *
      * @return 用户列表
      */
-    List<User> getUserList(Integer page,Integer limit);
+    List<User> getUserList(Integer page,Integer limit,String userName,Integer userRole);
 
     /**
      * 添加一条用户信息

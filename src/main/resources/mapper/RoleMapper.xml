@@ -10,6 +10,9 @@
 		select * from smbms_role
 		limit #{page},#{limit}
 	</select>
+	<select id="getRolebyName" resultType="com.wxthxy.supermarket.entity.Role" parameterType="String">
+		select * from smbms_role where roleName=#{roleName}
+	</select>
     <select id="getCount" resultType="Integer">
 		select count(*) from smbms_role
 	</select>

@@ -34,12 +34,13 @@ public class UserController {
 
     @RequestMapping(value = "/json/userlist", method = RequestMethod.GET)
     @ResponseBody
-    public JSONObject userlist(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "limit", required = false) Integer limit) {
+    public JSONObject userlist(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "limit", required = false) Integer limit,
+                               @RequestParam(value = "userName", required = false) String userName, @RequestParam(value = "userRoleName", required = false) String userRoleName) {
         JSONObject json = new JSONObject();
         json.put("code", 0);
         json.put("msg", "");
         json.put("count", userservice.getCount());
-        List<User> users = userservice.getUserList((page - 1) * limit, limit);
+        List<User> users = userservice.getUserList((page - 1) * limit, limit,userName,userRoleName);
         json.put("data", users);
         return json;
     }

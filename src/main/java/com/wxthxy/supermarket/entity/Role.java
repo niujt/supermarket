@@ -6,7 +6,7 @@ public class Role {
 	/**
 	 * 主键
 	 */
-    private Long id;
+    private Integer id;
     /**
 	 * 权限人编码
 	 */
@@ -32,11 +32,11 @@ public class Role {
 	 */
     private Date modifyDate;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

@@ -26,7 +26,7 @@ public interface UserService {
      *
      * @return 用户列表
      */
-    List<User> getUserList(Integer page,Integer limit);
+    List<User> getUserList(Integer page,Integer limit,String userName,String userRoleName);
 
     /**
      * 添加一条新的用户信息

@@ -10,31 +10,20 @@
 <%@include file="../menu.jsp" %>
 <!--用户-->
 <hr>
-<table>
-    <form method="POST" class="layui-form"
-          action="/user/userlist.html">
-        <tr>
-            <td><span>&nbsp;&nbsp;&nbsp;&nbsp;用户名：</span></td>
-            <td>
-                <input name="queryname" class="layui-input"
-                        type="text" value="${queryUserName}">
-            </td>
-            <td><span>&nbsp;&nbsp;&nbsp;&nbsp;用户角色：</span></td>
-            <td>
-                    <input name="queryUserRole" class="layui-input"
-                           type="text" value="${queryUserRole}">
-            </td>
-            <td><input value="查 询" type="submit" id="searchbutton" class="layui-btn layui-btn-normal">
-            </td>
-            <td>
-                <button type="button" class="layui-btn layui-btn-normal"
-                        onclick="addHtml('/user/adduser.html')">添加用户
-                </button>
-            </td>
-        </tr>
-    </form>
-</table>
-
+<div class="demoTable">
+    用户名：
+    <div class="layui-inline">
+        <input class="layui-input" name="userName" id="userName" autocomplete="off">
+    </div>
+    用户角色：
+    <div class="layui-inline">
+        <input class="layui-input" name="userRoleName" id="userRoleName" autocomplete="off">
+    </div>
+    <button class="layui-btn" data-type="reload">搜索</button>
+    <button type="button" class="layui-btn "
+            onclick="addHtml('/user/adduser.html')">添加用户
+    </button>
+</div>
 <table id="userlist" lay-filter="test"></table>
 <script type="text/html" id="toolbar">
     <div class="layui-btn-container">
@@ -52,6 +41,7 @@
         table.render({
             elem: '#userlist'
             , height: 500
+            ,id:'testReload'
             , url: '/user/json/userlist' //数据接口
             , page: true //开启分页
             , cols: [[ //表头
@@ -88,15 +78,34 @@
             var data = obj.data;
             if (obj.event === 'del') {
                 layer.confirm('真的删除行么', function (index) {
-                    del("/user/deluser/"+data.id);
+                    del("/user/deluser/" + data.id);
                     obj.del();
                     layer.close(index);
                 });
             } else if (obj.event === 'edit') {
-               editHtml("/user/modifyuser.html/"+data.id);
+                editHtml("/user/modifyuser.html/" + data.id);
             }
         });
-
+        var $ = layui.$, active = {
+            reload: function () {
+                var userName = $('#userName');
+                var userRoleName = $('#userRoleName');
+                //执行重载
+                table.reload('testReload', {
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                    , where: {
+                        userName: userName.val(),
+                        userRoleName: userRoleName.val()
+                    }
+                });
+            }
+        };
+        $('.demoTable .layui-btn').on('click', function () {
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
     });
 </script>
 <%@include file="../foot.jsp" %>

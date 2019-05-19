@@ -43,6 +43,13 @@
 		select u.*,r.roleName as userRoleName from smbms_user u left join smbms_role r
 		on
 		u.userRole = r.id
+		where 1=1
+		<if test="userName!=''">
+			and u.userName=#{userName}
+		</if>
+		<if test="userRole!=0">
+			and u.userRole=#{userRole}
+		</if>
 		order by u.creationDate DESC
 		limit #{page},#{limit}
 	</select>
