@@ -20,7 +20,7 @@ import com.wxthxy.supermarket.service.GoodsService;
 import com.wxthxy.supermarket.service.RefuseService;
 import com.wxthxy.supermarket.util.Constants;
 
-@Controller
+@RestController
 @RequestMapping("/refuse")
 public class RefuseController {
     //退货单Controller

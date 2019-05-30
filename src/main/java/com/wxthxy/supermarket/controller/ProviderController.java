@@ -18,7 +18,7 @@ import com.wxthxy.supermarket.entity.Provider;
 import com.wxthxy.supermarket.service.BillService;
 import com.wxthxy.supermarket.service.ProviderService;
 
-@Controller
+@RestController
 @RequestMapping("/provider")
 public class ProviderController {
     @Resource

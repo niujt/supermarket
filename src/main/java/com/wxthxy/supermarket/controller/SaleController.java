@@ -23,7 +23,7 @@ import com.wxthxy.supermarket.util.Constants;
  *
  * @author limiaoZhou
  */
-@Controller
+@RestController
 @RequestMapping("/sale")
 public class SaleController {
     @Resource

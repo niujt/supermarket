@@ -14,7 +14,7 @@ import com.wxthxy.supermarket.service.RoleService;
 import com.wxthxy.supermarket.service.UserService;
 import com.wxthxy.supermarket.util.Constants;
 
-@Controller
+@RestController
 @RequestMapping("/user")
 public class UserController {
     @Resource
@@ -22,18 +22,8 @@ public class UserController {
     @Resource
     private RoleService roleservice;
 
-    /**
-     * 用户列表
-     *
-     * @return
-     */
-    @RequestMapping(value = "/userlist.html")
-    public String showuserlist() {
-        return "list/userlist";
-    }
 
-    @RequestMapping(value = "/json/userlist", method = RequestMethod.GET)
-    @ResponseBody
+    @RequestMapping(value = "/user", method = RequestMethod.GET)
     public JSONObject userlist(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "limit", required = false) Integer limit,
                                @RequestParam(value = "userName", required = false) String userName, @RequestParam(value = "userRoleName", required = false) String userRoleName) {
         JSONObject json = new JSONObject();
@@ -48,15 +38,14 @@ public class UserController {
     /**
      * 单击修改按钮进入修改页面并根据id先查询指定的用户信息
      *
-     * @param request
      * @return
      */
-    @RequestMapping("/modifyuser.html/{id}")
-    public String modifyuser(@PathVariable Integer id, HttpServletRequest request) {
+    @RequestMapping(value = "/user/{id}",method = RequestMethod.GET)
+    public JSONObject modifyuser(@PathVariable Integer id) {
         User user = userservice.getUserbyid(id);
-        request.setAttribute("role", roleservice.getRolelist(0, 9999));
-        request.setAttribute("user", user);
-        return "info/usermodify";
+        JSONObject json = new JSONObject();
+        json.put("user",user);
+        return json;
     }
 
     /**

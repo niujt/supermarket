@@ -16,7 +16,7 @@ import com.wxthxy.supermarket.entity.User;
 import com.wxthxy.supermarket.service.RoleService;
 import com.wxthxy.supermarket.util.Constants;
 
-@Controller
+@RestController
 @RequestMapping("/role")
 public class RoleController {
     @Resource

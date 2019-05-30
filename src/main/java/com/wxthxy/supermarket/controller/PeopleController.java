@@ -19,7 +19,7 @@ import com.wxthxy.supermarket.service.DeptService;
 import com.wxthxy.supermarket.service.PeopleService;
 import com.wxthxy.supermarket.util.Constants;
 
-@Controller
+@RestController
 @RequestMapping("/people")
 public class PeopleController {
     @Resource

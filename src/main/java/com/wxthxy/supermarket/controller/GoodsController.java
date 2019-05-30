@@ -22,7 +22,7 @@ import com.wxthxy.supermarket.util.Constants;
  *
  * @author limiaoZhou
  */
-@Controller
+@RestController
 @RequestMapping("/goods")
 public class GoodsController {
     @Resource
@@ -30,13 +30,8 @@ public class GoodsController {
     @Resource
     private RefuseService refuseservice;
 
-    @RequestMapping("/goodslist.html")
-    public String billlist() {
-        return "list/goodslist";
 
-    }
-
-    @RequestMapping(value = "/json/goodslist", method = RequestMethod.GET)
+    @RequestMapping(value = "/goods", method = RequestMethod.GET)
     @ResponseBody
     public JSONObject billlist(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "limit", required = false) Integer limit
     ,@RequestParam(value = "gcode", required = false) String gcode,@RequestParam(value = "gname", required = false) String gname) {
@@ -49,13 +44,9 @@ public class GoodsController {
         return json;
     }
 
-    @RequestMapping("/goodsadd.html")
-    public String goodsadd() {
-        return "add/goodsadd";
 
-    }
 
-    @RequestMapping("/updategoods.html/{id}")
+    @RequestMapping(value = "/goods/{id}",method = RequestMethod.GET)
     public String updategoods(@PathVariable Integer id, HttpServletRequest request) {
         Goods goods = goodsservice.findgoodsbyid(id);
         request.setAttribute("goods", goods);

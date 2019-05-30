@@ -12,8 +12,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.wxthxy.supermarket.entity.User;
 import com.wxthxy.supermarket.service.UserService;
 import com.wxthxy.supermarket.util.Constants;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 public class LoginController {
 
 	@Resource

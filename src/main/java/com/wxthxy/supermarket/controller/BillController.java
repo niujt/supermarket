@@ -10,7 +10,6 @@ import javax.servlet.http.HttpSession;
 
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import com.wxthxy.supermarket.entity.Bill;
@@ -29,7 +28,7 @@ import com.wxthxy.supermarket.util.Constants;
  *
  * @author limiaoZhou
  */
-@Controller
+@RestController
 @RequestMapping("/bill")
 public class BillController {
     @Autowired
@@ -41,40 +40,19 @@ public class BillController {
     @Autowired
     private RefuseService refuseservice;
 
-    /**
-     * 进入订单列表
-     *
-     * @return
-     */
-    @RequestMapping("/billlist.html")
-    public String showbilllist() {
-        return "list/billlist";
-    }
 
-    @RequestMapping(value = "/json/billlist", method = RequestMethod.GET)
-    @ResponseBody
+    @RequestMapping(value = "/bill", method = RequestMethod.GET)
     public JSONObject billlist(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "limit", required = false) Integer limit
-    ,@RequestParam(value = "productName",required = false)String productName,@RequestParam(value = "providerName",required = false)String providerName) {
+            , @RequestParam(value = "productName", required = false) String productName, @RequestParam(value = "providerName", required = false) String providerName) {
         JSONObject json = new JSONObject();
         json.put("code", 0);
         json.put("msg", "");
         json.put("count", billservice.getcount());
-        List<Bill> bills = billservice.billlist((page - 1) * limit, limit,productName,providerName);
+        List<Bill> bills = billservice.billlist((page - 1) * limit, limit, productName, providerName);
         json.put("data", bills);
         return json;
     }
 
-    /**
-     * 进入添加订单列表
-     *
-     * @return
-     */
-    @RequestMapping("/billadd.html")
-    public String billadd(HttpServletRequest request) {
-        List<Provider> providers = providerservice.getProviderList(0, 9999,"","");
-        request.setAttribute("providers", providers);
-        return "add/billadd";
-    }
 
     /**
      * 进入修改页面
@@ -82,15 +60,16 @@ public class BillController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "updatebill.html/{id}", method = RequestMethod.GET)
-    public String updatebill(@PathVariable String id, HttpServletRequest request) {
+    @RequestMapping(value = "/bill/{id}", method = RequestMethod.GET)
+    public JSONObject updatebill(@PathVariable String id, HttpServletRequest request) {
         //根据id查找到订单信息
         Bill b = billservice.getBillbyid(id);
         request.setAttribute("bill", b);
+        JSONObject json = new JSONObject();
         //供应商列表
-        List<Provider> providerlist = providerservice.getProviderList(0, 9999,"","");
-        request.setAttribute("providers", providerlist);
-        return "info/billmodify";
+        List<Provider> providerlist = providerservice.getProviderList(0, 9999, "", "");
+        json.put("providers", providerlist);
+        return json;
     }
 
     /**
@@ -99,8 +78,7 @@ public class BillController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/deletebillbyid/{id}", method = RequestMethod.DELETE)
-    @ResponseBody
+    @RequestMapping(value = "/bill/{id}", method = RequestMethod.DELETE)
     public JSONObject deletebillbyid(@PathVariable String id, HttpSession session) {
         JSONObject json = new JSONObject();
         Bill bill = billservice.getBillbyid(id);
@@ -131,8 +109,7 @@ public class BillController {
      * @param session
      * @return
      */
-    @RequestMapping(value = "/savebill.html", method = RequestMethod.POST)
-    @ResponseBody
+    @RequestMapping(value = "/bill", method = RequestMethod.POST)
     public JSONObject savebill(@RequestBody Bill bill, HttpSession session) {
         JSONObject json = new JSONObject();
         //登陆人的id
@@ -142,8 +119,8 @@ public class BillController {
         bill.setCreationDate(new Date());
         if (billservice.savebill(bill) == 1) {
             if (bill.getIsin() == 1) {
-                saveGoods(bill,loginerid,goodsService);
-                json.put("message", bill.getProductName()+"已经添加到库存");
+                saveGoods(bill, loginerid, goodsService);
+                json.put("message", bill.getProductName() + "已经添加到库存");
             } else {
                 json.put("message", "添加成功");
             }
@@ -153,13 +130,6 @@ public class BillController {
         return json;
     }
 
-    /**
-     * 根据id查询订单信息
-     *
-     * @param id
-     * @param m
-     * @return
-     */
 
     /**
      * 点击保存修改的订单信息
@@ -168,31 +138,29 @@ public class BillController {
      * @param session
      * @return
      */
-    @RequestMapping(value = "/saveupdatebill.html", method = RequestMethod.PUT)
-    @ResponseBody
+    @RequestMapping(value = "/bill", method = RequestMethod.PUT)
     public JSONObject saveupdatebill(@RequestBody Bill bill, HttpSession session) {
-        JSONObject json=new JSONObject();
+        JSONObject json = new JSONObject();
         //登陆人的id
         long loginerid = ((User) (session.getAttribute(Constants.SESSION))).getId();
         bill.setModifyBy(loginerid);
         //创建时间
         bill.setModifyDate(new Date());
         if (billservice.updatebillbyid(bill) == 1) {
-            if(bill.getIsin()==1){
-                saveGoods(bill,loginerid,goodsService);
-                json.put("message","修改成功,该商品已入库");
-            }
-            else {
-                json.put("message","修改成功");
+            if (bill.getIsin() == 1) {
+                saveGoods(bill, loginerid, goodsService);
+                json.put("message", "修改成功,该商品已入库");
+            } else {
+                json.put("message", "修改成功");
             }
 
-        }
-        else {
-            json.put("message","修改失败");
+        } else {
+            json.put("message", "修改失败");
         }
         return json;
     }
-    private static void saveGoods(Bill bill,Long loginerid,GoodsService goodsService){
+
+    private static void saveGoods(Bill bill, Long loginerid, GoodsService goodsService) {
         Goods g = new Goods();
         g.setCreatedBy(loginerid);
         g.setCreationDate(new Date());

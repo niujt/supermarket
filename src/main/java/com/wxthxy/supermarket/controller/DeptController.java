@@ -6,23 +6,25 @@ import java.util.List;
 import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONArray;
 import com.wxthxy.supermarket.entity.Dept;
 import com.wxthxy.supermarket.service.DeptService;
+import org.springframework.web.bind.annotation.RestController;
+
 /**
  * 订单Controller
  * @author limiaoZhou
  *
  */
-@Controller
+@RestController
 @RequestMapping("/dept")
 public class DeptController {
 	@Resource
 	private  DeptService deptservice;
-	@RequestMapping(value = "/deptlist")
-	@ResponseBody
+	@RequestMapping(value = "/dept",method = RequestMethod.GET)
 	public Object getproviderlist(){
 		HashMap<String,Object> result =new HashMap<String,Object>(); 
 
